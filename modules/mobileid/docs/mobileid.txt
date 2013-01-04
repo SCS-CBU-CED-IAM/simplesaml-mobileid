@@ -1,0 +1,57 @@
+Using the Mobile ID authentication source with simpleSAMLphp
+============================================================
+
+….
+
+Configuring Apache
+------------------
+
+<Nothing special?>
+
+
+Setting up the authX509 module
+------------------------------
+
+The first thing you need to do is to enable the cas module:
+
+    touch modules/mobileid/enable
+
+Then you must add it as an authentication source. Here is an
+example authsource.php
+
+    'MobileID' => array(
+        'authX509:X509userCert',
+        'hostname' => 'ldaps://ldap.example.net',
+        'enable_tls' => FALSE,
+        'attributes' => array("cn", "uid", "mail", "ou", "sn"),
+        'search.enable' => TRUE,
+        'search.attributes' => array('uid', 'mail'),
+        'search.base' => 'dc=example,dc=net',
+        'x509attributes' => array('UID' => 'uid'),
+        'ldapusercert' => array('userCertificate;binary'),
+    ),
+
+The configuration has the following options:
+
+* xxx …
+* yyy ….
+
+
+Database
+-----------------------------
+
+CREATE TABLE miduser (
+        id VARCHAR(32) PRIMARY KEY NOT NULL,
+        pwd VARCHAR(64),
+        msisdn TEXT NOT NULL);
+
+An example user (with password "secret"):
+
+    INSERT INTO miduser (id, pwd, msisdn)
+        VALUES('exampleuser', 'QwVYkvlrAMsXIgULyQ/pDDwDI3dF2aJD4XeVxg==', '+41798040457');
+
+
+Table miduser with following fields:
+ id: user id
+ msisdn: related MSIDSN number
+ pwd: optional related password

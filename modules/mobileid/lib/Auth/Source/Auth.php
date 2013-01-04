@@ -1,27 +1,14 @@
-/*
-* ====================================================
-* Mobile ID Authentication Method for simplesamlphp
-* ---------------------------------------------------
-* To be installed in modules/mobileid
+<?php
+
+/**
+* This class implements Mobile ID authentication with optional userid aliasing and password validation
+* against an SQL database.
 *
-* mkdir modules/mobileid
-* cd modules/mobileid
-*  cp ../core/default-enable .
-*  mkdir -p lib/Auth/Source
-*  touch lib/Auth/Source/Auth.php
-*
-* Dependencies: curl
-* Database:
-*   Table: miduser
-*   Fields: id,pwd,language,mail
-*     id: user id
-*     msisdn: related MSIDSN number
-*     pwd: optional related password
-*     mail: optional eMail value
-* ====================================================
+* @author Freddy Kaiser <kaiser.freddy@gmail.com>
+* @package simpleSAMLphp
+* @version $Id$
 */
 
-<?php
 class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 
 	/* The database DSN.
