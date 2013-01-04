@@ -22,7 +22,7 @@
 */
 
 <?php
-class sspmod_mymodule_Auth_Source_MyAuth extends sspmod_core_Auth_UserPassBase {
+class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 
 	/* The database DSN.
 	* See the documentation for the various database drivers for information about the syntax:
