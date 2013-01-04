@@ -17,7 +17,6 @@
 *     id: user id
 *     msisdn: related MSIDSN number
 *     pwd: optional related password
-*     lang: optional language for this user (de, en, fr, it)
 *     mail: optional eMail value
 * ====================================================
 */
@@ -36,9 +35,11 @@ class sspmod_mymodule_Auth_Source_MyAuth extends sspmod_core_Auth_UserPassBase {
 	private $password;
 
 	/* The mobile id related stuff. */
-	private uid;
-	private language;
-	private dtbs;
+	private $uid;
+	private $dtbs_en;
+    private $dtbs_de;
+    private $dtbs_fr;
+    private $dtbs_it;
 
 	public function __construct($info, $config) {
 		parent::__construct($info, $config);
@@ -62,6 +63,27 @@ class sspmod_mymodule_Auth_Source_MyAuth extends sspmod_core_Auth_UserPassBase {
 			throw new Exception('Missing or invalid language option in config.');
 		}
 		$this->language = $config['language'];
+
+        /* DTBS: TODO move in an array */
+		if (!is_string($config['DTBS_en'])) {
+			throw new Exception('Missing or invalid DTBS_en option in config.');
+		}
+		$this->DTBS_en = $config['DTBS_en'];
+        
+		if (!is_string($config['DTBS_de'])) {
+			throw new Exception('Missing or invalid DTBS_de option in config.');
+		}
+		$this->DTBS_de = $config['DTBS_de'];
+        
+		if (!is_string($config['DTBS_fr'])) {
+			throw new Exception('Missing or invalid DTBS_fr option in config.');
+		}
+		$this->DTBS_fr = $config['DTBS_fr'];
+        
+		if (!is_string($config['DTBS_it'])) {
+			throw new Exception('Missing or invalid DTBS_it option in config.');
+		}
+		$this->DTBS_it = $config['DTBS_it'];
 	}
 
 	/* A helper function for validating a password hash.
@@ -93,7 +115,7 @@ class sspmod_mymodule_Auth_Source_MyAuth extends sspmod_core_Auth_UserPassBase {
 		}
 
 		/* uid defaults to username. */
-		uid = array($username);
+		$uid = array($username);
 
 		/* Retrieve the row from the database. */
 		$row = $st->fetch(PDO::FETCH_ASSOC);
@@ -109,14 +131,17 @@ class sspmod_mymodule_Auth_Source_MyAuth extends sspmod_core_Auth_UserPassBase {
 			}
 		}
 
-		/* CALLLLLLL */
+        /* Get default language of session/browser */
+        $language = 'en';
+        $message = $DTBS_en;
+
+        /* CALLLLLLL */
 
 
 		/* Create the attribute array of the user. */
 		$attributes = array(
 			'uid' => array($uid),
-			'displayName' => array($row['full_name']),
-			'eduPersonAffiliation' => array('member', 'employee'),
+			'eMail' => array($row['eMail']),
 		);
 
 		/* Return the attributes. */
