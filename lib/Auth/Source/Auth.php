@@ -118,7 +118,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 		$row = $st->fetch(PDO::FETCH_ASSOC);
 		if ($row) {
 			/* User alias found, get the related msisdn. */
-			$msisdn = array($row['msisdn']);
+			$msisdn = $row['msisdn'];
             SimpleSAML_Logger::info('MobileID alias found for ' . var_export($uid, TRUE) . ' with msisdn ' . var_export($msisdn, TRUE));
 
 			/* Password not empty, check the password. */
