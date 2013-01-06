@@ -23,6 +23,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 
 	/* The mobile id related stuff. */
 	private $uid;
+    private $msisdn;
 	private $dtbs_en;
     private $dtbs_de;
     private $dtbs_fr;
@@ -96,32 +97,38 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
      * Verification if username has a password and check it
      */
 	protected function login($username, $password) {
+		/* uid and msisdn defaults to username. */
+        SimpleSAML_Logger::info('MobileID login(' . $username . ')');
+        
+		$uid = array($username);
+        $msisdn = array($username);
+
 		/* Connect to the database. */
 		$db = new PDO($this->dsn, $this->username, $this->password);
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
+        
 		/* With PDO we use prepared statements. This saves us from having to escape the username in the database query. */
 		$st = $db->prepare('SELECT id, msisdn, pwd, mail FROM miduser WHERE id=:username');
-
 		if (!$st->execute(array('username' => $username))) {
-			throw new Exception('Failed to query database for mobile id user.');
+			throw new Exception('MobileID login: Failed to query database for mobile id user.');
 		}
 
-		/* uid defaults to username. */
-		$uid = array($username);
-
+        
 		/* Retrieve the row from the database. */
 		$row = $st->fetch(PDO::FETCH_ASSOC);
 		if ($row) {
-			/* User alias found. */
-			$uid = array($row['msisdn']);
+			/* User alias found, get the related msisdn. */
+			$msisdn = array($row['msisdn']);
+            SimpleSAML_Logger::info('MobileID alias found for ' . $uid . ' with msisdn ' . $msisdn);
 
-			/* Check the password. */
-			if (!$this->checkPassword($row['password_hash'], $password)) {
-				/* Invalid password. */
-				SimpleSAML_Logger::warning('MyAuth: Wrong password for user ' . var_export($username, TRUE) . '.');
-				throw new SimpleSAML_Error_Error('WRONGUSERPASS');
-			}
+			/* Password not empty, check the password. */
+            if ($password) {
+                if (!$this->checkPassword($row['password_hash'], $password)) {
+                    /* Invalid password. */
+                    SimpleSAML_Logger::warning('MobileID login: Wrong password for user ' . var_export($uid, TRUE) . '.');
+                    throw new SimpleSAML_Error_Error('WRONGUSERPASS');
+                }
+            }
 		}
 
         /* Get default language of session/browser */
