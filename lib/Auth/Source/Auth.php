@@ -114,7 +114,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 		$row = $st->fetch(PDO::FETCH_ASSOC);
 		if ($row) {
 			/* User alias found. */
-			uid = array($row['msisdn']);
+			$uid = array($row['msisdn']);
 
 			/* Check the password. */
 			if (!$this->checkPassword($row['password_hash'], $password)) {
