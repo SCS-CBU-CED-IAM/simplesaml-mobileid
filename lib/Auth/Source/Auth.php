@@ -24,10 +24,10 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 	/* The mobile id related stuff. */
 	private $uid;
     private $msisdn;
-	private $dtbs_en;
-    private $dtbs_de;
-    private $dtbs_fr;
-    private $dtbs_it;
+	private $DTBS_en;
+    private $DTBS_de;
+    private $DTBS_fr;
+    private $DTBS_it;
 
 	public function __construct($info, $config) {
 		parent::__construct($info, $config);
@@ -100,8 +100,8 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 		/* uid and msisdn defaults to username. */
         SimpleSAML_Logger::info('MobileID login(' . $username . ')');
         
-		$uid = array($username);
-        $msisdn = array($username);
+		$uid = $username;
+        $msisdn = $username;
 
 		/* Connect to the database. */
 		$db = new PDO($this->dsn, $this->username, $this->password);
@@ -119,7 +119,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 		if ($row) {
 			/* User alias found, get the related msisdn. */
 			$msisdn = array($row['msisdn']);
-            SimpleSAML_Logger::info('MobileID alias found for ' . $uid . ' with msisdn ' . $msisdn);
+            SimpleSAML_Logger::info('MobileID alias found for ' . var_export($uid, TRUE) . ' with msisdn ' . var_export($msisdn, TRUE));
 
 			/* Password not empty, check the password. */
             if ($password) {
@@ -140,8 +140,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 
 		/* Create the attribute array of the user. */
 		$attributes = array(
-			'uid' => array($uid),
-			'eMail' => array($row['mail']),
+			'uid' => array($uid)
 		);
 
 		/* Return the attributes. */
