@@ -1,20 +1,20 @@
 <?php
 
-/**
-* This class implements Mobile ID authentication with optional userid aliasing and password validation
-* against an SQL database.
-*
-* @author Freddy Kaiser <kaiser.freddy@gmail.com>
-* @package simpleSAMLphp
-* @version $Id$
-*/
+/*
+ * This class implements Mobile ID authentication with optional userid aliasing and password validation
+ * against an SQL database.
+ *
+ * @author Freddy Kaiser <kaiser.freddy@gmail.com>
+ * @package simpleSAMLphp
+ * @version $Id$
+ */
 
 class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 
 	/* The database DSN.
-	* See the documentation for the various database drivers for information about the syntax:
-	*     http://www.php.net/manual/en/pdo.drivers.php
-	*/
+	 * See the documentation for the various database drivers for information about the syntax:
+	 *     http://www.php.net/manual/en/pdo.drivers.php
+	 */
 	private $dsn;
 
 	/* The database username & password. */
@@ -74,12 +74,12 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 	}
 
 	/* A helper function for validating a password hash.
-	*
-	* In this example we check a SSHA-password, where the database
-	* contains a base64 encoded byte string, where the first 20 bytes
-	* from the byte string is the SHA1 sum, and the remaining bytes is
-	* the salt.
-	*/
+	 *
+	 * In this example we check a SSHA-password, where the database
+	 * contains a base64 encoded byte string, where the first 20 bytes
+	 * from the byte string is the SHA1 sum, and the remaining bytes is
+	 * the salt.
+	 */
 	private function checkPassword($passwordHash, $password) {
 		$passwordHash = base64_decode($passwordHash);
 		$digest = substr($passwordHash, 0, 20);
@@ -89,6 +89,12 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 		return $digest === $checkDigest;
 	}
 
+    /* The login function.
+     *
+     * Cleanup of the username
+     * Verification if username has an alias and get the corresponding MSISDN
+     * Verification if username has a password and check it
+     */
 	protected function login($username, $password) {
 		/* Connect to the database. */
 		$db = new PDO($this->dsn, $this->username, $this->password);

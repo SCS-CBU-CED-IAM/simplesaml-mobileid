@@ -5,6 +5,31 @@ Mobile ID custom auth module for simplesamlphp
 
 Refer to http://simplesamlphp.org/docs/stable/simplesamlphp-modules for details.
 
+## Overview
+
+
+Call with or without MSISDN Number
+
+1) Without
+All done @IDP by asking: ID / Password
+  ID: can be anything from MSIDN to eMail
+    Works as "search for alias" in the User Store
+  Password: optional; if present needs to be validated and correct
+
+  OK: Submit
+  Cancel: replies to the SP with a "cancel"
+
+2) With
+Reads out the MSIDN from: ?
+
+Enforces the ID field from the "Without" and no password
+  Sends the "Ok"
+  On Password error asks about the password (Optional Password validation)
+
+
+## Install
+
+## Configuration
 
 And configured in `config/authsources.php`:
 
@@ -14,9 +39,9 @@ And configured in `config/authsources.php`:
         'username' => 'db_username',
         'password' => 'secret_db_password',
         'language' => 'en',
-        'DTBS_en' => 'Do you want to login?',
-        'DTBS_de' => 'Wollen Sie sich einloggen?',
-        'DTBS_fr' => 'Voulez-vous vous connecter?',
-        'DTBS_it' => 'Login ?',
+        'DTBS_en' => 'Authentification with Mobile ID?',
+        'DTBS_de' => 'Authentifizierung mit Mobile ID?',
+        'DTBS_fr' => 'Authentification avec Mobile ID?',
+        'DTBS_it' => 'Autenticazione con Mobile ID?',
     ),
 
