@@ -134,7 +134,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 		/* Create the attribute array of the user. */
 		$attributes = array(
 			'uid' => array($uid),
-			'eMail' => array($row['eMail']),
+			'eMail' => array($row['mail']),
 		);
 
 		/* Return the attributes. */
