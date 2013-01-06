@@ -28,10 +28,13 @@ Enforces the ID field from the "Without" and no password
 
 
 ## Install
+Checkout directly from git under the simplesamlphp modules folder with git clone <git> mobileid
+Enable the module `touch modules/mobileid/default-enabled`
+
 
 ## Configuration
 
-And configured in `config/authsources.php`:
+Add the module in the sources `config/authsources.php`:
 
     'MobileID' => array(
         'mobileid:Auth',
