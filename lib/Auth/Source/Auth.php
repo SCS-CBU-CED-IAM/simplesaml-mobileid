@@ -101,7 +101,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 		/* With PDO we use prepared statements. This saves us from having to escape the username in the database query. */
-		$st = $db->prepare('SELECT id, msisdn, pwd, lang, mail FROM miduser WHERE id=:username');
+		$st = $db->prepare('SELECT id, msisdn, pwd, mail FROM miduser WHERE id=:username');
 
 		if (!$st->execute(array('username' => $username))) {
 			throw new Exception('Failed to query database for mobile id user.');

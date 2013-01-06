@@ -40,15 +40,29 @@ The configuration has the following options:
 Database
 -----------------------------
 
+CREATE DATABASE mobileid;
+USE mobileid;
 CREATE TABLE miduser (
         id VARCHAR(32) PRIMARY KEY NOT NULL,
         pwd VARCHAR(64),
-        msisdn TEXT NOT NULL);
+        msisdn TEXT NOT NULL,
+	mail VARCHAR(64));
+
+CREATE USER 'admin'@'localhost' IDENTIFIED BY 'IJU9MusryyvC';
+  GRANT ALL ON mobileid.* TO 'admin'@'localhost';
+GRANT SELECT ON mobileid.miduser TO 'admin'@'localhost';
 
 An example user (with password "secret"):
 
-    INSERT INTO miduser (id, pwd, msisdn)
+    INSERT INTO miduser (id, pwd, msisdn, mail)
         VALUES('exampleuser', 'QwVYkvlrAMsXIgULyQ/pDDwDI3dF2aJD4XeVxg==', '+41798040457');
+    INSERT INTO miduser (id, msisdn)
+        VALUES('fkaiser', '+41792080350');
+    INSERT INTO miduser (id, msisdn)
+        VALUES('fkaiser@cartel.ch', '+41792080350');
+
+
+
 
 
 Table miduser with following fields:
