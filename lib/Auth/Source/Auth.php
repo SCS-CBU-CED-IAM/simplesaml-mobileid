@@ -131,7 +131,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
     
     /* A helper function for generating a SuisseID number.
      *
-     * Based on MSISDN we generate a SuisseID conform number
+     * Based on MSISDN like +41792080350 we generate a SuisseID conform number
      * 1100-9xxy-yyyy-yyyy where xx is International Prefix and yyy the number itself
      */
     private function getSuisseIDfrom($msisdn) {
@@ -140,10 +140,10 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
         
         /* Return empty if not starting with + */
         if (strlen($suisseid) == 0 || $suisseid[1] != '+')
-            return '';
+            return '1100-<No +>';
         /* Return empty if not valid US / World number */
-        if (strlen($suisseid) != 11 && strlen($suisseid) != 12)
-            return '';
+        if (strlen($suisseid) != 11 || strlen($suisseid) != 12)
+            return '110-<Wrong length>';
 
         /* Set prefix for american number */
         $suisseid = str_replace('+1', '1100-901', $suisseid);
