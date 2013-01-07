@@ -18,12 +18,13 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 	private $dsn;
 
 	/* The database username & password. */
-	private $username;
-	private $password;
+	private $dbusername;
+	private $dbpassword;
 
 	/* The mobile id related stuff. */
 	private $uid;
     private $msisdn;
+    private $language;
 	private $DTBS_en;
     private $DTBS_de;
     private $DTBS_fr;
@@ -40,12 +41,12 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 		if (!is_string($config['username'])) {
 			throw new Exception('Missing or invalid username option in config.');
 		}
-		$this->username = $config['username'];
+		$this->dbusername = $config['username'];
 
 		if (!is_string($config['password'])) {
 			throw new Exception('Missing or invalid password option in config.');
 		}
-		$this->password = $config['password'];
+		$this->dbpassword = $config['password'];
 
 		if (!is_string($config['language'])) {
 			throw new Exception('Missing or invalid language option in config.');
@@ -100,11 +101,11 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 		/* uid and msisdn defaults to username. */
         SimpleSAML_Logger::info('MobileID login(' . $username . ')');
         
-		$uid = $username;
-        $msisdn = $username;
+		$this->uid = $username;
+        $this->msisdn = $username;
 
 		/* Connect to the database. */
-		$db = new PDO($this->dsn, $this->username, $this->password);
+		$db = new PDO($this->dsn, $this->dbusername, $this->dbpassword);
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
 		/* With PDO we use prepared statements. This saves us from having to escape the username in the database query. */
@@ -112,35 +113,36 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 		if (!$st->execute(array('username' => $username))) {
 			throw new Exception('MobileID login: Failed to query database for mobile id user.');
 		}
-
         
 		/* Retrieve the row from the database. */
 		$row = $st->fetch(PDO::FETCH_ASSOC);
 		if ($row) {
 			/* User alias found, get the related msisdn. */
-			$msisdn = $row['msisdn'];
-            SimpleSAML_Logger::info('MobileID alias found for ' . var_export($uid, TRUE) . ' with msisdn ' . var_export($msisdn, TRUE));
+			$this->msisdn = $row['msisdn'];
+            SimpleSAML_Logger::info('MobileID alias found for ' . var_export($this->uid, TRUE) . ' with msisdn ' . var_export($this->msisdn, TRUE));
 
 			/* Password not empty, check the password. */
             if ($password) {
                 if (!$this->checkPassword($row['password_hash'], $password)) {
                     /* Invalid password. */
-                    SimpleSAML_Logger::warning('MobileID login: Wrong password for user ' . var_export($uid, TRUE) . '.');
+                    SimpleSAML_Logger::warning('MobileID login: Wrong password for user ' . var_export($this->uid, TRUE) . '.');
                     throw new SimpleSAML_Error_Error('WRONGUSERPASS');
                 }
             }
 		}
 
         /* Get default language of session/browser */
-        $language = 'en';
-        $message = $DTBS_en;
+        $this->language = 'en';
+        $this->message = $this->DTBS_en;
 
         /* CALLLLLLL */
 
 
 		/* Create the attribute array of the user. */
 		$attributes = array(
-			'uid' => array($uid)
+			'uid' => array($this->uid),
+            'mobile' => array($this->msisdn),
+            'preferredLanguage' => array($this->language),
 		);
 
 		/* Return the attributes. */
