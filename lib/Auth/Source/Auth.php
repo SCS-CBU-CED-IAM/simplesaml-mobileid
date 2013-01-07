@@ -42,84 +42,91 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 		parent::__construct($info, $config);
 
         /* Mandatory options */
-		if (!is_string($config['dsn'])) {
+		if (!is_string($config['dsn']))
 			throw new Exception('MobileID: Missing or invalid dsn option in config.');
-		}
 		$this->dsn = $config['dsn'];
 
-		if (!is_string($config['username'])) {
+		if (!is_string($config['username']))
 			throw new Exception('MobileID: Missing or invalid username option in config.');
-		}
 		$this->dbusername = $config['username'];
 
-		if (!is_string($config['password'])) {
+		if (!is_string($config['password']))
 			throw new Exception('MobileID: Missing or invalid password option in config.');
-		}
 		$this->dbpassword = $config['password'];
 
-		if (!is_string($config['msg_en'])) {
+		if (!is_string($config['msg_en']))
 			throw new Exception('MobileID: Missing or invalid msg_en option in config.');
-		}
 		$this->msg_en = $config['msg_en'];
 
-        if (!is_string($config['msg_de'])) {
+        if (!is_string($config['msg_de']))
 			throw new Exception('MobileID: Missing or invalid msg_de option in config.');
-		}
 		$this->msg_de = $config['msg_de'];
         
-		if (!is_string($config['msg_fr'])) {
+		if (!is_string($config['msg_fr']))
 			throw new Exception('MobileID: Missing or invalid msg_fr option in config.');
-		}
 		$this->msg_fr = $config['msg_fr'];
         
-		if (!is_string($config['msg_it'])) {
+		if (!is_string($config['msg_it']))
 			throw new Exception('MobileID: Missing or invalid msg_it option in config.');
-		}
 		$this->msg_it = $config['msg_it'];
         
-        if (!is_string($config['ap_id'])) {
+        if (!is_string($config['ap_id']))
 			throw new Exception('MobileID: Missing or invalid ap_id option in config.');
-		}
 		$this->ap_id = $config['ap_id'];
 
-        if (!is_string($config['cert_file'])) {
+        if (!is_string($config['cert_file']))
 			throw new Exception('MobileID: Missing or invalid cert_file option in config.');
-		}
 		$this->cert_file = $config['cert_file'];
 
-        if (!is_string($config['cert_key'])) {
+        if (!is_string($config['cert_key']))
 			throw new Exception('MobileID: Missing or invalid cert_key option in config.');
-		}
 		$this->cert_key = $config['cert_key'];
 
-        if (!is_string($config['mid_ca'])) {
+        if (!is_string($config['mid_ca']))
 			throw new Exception('MobileID: Missing or invalid mid_ca option in config.');
-		}
 		$this->mid_ca = $config['mid_ca'];
 
-        if (!is_string($config['mid_ocsp'])) {
+        if (!is_string($config['mid_ocsp']))
 			throw new Exception('MobileID: Missing or invalid mid_ocsp option in config.');
-		}
 		$this->mid_ocsp = $config['mid_ocsp'];
         
         /* Optional options */
-        if (is_string($config['ap_pwd'])) {
+        if (is_string($config['ap_pwd']))
             $this->ap_id = $config['ap_pwd'];
-		}
 
-        if (is_string($config['default_lang'])) {
+        if (is_string($config['default_lang']))
             $this->language = $config['default_lang'];
-		}
 
-        if (is_int($config['timeout_ws'])) {
+        if (is_int($config['timeout_ws']))
             $this->mid_timeout_ws = $config['timeout_ws'];
-		}
         
-        if (is_int($config['timeout_mid'])) {
+        if (is_int($config['timeout_mid']))
             $this->mid_timeout_mid = $config['timeout_mid'];
-		}        
 	}
 
+    /* A helper function for setting the right user id.
+     *
+     * Ensures international format +99 without spaces
+     */
+    protected function getMSISDNfromUID($uid) {
+        /* Remove all whitespaces */
+        $uid = preg_replace('/\s+/', '', $uid);
+        /* Remove all non-digits */
+        $uid = preg_replace('/^\\D*/', '', $uid);
+
+        /* Still something here */
+        if (strlen($foo) > 5) {
+            /* Add implicit +41 if starting only with one zero */
+            if ($uid[0] == '0' && $uid[1] != '0')
+                $uid = '+41' . substr($uid, 1)
+            /* Replace 00 with + */
+            if ($uid[0] == '0' && $uid[1] == '0' && $uid[2] != '0')
+                $uid = '+' . substr($uid, 2)
+        }
+
+        return $uid;
+    }
+    
 	/* A helper function for validating a password hash.
 	 *
 	 * In this example we check a SSHA-password, where the database
@@ -155,7 +162,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
         
 		/* With PDO we use prepared statements. This saves us from having to escape the username in the database query. */
 		$st = $db->prepare('SELECT id, msisdn, pwd, mail FROM miduser WHERE id=:username');
-		if (!$st->execute(array('username' => $username))) {
+		if (!$st->execute(array('username' => $this->uid))) {
 			throw new Exception('MobileID: Failed to query database for mobile id user.');
 		}
         
@@ -167,20 +174,24 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
             SimpleSAML_Logger::info('MobileID: Alias found for ' . var_export($this->uid, TRUE) . ' with msisdn ' . var_export($this->msisdn, TRUE));
 
 			/* Password not empty, check the password. */
-            if ($password) {
-                if (!$this->checkPassword($row['password_hash'], $password)) {
+            if ($password && !$this->checkPassword($row['password_hash'], $password)) {
                     /* Invalid password. */
                     SimpleSAML_Logger::warning('MobileID: Wrong password for user ' . var_export($this->uid, TRUE) . '.');
                     throw new SimpleSAML_Error_Error('WRONGUSERPASS');
                 }
-            }
-		}
-
+        }
+        else {
+            /* User is not aliased, cleanup the uid. */
+            $this->msisdn = getMSISDNfromUID($this->uid);
+            SimpleSAML_Logger::info('MobileID: Alias not found for ' . var_export($this->uid, TRUE) . ' msisdn will be ' . var_export($this->msisdn, TRUE));
+        }
+        
         /* Get default language of session/browser */
         $this->language = 'en';
         $this->message = $this->msg_en;
 
         /* CALLLLLLL */
+        /* If fine set the uid to msisdn */
 
 
 		/* Create the attribute array of the user. */
