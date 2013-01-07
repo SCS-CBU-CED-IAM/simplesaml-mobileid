@@ -111,6 +111,8 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
     private function getMSISDNfrom($uid) {
         /* Remove all whitespaces */
         $uid = preg_replace('/\s+/', '', $uid);
+        /* Replace first + with 00 */
+        $uid = str_replace('+', '00', $uid, 1);
         /* Remove all non-digits */
         $uid = preg_replace('/^\\D*/', '', $uid);
 
