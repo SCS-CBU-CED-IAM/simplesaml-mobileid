@@ -67,13 +67,15 @@ Add the module in the sources `config/authsources.php`:
 	'mid_ca'       => '/opt/mobileid/swisscom-ca.crt',
 	'mid_ocsp'     => '/opt/mobileid/swisscom-ocsp.crt',
 	'ap_id'        => '<ID provided by Swisscom>',
-	'ap_pwd'       => '<Password provided by Swisscom>',
-        'timeout_ws'   => 90,
-        'timoeut_mid'  => 80,
-        'default_lang' => 'en',
         'msg_en'       => 'Authentification with Mobile ID?',
         'msg_de'       => 'Authentifizierung mit Mobile ID?',
         'msg_fr'       => 'Authentification avec Mobile ID?',
         'msg_it'       => 'Autenticazione con Mobile ID?',
     ),
+
+Optional elements
+	'ap_pwd'       => '<Password provided by Swisscom>',
+        'timeout_ws'   => 90,
+        'timeout_mid'  => 80,
+        'default_lang' => 'en',
 
