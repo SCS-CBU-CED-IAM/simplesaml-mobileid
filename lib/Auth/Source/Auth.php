@@ -221,7 +221,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 			'uid' => array($this->uid),
             'mobile' => array($this->msisdn),
             'preferredLanguage' => array($this->language),
-            'sn' => array($this->getSuisseIDfrom($this->msisdn)),
+            'noredupersonnin' => array($this->getSuisseIDfrom($this->msisdn)),
 		);
 
 		/* Return the attributes. */
