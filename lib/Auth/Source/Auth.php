@@ -140,10 +140,10 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
         
         /* Return empty if not starting with + */
         if (strlen($suisseid) == 0 || $suisseid[0] != '+')
-            return '1100-<No +>';
+            return '';
         /* Return empty if not valid US / World number */
         if (strlen($suisseid) != 11 && strlen($suisseid) != 12)
-            return '110-<Wrong length>';
+            return '';
 
         /* Set prefix for american number */
         $suisseid = str_replace('+1', '1100-901', $suisseid);
