@@ -136,7 +136,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
      */
     private function getSuisseIDfrom($msisdn) {
         /* Ensure clean format */
-        $suisseid = self->getMSISDNfrom($msisdn);
+        $suisseid = $self->getMSISDNfrom($msisdn);
         
         /* Return empty if not starting with + */
         if (strlen($suisseid) == 0 || $suisseid[1] != '+')
