@@ -152,7 +152,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 	protected function login($username, $password) {
 		/* uid and msisdn defaults to username. */
 		$this->uid    = $username;
-        $this->msisdn = getMSISDNfrom($username);
+        $this->msisdn = $this->getMSISDNfrom($username);
         SimpleSAML_Logger::info('MobileID: Login of ' . $this->uid . ' as ' . $this->msisdn);
         
 		/* Connect to the database. */
