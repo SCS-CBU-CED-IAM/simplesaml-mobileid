@@ -129,6 +129,32 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
         return $uid;
     }
     
+    /* A helper function for generating a SuisseID number.
+     *
+     * Based on MSISDN we generate a SuisseID conform number
+     * 1100-9xxy-yyyy-yyyy where xx is International Prefix and yyy the number itself
+     */
+    private function getSuisseIDfrom($msisdn) {
+        /* Ensure clean format */
+        $suisseid = self->getMSISDNfrom($msisdn);
+        
+        /* Return empty if not starting with + */
+        if (strlen($suisseid) == 0 || $suisseid[1] != '+')
+            return '';
+        /* Return empty if not valid US / World number */
+        if (strlen($suisseid) != 11 && strlen($suisseid) != 12)
+            return '';
+
+        /* Set prefix for american number */
+        $suisseid = str_replace('+1', '1100-901', $suisseid);
+        /* Set prefix for non american numbers */
+        $suisseid = str_replace('+', '1100-9', $suisseid);
+        /* Add - */
+        $suisseid = substr($suisseid, 0, 9) . '-' . substr($suisseid, 9, 4) . '-' . substr($suisseid, 13, 4)
+        
+        return $suisseid
+    }
+    
 	/* A helper function for validating a password hash.
 	 *
 	 * In this example we check a SSHA-password, where the database
@@ -195,6 +221,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 			'uid' => array($this->uid),
             'mobile' => array($this->msisdn),
             'preferredLanguage' => array($this->language),
+            'suisseid' => array($this->getSuisseIDfrom($this->msisdn)),
 		);
 
 		/* Return the attributes. */
