@@ -139,10 +139,10 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
         $suisseid = $this->getMSISDNfrom($msisdn);
         
         /* Return empty if not starting with + */
-        if (strlen($suisseid) == 0 || $suisseid[1] != '+')
+        if (strlen($suisseid) == 0 || $suisseid[0] != '+')
             return '1100-<No +>';
         /* Return empty if not valid US / World number */
-        if (strlen($suisseid) != 11 || strlen($suisseid) != 12)
+        if (strlen($suisseid) != 11 && strlen($suisseid) != 12)
             return '110-<Wrong length>';
 
         /* Set prefix for american number */
