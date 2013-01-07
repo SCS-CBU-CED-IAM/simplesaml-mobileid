@@ -108,14 +108,14 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
      *
      * Ensures international format +99 without spaces
      */
-    protected function getMSISDNfromUID($uid) {
+    private function getMSISDNfromUID($uid) {
         /* Remove all whitespaces */
         $uid = preg_replace('/\s+/', '', $uid);
         /* Remove all non-digits */
         $uid = preg_replace('/^\\D*/', '', $uid);
 
         /* Still something here */
-        if (strlen($foo) > 5) {
+        if (strlen($uid) > 5) {
             /* Add implicit +41 if starting only with one zero */
             if ($uid[0] == '0' && $uid[1] != '0')
                 $uid = '+41' . substr($uid, 1);
