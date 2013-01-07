@@ -108,7 +108,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
      *
      * Ensures international format +99 without spaces
      */
-    private function getMSISDNfromUID($uid) {
+    private function getMSISDNfrom($uid) {
         /* Remove all whitespaces */
         $uid = preg_replace('/\s+/', '', $uid);
         /* Remove all non-digits */
@@ -151,15 +151,14 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
      */
 	protected function login($username, $password) {
 		/* uid and msisdn defaults to username. */
-        SimpleSAML_Logger::info('MobileID: login(' . $username . ')');
+		$this->uid    = $username;
+        $this->msisdn = getMSISDNfrom($username);
+        SimpleSAML_Logger::info('MobileID: Login of ' . $this->uid . ' as ' . $this->msisdn);
         
-		$this->uid = $username;
-        $this->msisdn = $username;
-
 		/* Connect to the database. */
 		$db = new PDO($this->dsn, $this->dbusername, $this->dbpassword);
 		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        
+
 		/* With PDO we use prepared statements. This saves us from having to escape the username in the database query. */
 		$st = $db->prepare('SELECT id, msisdn, pwd, mail FROM miduser WHERE id=:username');
 		if (!$st->execute(array('username' => $this->uid))) {
@@ -179,11 +178,6 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
                     SimpleSAML_Logger::warning('MobileID: Wrong password for user ' . var_export($this->uid, TRUE) . '.');
                     throw new SimpleSAML_Error_Error('WRONGUSERPASS');
                 }
-        }
-        else {
-            /* User is not aliased, cleanup the uid. */
-            $this->msisdn = getMSISDNfromUID($this->uid);
-            SimpleSAML_Logger::info('MobileID: Alias not found for ' . var_export($this->uid, TRUE) . ' msisdn will be ' . var_export($this->msisdn, TRUE));
         }
         
         /* Get default language of session/browser */
