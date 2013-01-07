@@ -24,55 +24,100 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 	/* The mobile id related stuff. */
 	private $uid;
     private $msisdn;
-    private $language;
-	private $DTBS_en;
-    private $DTBS_de;
-    private $DTBS_fr;
-    private $DTBS_it;
+    private $language = "en";
+	private $msg_en;
+    private $msg_de;
+    private $msg_fr;
+    private $msg_it;
+    private $ap_id;
+    private $ap_pwd = "disabled";
+    private $cert_file;
+    private $cert_key;
+    private $mid_ca;
+    private $mid_ocsp;
+    private $mid_timeout_ws;
+    private $mid_timeout_mid;
 
 	public function __construct($info, $config) {
 		parent::__construct($info, $config);
 
+        /* Mandatory options */
 		if (!is_string($config['dsn'])) {
-			throw new Exception('Missing or invalid dsn option in config.');
+			throw new Exception('MobileID: Missing or invalid dsn option in config.');
 		}
 		$this->dsn = $config['dsn'];
 
 		if (!is_string($config['username'])) {
-			throw new Exception('Missing or invalid username option in config.');
+			throw new Exception('MobileID: Missing or invalid username option in config.');
 		}
 		$this->dbusername = $config['username'];
 
 		if (!is_string($config['password'])) {
-			throw new Exception('Missing or invalid password option in config.');
+			throw new Exception('MobileID: Missing or invalid password option in config.');
 		}
 		$this->dbpassword = $config['password'];
 
-		if (!is_string($config['language'])) {
-			throw new Exception('Missing or invalid language option in config.');
+		if (!is_string($config['msg_en'])) {
+			throw new Exception('MobileID: Missing or invalid msg_en option in config.');
 		}
-		$this->language = $config['language'];
+		$this->msg_en = $config['msg_en'];
 
-        /* DTBS: TODO move in an array */
-		if (!is_string($config['DTBS_en'])) {
-			throw new Exception('Missing or invalid DTBS_en option in config.');
+        if (!is_string($config['msg_de'])) {
+			throw new Exception('MobileID: Missing or invalid msg_de option in config.');
 		}
-		$this->DTBS_en = $config['DTBS_en'];
+		$this->msg_de = $config['msg_de'];
         
-		if (!is_string($config['DTBS_de'])) {
-			throw new Exception('Missing or invalid DTBS_de option in config.');
+		if (!is_string($config['msg_fr'])) {
+			throw new Exception('MobileID: Missing or invalid msg_fr option in config.');
 		}
-		$this->DTBS_de = $config['DTBS_de'];
+		$this->msg_fr = $config['msg_fr'];
         
-		if (!is_string($config['DTBS_fr'])) {
-			throw new Exception('Missing or invalid DTBS_fr option in config.');
+		if (!is_string($config['msg_it'])) {
+			throw new Exception('MobileID: Missing or invalid msg_it option in config.');
 		}
-		$this->DTBS_fr = $config['DTBS_fr'];
+		$this->msg_it = $config['msg_it'];
         
-		if (!is_string($config['DTBS_it'])) {
-			throw new Exception('Missing or invalid DTBS_it option in config.');
+        if (!is_string($config['ap_id'])) {
+			throw new Exception('MobileID: Missing or invalid ap_id option in config.');
 		}
-		$this->DTBS_it = $config['DTBS_it'];
+		$this->ap_id = $config['ap_id'];
+
+        if (!is_string($config['cert_file'])) {
+			throw new Exception('MobileID: Missing or invalid cert_file option in config.');
+		}
+		$this->cert_file = $config['cert_file'];
+
+        if (!is_string($config['cert_key'])) {
+			throw new Exception('MobileID: Missing or invalid cert_key option in config.');
+		}
+		$this->cert_key = $config['cert_key'];
+
+        if (!is_string($config['mid_ca'])) {
+			throw new Exception('MobileID: Missing or invalid mid_ca option in config.');
+		}
+		$this->mid_ca = $config['mid_ca'];
+
+        if (!is_string($config['mid_ocsp'])) {
+			throw new Exception('MobileID: Missing or invalid mid_ocsp option in config.');
+		}
+		$this->mid_ocsp = $config['mid_ocsp'];
+        
+        /* Optional options */
+        if (is_string($config['ap_pwd'])) {
+            $this->ap_id = $config['ap_pwd'];
+		}
+
+        if (is_string($config['default_lang'])) {
+            $this->language = $config['default_lang'];
+		}
+
+        if (is_int($config['timeout_ws'])) {
+            $this->mid_timeout_ws = $config['timeout_ws'];
+		}
+        
+        if (is_int($config['timeout_mid'])) {
+            $this->mid_timeout_mid = $config['timeout_mid'];
+		}        
 	}
 
 	/* A helper function for validating a password hash.
@@ -99,7 +144,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
      */
 	protected function login($username, $password) {
 		/* uid and msisdn defaults to username. */
-        SimpleSAML_Logger::info('MobileID login(' . $username . ')');
+        SimpleSAML_Logger::info('MobileID: login(' . $username . ')');
         
 		$this->uid = $username;
         $this->msisdn = $username;
@@ -111,7 +156,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 		/* With PDO we use prepared statements. This saves us from having to escape the username in the database query. */
 		$st = $db->prepare('SELECT id, msisdn, pwd, mail FROM miduser WHERE id=:username');
 		if (!$st->execute(array('username' => $username))) {
-			throw new Exception('MobileID login: Failed to query database for mobile id user.');
+			throw new Exception('MobileID: Failed to query database for mobile id user.');
 		}
         
 		/* Retrieve the row from the database. */
@@ -119,13 +164,13 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 		if ($row) {
 			/* User alias found, get the related msisdn. */
 			$this->msisdn = $row['msisdn'];
-            SimpleSAML_Logger::info('MobileID alias found for ' . var_export($this->uid, TRUE) . ' with msisdn ' . var_export($this->msisdn, TRUE));
+            SimpleSAML_Logger::info('MobileID: Alias found for ' . var_export($this->uid, TRUE) . ' with msisdn ' . var_export($this->msisdn, TRUE));
 
 			/* Password not empty, check the password. */
             if ($password) {
                 if (!$this->checkPassword($row['password_hash'], $password)) {
                     /* Invalid password. */
-                    SimpleSAML_Logger::warning('MobileID login: Wrong password for user ' . var_export($this->uid, TRUE) . '.');
+                    SimpleSAML_Logger::warning('MobileID: Wrong password for user ' . var_export($this->uid, TRUE) . '.');
                     throw new SimpleSAML_Error_Error('WRONGUSERPASS');
                 }
             }
@@ -133,7 +178,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 
         /* Get default language of session/browser */
         $this->language = 'en';
-        $this->message = $this->DTBS_en;
+        $this->message = $this->msg_en;
 
         /* CALLLLLLL */
 

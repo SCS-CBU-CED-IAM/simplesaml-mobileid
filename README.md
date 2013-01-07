@@ -11,6 +11,7 @@ Refer to http://simplesamlphp.org/docs/stable/simplesamlphp-modules for details.
 Call with or without MSISDN Number
 
 1) Without
+
 All done @IDP by asking: ID / Password
   ID: can be anything from MSIDN to eMail
     Works as "search for alias" in the User Store
@@ -20,6 +21,7 @@ All done @IDP by asking: ID / Password
   Cancel: replies to the SP with a "cancel"
 
 2) With
+
 Reads out the MSIDN from: ?
 
 Enforces the ID field from the "Without" and no password
@@ -29,7 +31,26 @@ Enforces the ID field from the "Without" and no password
 
 ## Install
 Checkout directly from git under the simplesamlphp modules folder with git clone <git> mobileid
-Enable the module `touch modules/mobileid/default-enabled`
+
+Enable the cas module:
+  `touch modules/mobileid/default-enabled`
+
+Apache: nothing special ?
+
+Create the database and the related miduser table:
+
+`CREATE DATABASE mobileid;`
+`USE mobileid;`
+`CREATE TABLE miduser (
+        id VARCHAR(32) PRIMARY KEY NOT NULL,
+        pwd VARCHAR(64),
+        msisdn TEXT NOT NULL);`
+
+`CREATE USER 'dbuser'@'localhost' IDENTIFIED BY 'dbpwd';`
+`GRANT SELECT ON mobileid.miduser TO 'dbuser'@'localhost';`
+
+An example user (with password "secret"):
+`INSERT INTO miduser (id, pwd, msisdn) VALUES('exampleuser', 'QwVYkvlrAMsXIgULyQ/pDDwDI3dF2aJD4XeVxg==', '+41791234567');`
 
 
 ## Configuration
@@ -38,13 +59,21 @@ Add the module in the sources `config/authsources.php`:
 
     'MobileID' => array(
         'mobileid:Auth',
-        'dsn' => 'mysql:host=localhost;dbname=mobileid',
-        'username' => 'db_username',
-        'password' => 'secret_db_password',
-        'language' => 'en',
-        'DTBS_en' => 'Authentification with Mobile ID?',
-        'DTBS_de' => 'Authentifizierung mit Mobile ID?',
-        'DTBS_fr' => 'Authentification avec Mobile ID?',
-        'DTBS_it' => 'Autenticazione con Mobile ID?',
+        'dsn'          => 'mysql:host=localhost;dbname=mobileid',
+        'username'     => 'dbuser',
+        'password'     => 'dbpassword',
+        'cert_file'    => '/opt/mobileid/mycert.crt',
+	'cert_key'     => '/opt/mobileid/mycert.key',
+	'mid_ca'       => '/opt/mobileid/swisscom-ca.crt',
+	'mid_ocsp'     => '/opt/mobileid/swisscom-ocsp.crt',
+	'ap_id'        => '<ID provided by Swisscom>',
+	'ap_pwd'       => '<Password provided by Swisscom>',
+        'timeout_ws'   => 90,
+        'timoeut_mid'  => 80,
+        'default_lang' => 'en',
+        'msg_en'       => 'Authentification with Mobile ID?',
+        'msg_de'       => 'Authentifizierung mit Mobile ID?',
+        'msg_fr'       => 'Authentification avec Mobile ID?',
+        'msg_it'       => 'Autenticazione con Mobile ID?',
     ),
 
