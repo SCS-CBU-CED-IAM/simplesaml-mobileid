@@ -114,7 +114,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
         /* Replace first + with 00 */
         $uid = str_replace('+', '00', $uid);
         /* Remove all non-digits */
-        $uid = preg_replace('/^\\D*/', '', $uid);
+        $uid = preg_replace('/\D/', '', $uid);
 
         /* Still something here */
         if (strlen($uid) > 5) {
