@@ -150,9 +150,9 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
         /* Set prefix for non american numbers */
         $suisseid = str_replace('+', '1100-9', $suisseid);
         /* Add - */
-        $suisseid = substr($suisseid, 0, 9) . '-' . substr($suisseid, 9, 4) . '-' . substr($suisseid, 13, 4)
+        $suisseid = substr($suisseid, 0, 9) . '-' . substr($suisseid, 9, 4) . '-' . substr($suisseid, 13, 4);
         
-        return $suisseid
+        return $suisseid;
     }
     
 	/* A helper function for validating a password hash.
