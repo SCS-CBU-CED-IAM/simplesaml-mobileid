@@ -44,9 +44,6 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 	public function __construct($info, $config) {
 		parent::__construct($info, $config);
 
-        /* Set the AuthnContext in the state*/
-        $this->state['saml:AuthnContextClassRef'] = 'urn:oasis:names:tc:SAML:2.0:ac:classes:MobileTwoFactorContract';
-
         /* Mandatory options */
 		if (!is_string($config['dsn']))
 			throw new Exception('MobileID: Missing or invalid dsn option in config.');
