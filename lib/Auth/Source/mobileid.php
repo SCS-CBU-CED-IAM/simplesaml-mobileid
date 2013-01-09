@@ -9,12 +9,12 @@
 class mobileid {
 	
 	/* Parameters */
+    private $ap_id;                         // AP UserID provided by Swisscom
+	private $ap_pwd;                        // AP Password must be present but is not validated
 	public $cert_ca;                        // Bag file with the server/client issuing and root certifiates
 	public $cert_key;                       // The related key of the certificate
 	public $cert_file;                      // The certificate that is allowed to access the service
-    public $ap_id;                          // AP UserID provided by Swisscom
-	public $ap_pwd;                         // AP Password must be present but is not validated
-	public $ocsp_cert;                      // OCSP information of the signers certificate	
+	public $ocsp_cert;                      // OCSP information of the signers certificate
 	public $TimeOutWSRequest  = 90;         // Timeout WS request
 	public $TimeOutMIDRequest = 80;         // Timeout MobileID request
 
@@ -63,7 +63,11 @@ class mobileid {
 	* Mobileid class
 	*
 	*/
-	public function __construct() {
+	public function __construct($ap_id, $ap_pwd) {
+        /* Set the AP Infos */
+        $this->ap_id = $ap_id;
+        $this->ap_pwd = $ap_pwd;
+        
 		/* Check the server requirements */
 		if (!$this->checkRequirements()) return;
 
@@ -81,17 +85,11 @@ class mobileid {
 	* @return 	boolean	true on success, false on failure
 	*/
 	private function checkRequirements() {
-		if (!function_exists('curl_init')) {
-			$this->setError('PHP <libcurl> library is not installed!');
-			return;			
-		}
-		
-		if (!function_exists('xml_parse')) {
-			$this->setError('PHP <libxml> library is not installed!');
-			return;			
-		}
-		
-		return true;
+		if (!function_exists('curl_init')) $this->setError('PHP <libcurl> library is not installed!');
+		if (!function_exists('xml_parse')) $this->setError('PHP <libxml> library is not installed!');
+
+		if ($this->response_error) return;                      // Error found
+		return true;                                            // All fine
 	}
 
 	/**
@@ -100,47 +98,17 @@ class mobileid {
 	* @return 	boolean	true on success, false on failure
 	*/
 	public function checkConfiguration() {
-		if (!strlen($this->mobileIdConfig->cert_ca)) {
-			$this->setError('No CA Certificate configured!');
-			return;
-		}
+		if (!strlen($this->mobileIdConfig->cert_ca)) $this->setError('No CA Certificate configured!');
+		if (!strlen($this->mobileIdConfig->cert_file)) $this->setError('No Client Certificate configured!');
+		if (!strlen($this->mobileIdConfig->cert_key)) $this->setError('No Client Certificate key configured!');
+		if (!strlen($this->mobileIdConfig->ap_id)) $this->setError('No AP ID configured!');
+		if (!strlen($this->mobileIdConfig->ap_pwd)) $this->setError('No AP Password configured!');
+		if (!strlen($this->mobileIdConfig->ocsp_cert)) $this->setError('No OCSP Certificate configured!');
+		if (!strlen($this->mobileIdConfig->ws_url)) $this->setError('No WS Url configured!');
+		if (!strlen($this->mobileIdConfig->ws_action)) $this->setError('No WS Action configured!');
 
-		if (!strlen($this->mobileIdConfig->cert_file)) {
-			$this->setError('No Client Certificate configured!');
-			return;
-		}
-
-		if (!strlen($this->mobileIdConfig->cert_key)) {
-			$this->setError('No Client Certificate key configured!');
-			return;
-		}
-
-		if (!strlen($this->mobileIdConfig->ap_id)) {
-			$this->setError('No AP ID configured!');
-			return;
-		}
-
-		if (!strlen($this->mobileIdConfig->ap_pwd)) {
-			$this->setError('No AP Password configured!');
-			return;
-		}
-
-		if (!strlen($this->mobileIdConfig->ocsp_cert)) {
-			$this->setError('No OCSP Certificate configured!');
-			return;
-		}
-
-		if (!strlen($this->mobileIdConfig->ws_url)) {
-			$this->setError('No WS Url configured!');
-			return;
-		}
-
-		if (!strlen($this->mobileIdConfig->ws_action)) {
-			$this->setError('No WS Action configured!');
-			return;
-		}
-		
-		return true;
+        if ($this->response_error) return;                      // Error found
+		return true;                                            // All fine
 	}
 
 	/**
@@ -212,9 +180,7 @@ class mobileid {
 		if ($this->soap_response_xml === false) {
 			$this->curl_errno = curl_errno($ch);
 			$this->curl_error = curl_error($ch);
-
 			$this->checkCurlError();
-
 			return;
 		}
 
@@ -243,17 +209,11 @@ class mobileid {
 	/**
 	* Check Curl Error
 	*
-	* @return 	boolean	true on success, false on failure
 	*/
 	private function checkCurlError() {
-		// Test if we had a timeout
-		if ($this->curl_errno == '28') {
-			$this->response_soap_fault_subcode = '208';
-		}
-		
+		if ($this->curl_errno == '28')                  // Timeout ?
+            $this->response_soap_fault_subcode = '208';
 		$this->setError($this->curl_error);
-		
-		return;
 	}
 
 	/**
@@ -315,14 +275,10 @@ class mobileid {
 	*/
 	private function checkResponseRequest() {
 		/* Check the response request, does we have a valid XML buffer */
-		if (!$this->checkResponseRequestXmlBuffer()) {
-			return;
-		}
+		if (!$this->checkResponseRequestXmlBuffer()) return;
 
 		/* Clean up the XML soap response to parse it using SimpleXML */
-		if (!$this->setXmlResponseObject()) {
-			return;
-		}
+		if (!$this->setXmlResponseObject()) return;
 
 		/* Soap request response is an error */
 		if (!$this->isResponseRequestSuccess()) {
@@ -331,24 +287,16 @@ class mobileid {
 		}
 		
 		/* Set the response Datas */
-		if (!$this->setResponseData()) {
-			return;
-		}
-
+		if (!$this->setResponseData()) return;
+        
 		/* Get the encoded signature */
-		if (!$this->getEncodedSignature()) {
-			return;
-		}
+		if (!$this->getEncodedSignature()) return;
 
 		/* Extract the signers certificate */
-		if (!$this->extractSignersCertificate()) {
-			return;
-		}
+		if (!$this->extractSignersCertificate()) return;
 
 		/* Verify the revocation status over ocsp */
-		if (!$this->revocationStatusVerify()) {
-			return;
-		}
+		if (!$this->revocationStatusVerify()) return;
 		
 		$this->cleanUpTempFiles();
 		$this->setRequestSuccess();
@@ -363,13 +311,10 @@ class mobileid {
 	*/
 	private function checkResponseRequestXmlBuffer() {
 		$xml = xml_parser_create('UTF-8');
-		
-		if (!xml_parse($xml, $this->soap_response_xml)) {
-			$this->setError('MobileID XML Response error: '.xml_error_string(xml_get_error_code($xml)));
-			return;			
-		}
-		
-		return true;
+		if (!xml_parse($xml, $this->soap_response_xml)) $this->setError('MobileID XML Response error: '.xml_error_string(xml_get_error_code($xml)));
+        
+		if ($this->response_error) return;                      // Error found
+		return true;                                            // All fine
 	}
 	
 	/**
@@ -379,13 +324,10 @@ class mobileid {
 	*/
 	private function setXmlResponseObject() {
 		$this->soap_response_simple_xml = simplexml_load_string($this->cleanUpResponse());
+        if (!$this->soap_response_simple_xml) $this->setError('Error parsing the XML response.');
 		
-		if (!$this->soap_response_simple_xml) {
-			$this->setError('Error parsing the XML response.');
-			return;			
-		}
-		
-		return true;
+		if ($this->response_error) return;                      // Error found
+		return true;                                            // All fine
 	}
 
 	/**
@@ -419,27 +361,16 @@ class mobileid {
 	*/
 	private function setResponseErrorSubCode() {
 		$subcode = (string)$this->soap_response_simple_xml->soapenvBody->soapenvFault->soapenvCode->soapenvSubcode->soapenvValue;
-		
-		if (!strlen($subcode)) {
-			$this->setError('No subcode error found!');
-			return;			
-		}
-		
-		if (!strstr($subcode, '_')) {
-			$this->setError('Subcode is invalid!');
-			return;			
-		}
-		
-		$array_tmp = explode('_', $subcode);
-		
-		$this->response_soap_fault_subcode = $array_tmp[1];
-		
-		if (!strlen($this->response_soap_fault_subcode)) {
-			$this->setError('Can not get the subcode!');
-			return;
-		}
+		if (!strlen($subcode)) $this->setError('No subcode error found!');
+		if (!strstr($subcode, '_')) $this->setError('Subcode is invalid!');
+		if ($this->response_error) return;                      // Error found
 
-		return true;
+		$array_tmp = explode('_', $subcode);
+        $this->response_soap_fault_subcode = $array_tmp[1];
+        if (!strlen($this->response_soap_fault_subcode)) $this->setError('Can not get the subcode!');
+        
+		if ($this->response_error) return;                      // Error found
+		return true;                                            // All fine
 	}
 
 	/**
@@ -449,13 +380,10 @@ class mobileid {
 	*/
 	private function setResponseErrorMessage() {		
 		$this->response_status_message = (string)$this->soap_response_simple_xml->soapenvBody->soapenvFault->soapenvReason->soapenvText;
-		
-		if (!strlen($this->response_status_message)) {
-			$this->setError('No response error message found!.');
-			return;			
-		}
+		if (!strlen($this->response_status_message)) $this->setError('No response error message found!.');
 
-		return true;
+		if ($this->response_error) return;                      // Error found
+		return true;                                            // All fine
 	}
 
 	/**
@@ -479,13 +407,10 @@ class mobileid {
 	*/
 	private function setResponseTransId() {
 		$this->data_response_trans_id = (string)$this->soap_response_simple_xml->soapenvBody->MSS_SignatureResponse->mssMSS_SignatureResp["MSSP_TransID"];
+        if (!strlen($this->data_response_trans_id)) $this->setError('No response transaction ID found!.');
 
-		if (!strlen($this->data_response_trans_id)) {
-			$this->setError('No response transaction ID found!.');
-			return;			
-		}
-
-		return true;
+		if ($this->response_error) return;                      // Error found
+		return true;                                            // All fine
 	}
 
 	/**

@@ -216,9 +216,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
         $this->message = $this->msg_en;
 
         /* New instance of the Mobile ID class */
-        $mobileIdRequest = new mobileid();
-        $mobileIdReqeust->ap_id     = $this->ap_id;
-        $mobileIdReqeust->ap_pwd    = $this->ap_pwd;
+        $mobileIdRequest = new mobileid($this->ap_id, $this->ap_pwd);
         $mobileIdRequest->cert_file = $this->cert_file;
         $mobileIdRequest->cert_key  = $this->cert_key;
         $mobileIdRequest->cert_ca   = $this->cert_ca;
