@@ -56,27 +56,15 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 		if (!is_string($config['password']))
 			throw new Exception('MobileID: Missing or invalid password option in config.');
 		$this->dbpassword = $config['password'];
-
-		if (!is_string($config['msg_en']))
-			throw new Exception('MobileID: Missing or invalid msg_en option in config.');
-		$this->msg_en = $config['msg_en'];
-
-        if (!is_string($config['msg_de']))
-			throw new Exception('MobileID: Missing or invalid msg_de option in config.');
-		$this->msg_de = $config['msg_de'];
-        
-		if (!is_string($config['msg_fr']))
-			throw new Exception('MobileID: Missing or invalid msg_fr option in config.');
-		$this->msg_fr = $config['msg_fr'];
-        
-		if (!is_string($config['msg_it']))
-			throw new Exception('MobileID: Missing or invalid msg_it option in config.');
-		$this->msg_it = $config['msg_it'];
         
         if (!is_string($config['ap_id']))
 			throw new Exception('MobileID: Missing or invalid ap_id option in config.');
 		$this->ap_id = $config['ap_id'];
-
+        
+        if (!is_string($config['ap_pwd']))
+			throw new Exception('MobileID: Missing or invalid ap_pwd option in config.');
+		$this->ap_id = $config['ap_pwd'];
+        
         if (!is_string($config['cert_file']))
 			throw new Exception('MobileID: Missing or invalid cert_file option in config.');
 		$this->cert_file = $config['cert_file'];
@@ -92,11 +80,24 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
         if (!is_string($config['mid_ocsp']))
 			throw new Exception('MobileID: Missing or invalid mid_ocsp option in config.');
 		$this->mid_ocsp = $config['mid_ocsp'];
-        
-        /* Optional options */
-        if (is_string($config['ap_pwd']))
-            $this->ap_pwd = $config['ap_pwd'];
 
+		if (!is_string($config['msg_en']))
+			throw new Exception('MobileID: Missing or invalid msg_en option in config.');
+		$this->msg_en = $config['msg_en'];
+        
+        if (!is_string($config['msg_de']))
+			throw new Exception('MobileID: Missing or invalid msg_de option in config.');
+		$this->msg_de = $config['msg_de'];
+        
+		if (!is_string($config['msg_fr']))
+			throw new Exception('MobileID: Missing or invalid msg_fr option in config.');
+		$this->msg_fr = $config['msg_fr'];
+        
+		if (!is_string($config['msg_it']))
+			throw new Exception('MobileID: Missing or invalid msg_it option in config.');
+		$this->msg_it = $config['msg_it'];
+
+        /* Optional options */
         if (is_string($config['default_lang']))
             $this->language = $config['default_lang'];
 
