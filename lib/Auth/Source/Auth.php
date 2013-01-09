@@ -230,8 +230,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
         /* Call Mobile ID */
         $mobileIdRequest->sendRequest($this->msisdn, $this->language, $this->message);
         if ($mobileIdRequest->response_error) {
-            SimpleSAML_Logger::warning('MobileID: error in call ' . var_export($mobileIdRequest->response_error, TRUE));
-    SimpleSAML_Logger::warning('MobileID: error in call (Details)' . var_dump($mobileIdRequest));
+            SimpleSAML_Logger::warning('MobileID: error in service call ' . var_export($mobileIdRequest->response_error, TRUE));
             throw new SimpleSAML_Error_Error('WRONGUSERPASS');
         }
         
