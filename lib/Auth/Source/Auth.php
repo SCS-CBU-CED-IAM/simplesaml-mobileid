@@ -226,9 +226,12 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 			$mobileIdRequest->TimeOutMIDRequest = (int)$this->mid_timeout_mid;
         if ($this->mid_timeout_ws)
 			$mobileIdRequest->TimeOutWSRequest = (int)$this->mid_timeout_ws;
+    var_dump($this->ap_id);
+    var_dump($this->ap_pwd);
+    
         /* Call Mobile ID */
         $mobileIdRequest->sendRequest($this->msisdn, $this->language, $this->message);
-   var_dump($mobileIdRequest);
+    var_dump($mobileIdRequest);
         if ($mobileIdRequest->response_error) {
             SimpleSAML_Logger::warning('MobileID: error in call ' . var_export($mobileIdRequest->response_error, TRUE));
             throw new SimpleSAML_Error_Error('WRONGUSERPASS');
