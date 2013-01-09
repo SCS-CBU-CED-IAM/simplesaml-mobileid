@@ -93,25 +93,6 @@ class mobileid {
 	}
 
 	/**
-	* Mobileid check the configuration
-	*
-	* @return 	boolean	true on success, false on failure
-	*/
-	public function checkConfiguration() {
-		if (!strlen($this->mobileIdConfig->cert_ca)) $this->setError('No CA Certificate configured!');
-		if (!strlen($this->mobileIdConfig->cert_file)) $this->setError('No Client Certificate configured!');
-		if (!strlen($this->mobileIdConfig->cert_key)) $this->setError('No Client Certificate key configured!');
-		if (!strlen($this->mobileIdConfig->ap_id)) $this->setError('No AP ID configured!');
-		if (!strlen($this->mobileIdConfig->ap_pwd)) $this->setError('No AP Password configured!');
-		if (!strlen($this->mobileIdConfig->ocsp_cert)) $this->setError('No OCSP Certificate configured!');
-		if (!strlen($this->mobileIdConfig->ws_url)) $this->setError('No WS Url configured!');
-		if (!strlen($this->mobileIdConfig->ws_action)) $this->setError('No WS Action configured!');
-
-        if ($this->response_error) return;                      // Error found
-		return true;                                            // All fine
-	}
-
-	/**
 	* Mobileid set the temporary directory for files manipulations
 	*
 	*/
