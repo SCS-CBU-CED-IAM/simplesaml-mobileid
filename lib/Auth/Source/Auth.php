@@ -95,7 +95,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
         
         /* Optional options */
         if (is_string($config['ap_pwd']))
-            $this->ap_id = $config['ap_pwd'];
+            $this->ap_pwd = $config['ap_pwd'];
 
         if (is_string($config['default_lang']))
             $this->language = $config['default_lang'];
