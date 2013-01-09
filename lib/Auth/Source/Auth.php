@@ -234,6 +234,9 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
             throw new SimpleSAML_Error_Error('WRONGUSERPASS');
         }
         
+        /* Set the AuthnContext */
+        $state['saml:AuthnContextClassRef'] = 'urn:oasis:names:tc:SAML:2.0:ac:classes:MobileTwoFactorContract';
+        
 		/* Create the attribute array of the user. */
 		$attributes = array(
 			'uid' => array($this->uid),
