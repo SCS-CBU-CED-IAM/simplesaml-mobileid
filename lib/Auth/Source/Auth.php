@@ -63,7 +63,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
         
         if (!is_string($config['ap_pwd']))
 			throw new Exception('MobileID: Missing or invalid ap_pwd option in config.');
-		$this->ap_id = $config['ap_pwd'];
+		$this->ap_pwd = $config['ap_pwd'];
         
         if (!is_string($config['cert_file']))
 			throw new Exception('MobileID: Missing or invalid cert_file option in config.');
