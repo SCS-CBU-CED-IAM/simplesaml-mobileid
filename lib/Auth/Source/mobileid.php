@@ -19,7 +19,6 @@ class mobileid {
 	public $TimeOutMIDRequest = 80;         // Timeout MobileID request
 
 	/* Soap request */
-	protected $soap_request;                // Soap request
 	protected $ws_url;                      // WS Url
 	protected $ws_action;                   // WS action
 	protected $ap_instant;                  // AP instant
@@ -27,6 +26,7 @@ class mobileid {
 	protected $UserLang;                    // Language
 	protected $MobileUser;                  // Phone number
 	protected $DataToBeSigned;              // Messsage
+	protected $soap_request;                // Soap request
 	
 	/* Response */
 	protected $soap_response_xml;           // XML response buffer
@@ -401,13 +401,10 @@ class mobileid {
 	*/
 	private function setResponseMobileUser() {
 		$this->data_response_mobile_user = (string)$this->soap_response_simple_xml->soapenvBody->MSS_SignatureResponse->mssMSS_SignatureResp->mssMobileUser->mssMSISDN;
-		
-		if (!strlen($this->data_response_mobile_user)) {
-			$this->setError('No response mobile user found!.');
-			return;			
-		}
-		
-		return true;
+				if (!strlen($this->data_response_mobile_user)) $this->setError('No response mobile user found!.');
+
+		if ($this->response_error) return;                      // Error found
+		return true;                                            // All fine
 	}
 
 	/**
@@ -417,13 +414,10 @@ class mobileid {
 	*/
 	private function setResponseMessage() {		
 		$this->data_response_message = (string)$this->soap_response_simple_xml->soapenvBody->MSS_SignatureResponse->mssMSS_SignatureResp->mssStatus->mssStatusMessage;
-		
-		if (!strlen($this->data_response_message)) {
-			$this->setError('No response message found!.');
-			return;			
-		}
-		
-		return true;
+		if (!strlen($this->data_response_message)) $this->setError('No response message found!.');
+
+		if ($this->response_error) return;                      // Error found
+		return true;                                            // All fine
 	}
 
 	/**
@@ -433,18 +427,11 @@ class mobileid {
 	*/
 	private function setResponseMssStatusCode() {
 		$this->response_mss_status_code = (string)$this->soap_response_simple_xml->soapenvBody->MSS_SignatureResponse->mssMSS_SignatureResp->mssStatus->mssStatusCode["Value"];
-		
-		if (!strlen($this->response_mss_status_code)) {
-			$this->setError('No response MSS status code found!.');
-			return;			
-		}
-		
-		if (!$this->checkResponseMssStatusCode()) {
-			$this->setError($this->data_response_message);
-			return;
-		}
-		
-		return true;
+		if (!strlen($this->response_mss_status_code)) $this->setError('No response MSS status code found!.');
+		if (!$this->checkResponseMssStatusCode()) $this->setError($this->data_response_message);
+
+		if ($this->response_error) return;                      // Error found
+		return true;                                            // All fine
 	}
 
 	/**
@@ -491,30 +478,24 @@ class mobileid {
 		$this->file_sig_cert = $this->tmp_dir.'/signature_'.$this->data_response_trans_id.'.crt';
 		
 		$fp = fopen($this->file_sig, 'w');
-		
 		if (!$fp) {
 			$this->setError('Error when opening the signature file!');
 			return;			
 		}
-
 		if (!fwrite($fp, $signature)) {
 			$this->setError('Error when writing the signature file!');
 			return;
 		}
-
 		fclose($fp);
 		
 		//$status = openssl_pkcs7_verify($this->file_sig, PKCS7_NOVERIFY, $this->file_sig_cert, array($this->cert_ca), array(), $this->file_sig_msg);
 		$status = openssl_pkcs7_verify($this->file_sig, PKCS7_NOVERIFY, $this->file_sig_cert, array($this->cert_ca));
 		
-		if (!$status) {
-			$this->setError('Error when verifing the signature : '.openssl_error_string());
-			return;
-		}
+		if (!$status) $this->setError('Error when verifing the signature : '.openssl_error_string());
+		if (!$this->getCertificateData()) $this->setError('Error when reading certificate!');
 
-		if (!$this->getCertificateData()) return;
-
-		return true;
+        if ($this->response_error) return;                      // Error found
+        return true;                                            // All fine
 	}
 
 	/**
@@ -574,27 +555,23 @@ class mobileid {
 	*/
 	private function checkRevocationStatus() {
         $result = file($this->file_sig_cert_check);
-
 		$status = explode(':', $result[0]);
 		
 		switch(trim($status[1])) {
 		case 'revoked':
 			$this->setError('The signers certificate is revoked!', '501');
 			break;
-
 		case 'failed':
 			$this->setError('The signers certificate is unknown!', '501');
 			break;
-
 		case 'good':
 		default:
 			$this->data_response_certificate_status = trim($status[1]);
 			break;
 		}
 
-		if ($this->response_error) return;
-		
-		return true;
+		if ($this->response_error) return;                      // Error found
+		return true;                                            // All fine
 	}
 
 	/**
@@ -609,15 +586,13 @@ class mobileid {
 		$this->response_status_message = $msg;
 		$this->response_error_type     = $error_type;
 
-		if ($this->response_mss_status_code == '501' || $this->response_mss_status_code == '503' ) {
+		if ($this->response_mss_status_code == '501' || $this->response_mss_status_code == '503' )
 			$this->response_error_type = 'warning';
-		}
 
 		$warning_code = array("105", "208", "401", "402", "403", "404", "406", "422");
 
-		if (in_array($this->response_soap_fault_subcode, $warning_code)) {
+		if (in_array($this->response_soap_fault_subcode, $warning_code))
 			$this->response_error_type = 'warning';
-		}
 		
 		$this->cleanUpTempFiles();
 

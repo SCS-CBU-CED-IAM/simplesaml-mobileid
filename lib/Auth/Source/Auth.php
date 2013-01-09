@@ -245,3 +245,4 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 		return $attributes;
 	}
 }
+?>
