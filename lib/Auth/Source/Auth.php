@@ -9,6 +9,9 @@
  * @version $Id$
  */
 
+define('__ROOT__', dirname(__FILE__));
+require_once(__ROOT__.'/mobileid.php');
+
 class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 
 	/* The database DSN.
@@ -212,10 +215,27 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
         $this->language = 'en';
         $this->message = $this->msg_en;
 
-        /* CALLLLLLL */
-        /* If fine set the uid to msisdn */
-
-
+        /* New instance of the Mobile ID class */
+        $mobileIdRequest = new mobileid();
+        $mobileIdReqeust->ap_id     = $this->ap_id;
+        $mobileIdReqeust->ap_pwd    = $this->ap_pwd;
+        $mobileIdRequest->cert_file = $this->cert_file;
+        $mobileIdRequest->cert_key  = $this->cert_key;
+        $mobileIdRequest->cert_ca   = $this->cert_ca;
+        if ($this->timeout_mid)
+			$mobileIdRequest->TimeOutMIDRequest = (int)$this->timeout_mid;
+        if ($this->timeout_ws)
+			$mobileIdRequest->TimeOutWSRequest = (int)$this->timeout_ws;
+        $mobileIdRequest->checkConfiguration();
+        
+        /* Call Mobile ID */
+        $mobileIdRequest->sendRequest($this->msisdn, $this->language, $this->message);
+   var_dump($mobileIdRequest);
+        if ($mobileIdRequest->response_error) {
+            SimpleSAML_Logger::warning('MobileID: error in call ' . var_export($mobileIdRequest->response_error, TRUE));
+            throw new SimpleSAML_Error_Error('WRONGUSERPASS');
+        }
+        
 		/* Create the attribute array of the user. */
 		$attributes = array(
 			'uid' => array($this->uid),
