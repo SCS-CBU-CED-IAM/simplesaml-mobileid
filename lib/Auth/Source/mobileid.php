@@ -7,8 +7,6 @@
  **/
 
 class mobileid {
-	
-	/* Parameters */
     private $ap_id;                         // AP UserID provided by Swisscom
 	private $ap_pwd;                        // AP Password must be present but is not validated
 	public $cert_ca;                        // Bag file with the server/client issuing and root certifiates
