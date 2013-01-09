@@ -219,7 +219,8 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
         $mobileIdRequest = new mobileid($this->ap_id, $this->ap_pwd);
         $mobileIdRequest->cert_file = $this->cert_file;
         $mobileIdRequest->cert_key  = $this->cert_key;
-        $mobileIdRequest->cert_ca   = $this->cert_ca;
+        $mobileIdRequest->cert_ca   = $this->mid_ca;
+        $mobileIdRequest->ocsp_cert = $this->mid_ocsp;
         if ($this->mid_timeout_mid)
 			$mobileIdRequest->TimeOutMIDRequest = (int)$this->mid_timeout_mid;
         if ($this->mid_timeout_ws)
