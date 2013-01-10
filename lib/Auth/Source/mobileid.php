@@ -117,7 +117,7 @@ class mobileid {
         /* Ensure proper MobileUser Number */
         if (strlen($this->MobileUser) > 3) {                            // At least a valid content
             if ($this->MobileUser[0] == '0' && $this->MobileUser[1] == '0') // 00 must be +
-                $this->MobileUser = '+' . substr($this->MobileUser, 2)
+                $this->MobileUser = '+' . substr($this->MobileUser, 2);
             }
 
         /* DEBUGGING SPECIAL NUMBERS */
