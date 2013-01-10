@@ -86,23 +86,18 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 
     /* A helper function for setting the right user id.
      *
-     * Ensures international format with 00 and no spaces
+     * Ensures international format with specified prefix (+ or 00) and no spaces
      */
-    private function getMSISDNfrom($uid) {
-        /* Remove all whitespaces */
-        $uid = preg_replace('/\s+/', '', $uid);
-        /* Replace first + with 00 */
-        $uid = str_replace('+', '00', $uid);
-        /* Remove all non-digits */
-        $uid = preg_replace('/\D/', '', $uid);
-
-        /* Still something here */
-        if (strlen($uid) > 5) {
-            /* Add implicit 0041 if starting only with one zero */
-            if ($uid[0] == '0' && $uid[1] != '0')
-                $uid = '0041' . substr($uid, 1);
+    private function getMSISDNfrom($uid, $prefix = '00') {
+        $uid = preg_replace('/\s+/', '', $uid);         // Remove all whitespaces
+        $uid = str_replace('+', '00', $uid);            // Replace all + with 00
+        $uid = preg_replace('/\D/', '', $uid);          // Remove all non-digits
+        if (strlen($uid) > 5) {                         // Still something here */
+            if ($uid[0] == '0' && $uid[1] != '0')           // Add implicit 41 if starting with one 0
+                $uid = '41' . substr($uid, 1);
         }
-
+        $uid = $prefix . $uid;                          // Add the defined prefix
+        
         return $uid;
     }
     
@@ -113,16 +108,15 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
      */
     private function getSuisseIDfrom($msisdn) {
         /* Ensure clean format */
-        $suisseid = $this->getMSISDNfrom($msisdn);
+        $suisseid = $this->getMSISDNfrom($msisdn, '00');
         
         /* Return empty if not valid US / World number */
-        if (strlen($suisseid) != 12 && strlen($suisseid) != 13)
-            return '';
+        if (strlen($suisseid) != 12 && strlen($suisseid) != 13) return '';
 
         /* Set prefix for non american / american numbers */
-        if (substr($suisseid, 0, 2) == '00')         // Non american number
+        if (substr($suisseid, 0, 2) == '00')            // Non american number
             $suisseid = '1100-9' . substr($suisseid, 2);
-        else                                    // -> american number needs one 0 more
+        else                                            // -> american number needs one 0 more
             $suisseid = '1100-90' . substr($suisseid, 1);
  
         /* Add - */
@@ -140,7 +134,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 	protected function login($username, $password) {
 		/* uid and msisdn defaults to username. */
 		$this->uid    = $username;
-        $this->msisdn = $this->getMSISDNfrom($username);
+        $this->msisdn = $this->getMSISDNfrom($username, '+');
         SimpleSAML_Logger::info('MobileID: Login of ' . var_export($this->uid, TRUE) . ' as ' . var_export($this->msisdn, TRUE));
         
         /* Get default language of session/browser */
@@ -159,14 +153,14 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
         /* Call Mobile ID */
         $mobileIdRequest->sendRequest($this->msisdn, $this->language, $this->message);
         if ($mobileIdRequest->response_error) {
-            SimpleSAML_Logger::warning('MobileID: error in service call ' . var_export($mobileIdRequest->response_error, TRUE));
+            SimpleSAML_Logger::warning('MobileID: error in service call ' . var_export($mobileIdRequest->response_status_message, TRUE));
             throw new SimpleSAML_Error_Error('WRONGUSERPASS');
         }
         
 		/* Create the attribute array of the user. */
 		$attributes = array(
 			'uid' => array($this->uid),
-            'mobile' => array($this->msisdn),
+            'mobile' => array($this->getMSISDNfrom($this->msisdn, '00')),
             'preferredLanguage' => array($this->language),
             'noredupersonnin' => array($this->getSuisseIDfrom($this->msisdn)),
 		);
