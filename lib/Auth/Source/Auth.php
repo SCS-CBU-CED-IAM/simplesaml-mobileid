@@ -95,8 +95,9 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
         if (strlen($uid) > 5) {                         // Still something here */
             if ($uid[0] == '0' && $uid[1] != '0')           // Add implicit 41 if starting with one 0
                 $uid = '41' . substr($uid, 1);
+            $uid = ltrim($uid, '0');                        // Remove all leading 0
         }
-        $uid = $prefix . $uid;                          // Add the defined prefix
+        $uid = $prefix . $uid;                           // Add the defined prefix
         
         return $uid;
     }
