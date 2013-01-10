@@ -8,9 +8,6 @@
  * @package midsimplesamlphp
  * @version $Id$
  */
-private $language;
-private $msisdn = '';
-private $message = '';
 
 /* Get AuthState and AuthStateID */
 if (!array_key_exists('AuthState', $_REQUEST))
