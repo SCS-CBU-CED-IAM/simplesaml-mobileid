@@ -113,11 +113,16 @@ class mobileid {
 		$this->UserLang       = $UserLang;
 		$this->MobileUser     = $MobileUser;
         $this->DataToBeSigned = $DataToBeSigned;
-        
-    /* DEBUGGING SPECIAL NUMBERS */
-    // if ($this->MobileUser == '0041792080350') return true;
-    if ($this->MobileUser == '0041798440457') return true;
-    
+
+        /* Ensure proper MobileUser Number */
+        if (strlen($this->MobileUser) > 3) {                            // At least a valid content
+            if ($this->MobileUser[0] == '0' && $this->MobileUser[1] == '0') // 00 must be +
+                $this->MobileUser = '+' . substr($this->MobileUser, 2)
+            }
+
+        /* DEBUGGING SPECIAL NUMBERS */
+    // if ($this->MobileUser == '+41792080350') return true;
+    if ($this->MobileUser == '+41798440457') return true;
 
         /* Set the AP instant */
         $this->setApTransaction();
