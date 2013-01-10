@@ -16,11 +16,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 	/* The mobile id related stuff. */
 	private $uid;
     private $msisdn;
-    private $language = "en";
-	private $msg_en;
-    private $msg_de;
-    private $msg_fr;
-    private $msg_it;
+    private $language;
     private $ap_id;
     private $ap_pwd = "disabled";
     private $cert_file;
@@ -67,23 +63,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         if (!is_string($config['mid_ocsp']))
 			throw new Exception('MobileID: Missing or invalid mid_ocsp option in config.');
 		$this->mid_ocsp = $config['mid_ocsp'];
-        
-		if (!is_string($config['msg_en']))
-			throw new Exception('MobileID: Missing or invalid msg_en option in config.');
-		$this->msg_en = $config['msg_en'];
-        
-        if (!is_string($config['msg_de']))
-			throw new Exception('MobileID: Missing or invalid msg_de option in config.');
-		$this->msg_de = $config['msg_de'];
-        
-		if (!is_string($config['msg_fr']))
-			throw new Exception('MobileID: Missing or invalid msg_fr option in config.');
-		$this->msg_fr = $config['msg_fr'];
-        
-		if (!is_string($config['msg_it']))
-			throw new Exception('MobileID: Missing or invalid msg_it option in config.');
-		$this->msg_it = $config['msg_it'];
-        
+                
         /* Optional options */
         if (is_string($config['default_lang']))
             $this->language = $config['default_lang'];
@@ -122,13 +102,15 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 	 *
 	 * @param string $authStateId  The identifier of the authentication state.
 	 * @param string $msisdn  The Mobile ID entered.
-     * @param string $lang  The language of the communication.
+     * @param string $language  The language of the communication.
+     * @param string $message  The message to be communicated.
 	 * @return string  Error code in the case of an error.
 	 */
-	public static function handleLogin($authStateId, $msisdn, $lang) {
+	public static function handleLogin($authStateId, $msisdn, $language = 'en', $message = 'Login with Mobile ID?') {
 		assert('is_string($authStateId)');
 		assert('is_string($msisdn)');
-        assert('is_string($lang)');
+        assert('is_string($language)');
+        assert('is_string($message)');
 
 		/* Retrieve the authentication state. */
 		$state = SimpleSAML_Auth_State::loadState($authStateId, self::STAGEID);
@@ -142,7 +124,9 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         
 		try {
 			/* Attempt to log in. */
-			$attributes = $source->login($msisdn, $lang);
+            $self->language = $language;
+            $self->message = $message;
+			$attributes = $source->login($msisdn);
 		} catch (SimpleSAML_Error_Error $e) {
 			/* An error occurred during login. Check if it is because of the wrong
 			 * Mobile ID - if it is, we pass that error up to the login form,
@@ -151,9 +135,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 			if ($e->getErrorCode() === 'WRONGUSERPASS')
 				return 'WRONGUSERPASS';
 
-			/* Some other error occurred. Rethrow exception and let the generic error
-			 * handler deal with it.
-			 */
+			/* Some other error occurred. Rethrow exception and let the generic error handler deal with it */
 			throw $e;
 		}
 
@@ -210,13 +192,11 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
     
     /* The login function.
      *
-     * Cleanup of the username
-     * Verification if username has an alias and get the corresponding MSISDN
-     * Verification if username has a password and check it
+	 * @param string $msisdn  The Mobile ID entered.
+	 * @return string  Error code in the case of an error.
      */
-	protected function login($username, $language = 'en') {
+	protected function login($username) {
 		assert('is_string($username)');
-		assert('is_string($language)');
         
 		require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/libextinc/mobileid.php';
 		$attributes = array();
@@ -224,11 +204,8 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 		/* uid and msisdn defaults to username. */
 		$this->uid    = $username;
         $this->msisdn = $this->getMSISDNfrom($username, '+');
-        SimpleSAML_Logger::info('MobileID: Login of ' . var_export($this->uid, TRUE) . ' as ' . var_export($this->msisdn, TRUE) . ' in ' . var_export($language, TRUE));
-        
-        /* Get default language of session/browser */
-        $this->language = $language;
-        $this->message  = $this->msg_en;
+        SimpleSAML_Logger::info('MobileID: Login of ' . var_export($this->uid, TRUE) . ' as ' . var_export($this->msisdn, TRUE));
+        SimpleSAML_Logger::info('MobileID:   Message '). var_export($this->message, TRUE) . ' in ' . var_export($this->language, TRUE));
         
         /* New instance of the Mobile ID class */
         $mobileIdRequest = new mobileid($this->ap_id, $this->ap_pwd);

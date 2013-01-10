@@ -14,6 +14,7 @@ class mobileid {
 	public $cert_key;                       // The related key of the certificate
 	public $cert_file;                      // The certificate that is allowed to access the service
 	public $ocsp_cert;                      // OCSP information of the signers certificate
+    private $ocsp_url;                      // OCSP url from the signers certificate
 	public $TimeOutWSRequest  = 90;         // Timeout WS request
 	public $TimeOutMIDRequest = 80;         // Timeout MobileID request
 

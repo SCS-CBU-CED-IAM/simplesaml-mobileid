@@ -2,11 +2,16 @@
 	"header": {
 		"de": "Anmelden mit Mobile ID",
 		"fr": "S'authentifier avec Mobile ID",
-		"it": "Connessione con Mobile ID",
+		"it": "Connessione con Mobile ID"
 	},
 	"intro": {
-		"de": "<<INTRO DE>>",
-		"fr": "<<INTRO FR>>",
-		"it": "<<INTRO IT>>",
+		"de": "Bitte geben Sie Ihre Mobile ID ein",
+		"fr": "Veuillez saisir votre Mobile ID",
+		"it": "Volete afferrare il vostro Mobile ID"
+	},
+	"message": {
+		"de": "Authentifizierung mit Mobile ID?",
+		"fr": "Authentification avec Mobile ID?",
+		"it": "Autenticazione con Mobile ID?"
 	}
 }

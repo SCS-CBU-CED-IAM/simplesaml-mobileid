@@ -10,6 +10,7 @@
  */
 private $language;
 private $msisdn = '';
+private $message = '';
 
 /* Get AuthState and AuthStateID */
 if (!array_key_exists('AuthState', $_REQUEST))
@@ -17,10 +18,11 @@ if (!array_key_exists('AuthState', $_REQUEST))
 $authStateId = $_REQUEST['AuthState'];
 
 /* Language detection */
-if (isset($_GET['lang']))
-    $language = $_GET['lang'];
+if (isset($_GET['language']))
+    $language = $_GET['language'];
 if (!strlen($language))
     $language = strtolower(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2));
+$message = $this->t('{mobileid:Auth:message}');
 
 /* MSISDN default value */
 if (array_key_exists('msisdn', $_REQUEST))
@@ -28,7 +30,7 @@ if (array_key_exists('msisdn', $_REQUEST))
 
 /* Try to login */
 if (!empty($msisdn))
-	$errorCode = sspmod_mobileid_Auth_Source_Auth::handleLogin($authStateId, $msisdn, $language);
+	$errorCode = sspmod_mobileid_Auth_Source_Auth::handleLogin($authStateId, $msisdn, $language, $message);
 else
 	$errorCode = NULL;
 
