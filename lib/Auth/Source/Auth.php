@@ -205,7 +205,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 		$this->uid    = $username;
         $this->msisdn = $this->getMSISDNfrom($username, '+');
         SimpleSAML_Logger::info('MobileID: Login of ' . var_export($this->uid, TRUE) . ' as ' . var_export($this->msisdn, TRUE));
-        SimpleSAML_Logger::info('MobileID:   Message '). var_export($this->message, TRUE) . ' in ' . var_export($this->language, TRUE));
+        SimpleSAML_Logger::info('MobileID:   Message ' . var_export($this->message, TRUE) . ' in ' . var_export($this->language, TRUE));
         
         /* New instance of the Mobile ID class */
         $mobileIdRequest = new mobileid($this->ap_id, $this->ap_pwd);
