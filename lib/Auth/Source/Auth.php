@@ -16,7 +16,8 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 	/* The mobile id related stuff. */
 	private $uid;
     private $msisdn;
-    private $language;
+    private $language = 'en';
+    private $message = 'Login with Mobile ID?';
     private $ap_id;
     private $ap_pwd = "disabled";
     private $cert_file;
@@ -106,7 +107,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
      * @param string $message  The message to be communicated.
 	 * @return string  Error code in the case of an error.
 	 */
-	public static function handleLogin($authStateId, $msisdn, $language = 'en', $message = 'Login with Mobile ID?') {
+	public static function handleLogin($authStateId, $msisdn, $language, $message) {
 		assert('is_string($authStateId)');
 		assert('is_string($msisdn)');
         assert('is_string($language)');

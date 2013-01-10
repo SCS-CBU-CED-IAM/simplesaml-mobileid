@@ -15,10 +15,9 @@ if (!array_key_exists('AuthState', $_REQUEST))
 $authStateId = $_REQUEST['AuthState'];
 
 /* Language detection */
-
-$language = $this->t('{mobileid:Auth:language}');
-$message = $this->t('{mobileid:Auth:message}');
-
+$language = '{mobileid:Auth:language}';
+$message = '{mobileid:Auth:message}';
+    
 /* MSISDN default value */
 if (array_key_exists('msisdn', $_REQUEST))
     $msisdn = $_REQUEST['msisdn'];
