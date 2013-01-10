@@ -15,13 +15,14 @@ if (!array_key_exists('AuthState', $_REQUEST))
 $authStateId = $_REQUEST['AuthState'];
 
 /* Language detection */
+/* TODO Does not work */
 $language = '{mobileid:Auth:language}';
 $message = '{mobileid:Auth:message}';
     
 /* MSISDN default value */
 if (array_key_exists('msisdn', $_REQUEST))
     $msisdn = $_REQUEST['msisdn'];
-
+    
 /* Try to login */
 if (!empty($msisdn))
 	$errorCode = sspmod_mobileid_Auth_Source_Auth::handleLogin($authStateId, $msisdn, $language, $message);
