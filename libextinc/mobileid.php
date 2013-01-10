@@ -1,8 +1,9 @@
 <?php
 /**
- * @version     1.0.0
- * @copyright   Copyright (C) 2011. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * Mobile ID authentication class
+ *
+ * @package simpleSAMLphp
+ * @version $Id$
  * Requirements PHP 5.3.x, php_libcurl, php_libxml, OpenSSL
  **/
 
@@ -670,4 +671,5 @@ class mobileid {
 		return preg_replace("/(<\/?)(\w+):([^>]*>)/", "$1$2$3", $this->soap_response_xml);
 	}
 }
+
 ?>

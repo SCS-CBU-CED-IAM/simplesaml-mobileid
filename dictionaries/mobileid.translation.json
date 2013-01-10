@@ -1,0 +1,12 @@
+{
+	"header": {
+		"de": "Anmelden mit Mobile ID",
+		"fr": "S'authentifier avec Mobile ID",
+		"it": "Connessione con Mobile ID",
+	},
+	"intro": {
+		"de": "<<INTRO DE>>",
+		"fr": "<<INTRO FR>>",
+		"it": "<<INTRO IT>>",
+	}
+}
