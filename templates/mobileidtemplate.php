@@ -2,7 +2,7 @@
 $this->data['header'] = $this->t('{mobileid:Auth:header}');
 $this->data['autofocus'] = 'msisdn';
 
-$this->includeAtTemplateBase('includes/header.php');
+//$this->includeAtTemplateBase('includes/header.php');
 
 ?>
 
@@ -27,7 +27,7 @@ if ($this->data['errorcode'] !== NULL) {
 
 		<p><?php echo $this->t('{mobileid:Auth:intro}'); ?></p>
 	
-		<p><input id="otp" style="border: 1px solid #ccc; background: #eee; padding: .5em; font-size: medium; width: 70%; color: #aaa" type="text" tabindex="2" name="msisdn" /></p>
+		<p><input id="msisdn" style="border: 1px solid #ccc; background: #eee; padding: .5em; font-size: medium; width: 70%; color: #aaa" type="text" tabindex="2" name="msisdn" /></p>
 
 
 
@@ -42,5 +42,5 @@ foreach ($this->data['stateparams'] as $name => $value) {
 
 <?php
 
-$this->includeAtTemplateBase('includes/footer.php');
+//$this->includeAtTemplateBase('includes/footer.php');
 ?>
