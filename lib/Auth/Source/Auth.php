@@ -120,10 +120,10 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
             return '';
 
         /* Set prefix for non american / american numbers */
-        if (substr($uid, 0, 2) == '00')         // Non american number
-            $suisseid = '1100-9' . substr($uid, 2);
+        if (substr($suisseid, 0, 2) == '00')         // Non american number
+            $suisseid = '1100-9' . substr($suisseid, 2);
         else                                    // -> american number needs one 0 more
-            $suisseid = '1100-90' . substr($uid, 1);
+            $suisseid = '1100-90' . substr($suisseid, 1);
  
         /* Add - */
         $suisseid = substr($suisseid, 0, 9) . '-' . substr($suisseid, 9, 4) . '-' . substr($suisseid, 13, 4);
