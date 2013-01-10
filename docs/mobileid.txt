@@ -1,4 +1,0 @@
-Using the Mobile ID authentication source with simpleSAMLphp
-============================================================
-
-….

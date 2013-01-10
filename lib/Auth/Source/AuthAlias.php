@@ -1,7 +1,8 @@
 <?php
 
 /*
- * This class implements Mobile ID authentication.
+ * This class implements Mobile ID authentication with optional userid aliasing and password validation
+ * against an SQL database.
  *
  * @author Freddy Kaiser <kaiser.freddy@gmail.com>
  * @package simpleSAMLphp
@@ -11,7 +12,18 @@
 define('__ROOT__', dirname(__FILE__));
 require_once(__ROOT__.'/mobileid.php');
 
-class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
+class sspmod_mobileid_Auth_Source_AuthAlias extends sspmod_core_Auth_UserPassBase {
+
+	/* The database DSN.
+	 * See the documentation for the various database drivers for information about the syntax:
+	 *     http://www.php.net/manual/en/pdo.drivers.php
+	 */
+	private $dsn;
+
+	/* The database username & password. */
+	private $dbusername;
+	private $dbpassword;
+
 	/* The mobile id related stuff. */
 	private $uid;
     private $msisdn;
@@ -32,7 +44,19 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 	public function __construct($info, $config) {
 		parent::__construct($info, $config);
 
-        /* Mandatory options */        
+        /* Mandatory options */
+		if (!is_string($config['dsn']))
+			throw new Exception('MobileID: Missing or invalid dsn option in config.');
+		$this->dsn = $config['dsn'];
+
+		if (!is_string($config['username']))
+			throw new Exception('MobileID: Missing or invalid username option in config.');
+		$this->dbusername = $config['username'];
+
+		if (!is_string($config['password']))
+			throw new Exception('MobileID: Missing or invalid password option in config.');
+		$this->dbpassword = $config['password'];
+        
         if (!is_string($config['ap_id']))
 			throw new Exception('MobileID: Missing or invalid ap_id option in config.');
 		$this->ap_id = $config['ap_id'];
@@ -135,6 +159,22 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
         return $suisseid;
     }
     
+	/* A helper function for validating a password hash.
+	 *
+	 * In this example we check a SSHA-password, where the database
+	 * contains a base64 encoded byte string, where the first 20 bytes
+	 * from the byte string is the SHA1 sum, and the remaining bytes is
+	 * the salt.
+	 */
+	private function checkPassword($passwordHash, $password) {
+		$passwordHash = base64_decode($passwordHash);
+		$digest = substr($passwordHash, 0, 20);
+		$salt = substr($passwordHash, 20);
+
+		$checkDigest = sha1($password . $salt, TRUE);
+		return $digest === $checkDigest;
+	}
+
     /* The login function.
      *
      * Cleanup of the username
@@ -147,6 +187,31 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
         $this->msisdn = $this->getMSISDNfrom($username);
         SimpleSAML_Logger::info('MobileID: Login of ' . var_export($this->uid, TRUE) . ' as ' . var_export($this->msisdn, TRUE));
         
+		/* Connect to the database. */
+		$db = new PDO($this->dsn, $this->dbusername, $this->dbpassword);
+		$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+		/* With PDO we use prepared statements. This saves us from having to escape the username in the database query. */
+		$st = $db->prepare('SELECT id, msisdn, pwd, mail FROM miduser WHERE id=:username');
+		if (!$st->execute(array('username' => $this->uid))) {
+			throw new Exception('MobileID: Failed to query database for mobile id user.');
+		}
+        
+		/* Retrieve the row from the database. */
+		$row = $st->fetch(PDO::FETCH_ASSOC);
+		if ($row) {
+			/* User alias found, get the related msisdn. */
+			$this->msisdn = $row['msisdn'];
+            SimpleSAML_Logger::info('MobileID: Alias found for ' . var_export($this->uid, TRUE) . ' with msisdn ' . var_export($this->msisdn, TRUE));
+
+			/* Password not empty, check the password. */
+            if ($password && !$this->checkPassword($row['password_hash'], $password)) {
+                    /* Invalid password. */
+                    SimpleSAML_Logger::warning('MobileID: Wrong password for user ' . var_export($this->uid, TRUE) . '.');
+                    throw new SimpleSAML_Error_Error('WRONGUSERPASS');
+                }
+        }
+        
         /* Get default language of session/browser */
         $this->language = 'en';
         $this->message = $this->msg_en;
@@ -157,8 +222,10 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
         $mobileIdRequest->cert_key  = $this->cert_key;
         $mobileIdRequest->cert_ca   = $this->mid_ca;
         $mobileIdRequest->ocsp_cert = $this->mid_ocsp;
-        if ($this->mid_timeout_mid) $mobileIdRequest->TimeOutMIDRequest = (int)$this->mid_timeout_mid;
-        if ($this->mid_timeout_ws)	$mobileIdRequest->TimeOutWSRequest = (int)$this->mid_timeout_ws;
+        if ($this->mid_timeout_mid)
+			$mobileIdRequest->TimeOutMIDRequest = (int)$this->mid_timeout_mid;
+        if ($this->mid_timeout_ws)
+			$mobileIdRequest->TimeOutWSRequest = (int)$this->mid_timeout_ws;
     
         /* Call Mobile ID */
         $mobileIdRequest->sendRequest($this->msisdn, $this->language, $this->message);
