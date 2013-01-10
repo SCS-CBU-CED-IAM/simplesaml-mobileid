@@ -18,7 +18,7 @@ if ($this->data['errorcode'] !== NULL) {
 <?php
 }
 ?>
-	<img height="100" width="100" style="float: right" src="<?php echo(SimpleSAML_Module::getModuleURL('mobileid/resources/logo.gif')); ?>" />
+	<img height="100" style="float: right" src="<?php echo(SimpleSAML_Module::getModuleURL('mobileid/resources/logo.gif')); ?>" />
 	<h2 style=""><?php echo $this->t('{mobileid:Auth:header}'); ?></h2>
 	<form action="?" method="post" name="f">
         <p><?php echo $this->t('{mobileid:Auth:intro}'); ?></p>
