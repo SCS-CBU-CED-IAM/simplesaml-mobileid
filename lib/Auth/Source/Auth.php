@@ -86,7 +86,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
 
     /* A helper function for setting the right user id.
      *
-     * Ensures international format +99 without spaces
+     * Ensures international format with 00 and no spaces
      */
     private function getMSISDNfrom($uid) {
         /* Remove all whitespaces */
@@ -100,10 +100,7 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
         if (strlen($uid) > 5) {
             /* Add implicit +41 if starting only with one zero */
             if ($uid[0] == '0' && $uid[1] != '0')
-                $uid = '+41' . substr($uid, 1);
-            /* Replace 00 with + */
-            if ($uid[0] == '0' && $uid[1] == '0' && $uid[2] != '0')
-                $uid = '+' . substr($uid, 2);
+                $uid = '0041' . substr($uid, 1);
         }
 
         return $uid;
@@ -111,24 +108,23 @@ class sspmod_mobileid_Auth_Source_Auth extends sspmod_core_Auth_UserPassBase {
     
     /* A helper function for generating a SuisseID number.
      *
-     * Based on MSISDN like +41792080350 we generate a SuisseID conform number
+     * Based on MSISDN like 0041792080350 we generate a SuisseID conform number
      * 1100-9xxy-yyyy-yyyy where xx is International Prefix and yyy the number itself
      */
     private function getSuisseIDfrom($msisdn) {
         /* Ensure clean format */
         $suisseid = $this->getMSISDNfrom($msisdn);
         
-        /* Return empty if not starting with + */
-        if (strlen($suisseid) == 0 || $suisseid[0] != '+')
-            return '';
         /* Return empty if not valid US / World number */
-        if (strlen($suisseid) != 11 && strlen($suisseid) != 12)
+        if (strlen($suisseid) != 12 && strlen($suisseid) != 13)
             return '';
 
-        /* Set prefix for american number */
-        $suisseid = str_replace('+1', '1100-901', $suisseid);
-        /* Set prefix for non american numbers */
-        $suisseid = str_replace('+', '1100-9', $suisseid);
+        /* Set prefix for non american / american numbers */
+        if (substr($uid, 0, 2) == '00')         // Non american number
+            $suisseid = '1100-9' . substr($uid, 2);
+        else                                    // -> american number needs one 0 more
+            $suisseid = '1100-90' . substr($uid, 1);
+ 
         /* Add - */
         $suisseid = substr($suisseid, 0, 9) . '-' . substr($suisseid, 9, 4) . '-' . substr($suisseid, 13, 4);
         
