@@ -115,7 +115,9 @@ class mobileid {
         $this->DataToBeSigned = $DataToBeSigned;
         
     /* DEBUGGING SPECIAL NUMBERS */
-    if ($this->MobileUser == '0041792080350') return true;
+    // if ($this->MobileUser == '0041792080350') return true;
+    if ($this->MobileUser == '0041798440457') return true;
+    
 
         /* Set the AP instant */
         $this->setApTransaction();
