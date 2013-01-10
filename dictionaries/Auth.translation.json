@@ -9,6 +9,11 @@
 		"fr": "Veuillez saisir votre Mobile ID",
 		"it": "Volete afferrare il vostro Mobile ID"
 	},
+	"language": {
+		"de": "de",
+		"fr": "fr",
+		"it": "it"
+	},
 	"message": {
 		"de": "Authentifizierung mit Mobile ID?",
 		"fr": "Authentification avec Mobile ID?",

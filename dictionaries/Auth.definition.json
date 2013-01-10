@@ -5,6 +5,9 @@
 	"intro": {
 		"en": "<<INTRODUCTION>>"
 	},
+	"language": {
+		"en": "en"
+	},
 	"message": {
 		"en": "Authentification with Mobile ID?"
 	}

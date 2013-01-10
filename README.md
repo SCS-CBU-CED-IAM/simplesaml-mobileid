@@ -7,9 +7,7 @@ Refer to http://simplesamlphp.org/docs/stable/simplesamlphp-modules for details.
 
 ## Overview
 
-mobileid:auth is a module that only asks about MSISDN
-mobileid:AuthAlias is module where the username can be aliased in a database and optional validation of a password.
-
+mobileid:auth is a module for login with Mobile ID.
 
 
 ## Install
