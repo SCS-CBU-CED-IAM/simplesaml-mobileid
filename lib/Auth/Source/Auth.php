@@ -224,7 +224,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 		/* uid and msisdn defaults to username. */
 		$this->uid    = $username;
         $this->msisdn = $this->getMSISDNfrom($username, '+');
-        SimpleSAML_Logger::info('MobileID: Login of ' . var_export($this->uid, TRUE) . ' as ' . var_export($this->msisdn, TRUE));
+        SimpleSAML_Logger::info('MobileID: Login of ' . var_export($this->uid, TRUE) . ' as ' . var_export($this->msisdn, TRUE) . ' in ' . var_export($language, TRUE));
         
         /* Get default language of session/browser */
         $this->language = $language;
