@@ -25,7 +25,11 @@ if (array_key_exists('middtbs', $_REQUEST))
 /* MSISDN default value */
 if (array_key_exists('msisdn', $_REQUEST))
     $msisdn = $_REQUEST['msisdn'];
-    
+
+var_dump($_REQUEST);
+var_dump($_POST);
+var_dump($_GET);
+
 /* Try to login */
 if (!empty($msisdn))
 	$errorCode = sspmod_mobileid_Auth_Source_Auth::handleLogin($authStateId, $msisdn, $language, $message);
@@ -37,6 +41,9 @@ $globalConfig = SimpleSAML_Configuration::getInstance();
 $t = new SimpleSAML_XHTML_Template($globalConfig, 'mobileid:mobileidtemplate.php');
 $t->data['stateparams'] = array('AuthState' => $authStateId);
 $t->data['errorcode'] = $errorCode;
+    
+var_dump($t->data);
+    
 $t->show();
 exit();
     
