@@ -218,7 +218,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         /* Call Mobile ID */
         $mobileIdRequest->sendRequest($this->msisdn, $this->language, $this->message);
         if ($mobileIdRequest->response_error) {
-            SimpleSAML_Logger::warning('MobileID: error in service call ' . var_export($mobileIdRequest->response_error, TRUE) . '-' . var_export($mobileIdRequest->response_status_message, TRUE));
+            SimpleSAML_Logger::warning('MobileID: error in service call ' . var_export($mobileIdRequest->response_status_message, TRUE));
             /* Define the error and filter the valid ones for dictionnaries */
             $erroris = $mobileIdRequest->response_status_message;
             switch($erroris) {
@@ -249,6 +249,10 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
                     $erroris = 'INTERNAL_ERROR';
                     break;
             }
+            /* Special handling for timeout */
+            if ($this->response_soap_fault_subcode === '208')
+                $erroris = 'EXPIRED_TRANSACTION';
+            
             throw new SimpleSAML_Error_Error($erroris);
         }
 
