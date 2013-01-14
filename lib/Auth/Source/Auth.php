@@ -209,7 +209,20 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         $mobileIdRequest->sendRequest($this->msisdn, $this->language, $this->message);
         if ($mobileIdRequest->response_error) {
             SimpleSAML_Logger::warning('MobileID: error in service call ' . var_export($mobileIdRequest->response_status_message, TRUE));
-            throw new SimpleSAML_Error_Error('MOBILEIDERROR_' . $mobileIdRequest->response_status_message);
+            /* Define the error and filter the valid ones for dictionnaries */
+            $erroris = $mobileIdRequest->response_status_message;
+            switch($erroris) {
+                case 'WRONG_PARAM';
+                case 'MISSING_PARAM';
+                case 'WRONG_DATA_LENGTH';
+                // Rest here if concept is working
+                case 'INTERNAL_ERROR';
+                    break;
+                default:
+                    $erroris = "";
+                    break;
+            }
+            throw new SimpleSAML_Error_Error('MOBILEIDERROR_' . $erroris);
         }
         
 		/* Create the attribute array of the user. */
