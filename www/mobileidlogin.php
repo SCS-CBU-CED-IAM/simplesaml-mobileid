@@ -15,8 +15,10 @@ if (!array_key_exists('AuthState', $_REQUEST))
 $authStateId = $_REQUEST['AuthState'];
 
 /* Language and message */
+$language = '';
 if (array_key_exists('midlang', $_REQUEST))
     $language = $_REQUEST['midlang'];
+$message = '';
 if (array_key_exists('middtbs', $_REQUEST))
     $message = $_REQUEST['middtbs'];
 
