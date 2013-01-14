@@ -18,18 +18,19 @@ $authStateId = $_REQUEST['AuthState'];
 if (array_key_exists('msisdn', $_REQUEST))
     $msisdn = $_REQUEST['msisdn'];
     
-/* Results */
+/* Login and results */
 $globalConfig = SimpleSAML_Configuration::getInstance();
 $t = new SimpleSAML_XHTML_Template($globalConfig, 'mobileid:mobileidtemplate.php');
 
-    /* Try to login */
-    $language = $t->t('{mobileid:Auth:language}');
-    $message = $t->t('{mobileid:Auth:message}');
-    if (!empty($msisdn))
-        $errorCode = sspmod_mobileid_Auth_Source_Auth::handleLogin($authStateId, $msisdn, $language, $message);
-    else
-        $errorCode = NULL;
-    
+/* Try to login */
+$language = $t->t('{mobileid:Auth:language}');
+$message = $t->t('{mobileid:Auth:message}');
+if (!empty($msisdn))
+    $errorCode = sspmod_mobileid_Auth_Source_Auth::handleLogin($authStateId, $msisdn, $language, $message);
+else
+    $errorCode = NULL;
+
+/* Results */
 $t->data['stateparams'] = array('AuthState' => $authStateId);
 $t->data['errorcode'] = $errorCode;
 $t->show();
