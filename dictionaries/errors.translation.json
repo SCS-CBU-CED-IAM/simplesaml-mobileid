@@ -1,13 +1,8 @@
 {
 	"error_header": {
-		"de": "Fehler",
-		"fr": "Erreur",
-		"it": "Errore",
-	},
-	"descr_MOBILEIDERROR_": {
-		"de": "Something strange happened during the login with Mobile ID",
-		"fr": "Something strange happened during the login with Mobile ID",
-		"it": "Something strange happened during the login with Mobile ID",
+		"de": "Fehler Mobile ID",
+		"fr": "Erreur Mobile ID",
+		"it": "Errore Mobile ID",
 	},
 	"descr_MOBILEIDERROR_WRONG_PARAM": {
 		"de": "Error during the login with Mobile ID (WRONG_PARAM)",

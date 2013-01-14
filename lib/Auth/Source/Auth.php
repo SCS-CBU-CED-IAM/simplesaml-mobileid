@@ -128,9 +128,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         $self->message = $message;
         /* Call the mobile id */
         $error = $source->login($msisdn);
-        if (strlen($error))                             // An error occured
-            return $error;
-//            throw new SimpleSAML_Error_Error($error);
+        if (strlen($error)) return $error;              // An error occured, return it
         
         /* Set the Attributes */
         $attributes = array(
@@ -225,7 +223,23 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
                 case 'WRONG_PARAM';
                 case 'MISSING_PARAM';
                 case 'WRONG_DATA_LENGTH';
-                // Rest here if concept is working
+                case 'UNAUTHORIZED_ACCESS';
+                case 'UNKNOWN_CLIENT';
+                case 'INAPPROPRIATE_DATA';
+                case 'INCOMPATIBLE_INTERFACE';
+                case 'UNSUPPORTED_PROFILE';
+                case 'EXPIRED_TRANSACTION';
+                case 'OTA_ERROR';
+                case 'USER_CANCEL';
+                case 'PIN_NR_BLOCKED';
+                case 'CARD_BLOCKED';
+                case 'NO_KEY_FOUND';
+                case 'PB_SIGNATURE_PROCESS';
+                case 'NO_CERT_FOUND';
+                case 'CRL_PB';
+                case 'CRL_EXPIRED';
+                case 'REVOKED_CERTIFICATE';
+                case 'INVALID_SIGNATURE';
                 case 'INTERNAL_ERROR';
                     break;
                 // All other errors are mapped to INTERNAL_ERROR
