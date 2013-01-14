@@ -133,8 +133,8 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 			 * Mobile ID - if it is, we pass that error up to the login form,
 			 * if not, we let the generic error handler deal with it.
 			 */
-			if ($e->getErrorCode() === 'WRONGUSERPASS')
-				return 'WRONGUSERPASS';
+			if ($e->getErrorCode() === 'MOBILEIDERROR')
+				return 'MOBILEIDERROR';
 
 			/* Some other error occurred. Rethrow exception and let the generic error handler deal with it */
 			throw $e;
@@ -221,7 +221,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         $mobileIdRequest->sendRequest($this->msisdn, $this->language, $this->message);
         if ($mobileIdRequest->response_error) {
             SimpleSAML_Logger::warning('MobileID: error in service call ' . var_export($mobileIdRequest->response_status_message, TRUE));
-            throw new SimpleSAML_Error_Error('WRONGUSERPASS');
+            throw new SimpleSAML_Error_Error('MOBILEIDERROR');
         }
         
 		/* Create the attribute array of the user. */

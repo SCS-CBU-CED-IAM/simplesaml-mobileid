@@ -1,0 +1,17 @@
+{
+	"error_header": {
+		"de": "Fehler",
+		"fr": "Erreur",
+		"it": "Errore"
+	},
+	"title_MOBILEIDERROR": {
+		"de": "Error during the login with Mobile ID",
+		"fr": "Error during the login with Mobile ID",
+		"it": "Error during the login with Mobile ID"
+	},
+	"descr_MOBILEIDERROR": {
+		"de": "Something strange happened during the login with Mobile ID",
+		"fr": "Something strange happened during the login with Mobile ID",
+		"it": "Something strange happened during the login with Mobile ID"
+	}
+}

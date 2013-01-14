@@ -3,7 +3,9 @@ swisscom-mobileid-simplesamlphp
 
 Mobile ID custom auth module for simplesamlphp
 
-Refer to http://simplesamlphp.org/docs/stable/simplesamlphp-modules for details.
+Refer to project documentation for more details:
+ * http://simplesamlphp.org/docs/stable/simplesamlphp-modules
+ * http://simplesamlphp.org/docs/stable/simplesamlphp-authsource
 
 ## Overview
 
