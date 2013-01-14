@@ -14,11 +14,12 @@ if (!array_key_exists('AuthState', $_REQUEST))
     throw new SimpleSAML_Error_BadRequest('Missing AuthState parameter.');
 $authStateId = $_REQUEST['AuthState'];
 
-/* Language detection */
-/* TODO Does not work */
-$language = '{mobileid:Auth:language}';
-$message = '{mobileid:Auth:message}';
-    
+/* Language and message */
+if (array_key_exists('midlang', $_REQUEST))
+    $language = $_REQUEST['midlang'];
+if (array_key_exists('middtbs', $_REQUEST))
+    $message = $_REQUEST['middtbs'];
+
 /* MSISDN default value */
 if (array_key_exists('msisdn', $_REQUEST))
     $msisdn = $_REQUEST['msisdn'];
