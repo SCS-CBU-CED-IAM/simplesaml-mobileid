@@ -15,9 +15,9 @@ if (!array_key_exists('AuthState', $_REQUEST))
 $authStateId = $_REQUEST['AuthState'];
 
 /* Language and message */
-if (!isset($language)
+if (!isset($language))
     $language = 'en';
-if (!isset($message)
+if (!isset($message))
     $message = 'Grrrrr';
 
 /* MSISDN default value */
