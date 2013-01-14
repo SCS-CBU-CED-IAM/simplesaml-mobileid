@@ -1,7 +1,7 @@
 <?php
 $this->data['header'] = $this->t('{mobileid:Auth:header}');
 $this->data['autofocus'] = 'msisdn';
-$this->includeAtTemplateBase('includes/header.php');
+//$this->includeAtTemplateBase('includes/header.php');
 
 // Language detection and DTBS/message
 $this->data['midlang'] = $this->t('{mobileid:Auth:language}');
@@ -35,5 +35,5 @@ foreach ($this->data['stateparams'] as $name => $value) {
 ?>
 
 <?php
-$this->includeAtTemplateBase('includes/footer.php');
+//$this->includeAtTemplateBase('includes/footer.php');
 ?>

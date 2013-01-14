@@ -26,10 +26,6 @@ if (array_key_exists('middtbs', $_REQUEST))
 if (array_key_exists('msisdn', $_REQUEST))
     $msisdn = $_REQUEST['msisdn'];
 
-var_dump($_REQUEST);
-var_dump($_POST);
-var_dump($_GET);
-
 /* Try to login */
 if (!empty($msisdn))
 	$errorCode = sspmod_mobileid_Auth_Source_Auth::handleLogin($authStateId, $msisdn, $language, $message);
@@ -43,6 +39,10 @@ $t->data['stateparams'] = array('AuthState' => $authStateId);
 $t->data['errorcode'] = $errorCode;
     
 var_dump($t->data);
+    var_dump($_REQUEST);
+    var_dump($_POST);
+    var_dump($_GET);
+    
     
 $t->show();
 exit();
