@@ -122,10 +122,6 @@ class mobileid {
                 $this->MobileUser = '+' . substr($this->MobileUser, 2);
             }
 
-        /* DEBUGGING SPECIAL NUMBERS */
-    // if ($this->MobileUser == '+41792080350') return true;
-    if ($this->MobileUser == '+41798440457') return true;
-
         /* Set the AP instant */
         $this->setApTransaction();
         
