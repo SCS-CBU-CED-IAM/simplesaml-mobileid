@@ -2,8 +2,6 @@
 $this->data['header'] = $this->t('{mobileid:Auth:header}');
 $this->data['autofocus'] = 'msisdn';
 $this->includeAtTemplateBase('includes/header.php');
-$this->data['language'] = $this->t('{mobileid:Auth:language}');
-$this->data['message'] = $this->t('{mobileid:Auth:message}');
 
 ?>
 	<img height="100" style="float: right" src="<?php echo(SimpleSAML_Module::getModuleURL('mobileid/resources/logo.gif')); ?>" />

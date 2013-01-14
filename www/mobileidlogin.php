@@ -17,21 +17,6 @@ $authStateId = $_REQUEST['AuthState'];
 /* MSISDN default value */
 if (array_key_exists('msisdn', $_REQUEST))
     $msisdn = $_REQUEST['msisdn'];
-
-/* Language and message */
-$language = '{mobileid:Auth:language}';
-$message  = '{mobileid:Auth:message}';
-/*
-if (array_key_exists('language', $_REQUEST))
-    $language = $_REQUEST['language'];
-else
-    $language = 'en';
-
-if (array_key_exists('message', $_REQUEST))
-    $message = $_REQUEST['message'];
-else
-    $message = 'Grrrrr';
-*/
     
 /* Try to login */
 if (!empty($msisdn))
@@ -44,6 +29,8 @@ $globalConfig = SimpleSAML_Configuration::getInstance();
 $t = new SimpleSAML_XHTML_Template($globalConfig, 'mobileid:mobileidtemplate.php');
 $t->data['stateparams'] = array('AuthState' => $authStateId);
 $t->data['errorcode'] = $errorCode;
+$language = $t->t('{mobileid:Auth:language}');
+$message = $t->t('{mobileid:Auth:message}');
 $t->show();
 exit();
     
