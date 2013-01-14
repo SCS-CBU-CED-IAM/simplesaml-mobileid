@@ -14,18 +14,15 @@ if (!array_key_exists('AuthState', $_REQUEST))
     throw new SimpleSAML_Error_BadRequest('Missing AuthState parameter.');
 $authStateId = $_REQUEST['AuthState'];
 
-/* Language and message */
-if (!isset($language))
-    $language = 'en';
-if (!isset($message))
-    $message = 'Grrrrr';
-
 /* MSISDN default value */
 if (array_key_exists('msisdn', $_REQUEST))
     $msisdn = $_REQUEST['msisdn'];
 
 /* Try to login */
 if (!empty($msisdn))
+    /* Language and message */
+    if (!isset($language)) $language = 'en';
+    if (!isset($message))  $message = 'Grrrrr';
 	$errorCode = sspmod_mobileid_Auth_Source_Auth::handleLogin($authStateId, $msisdn, $language, $message);
 else
 	$errorCode = NULL;
