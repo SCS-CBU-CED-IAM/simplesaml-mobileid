@@ -19,8 +19,8 @@ if (array_key_exists('msisdn', $_REQUEST))
     $msisdn = $_REQUEST['msisdn'];
 
 /* Language and message */
-$language = $t('{mobileid:Auth:language}');
-$message  = $t('{mobileid:Auth:message}');
+$language = '{mobileid:Auth:language}';
+$message  = '{mobileid:Auth:message}';
 /*
 if (array_key_exists('language', $_REQUEST))
     $language = $_REQUEST['language'];
