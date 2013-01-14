@@ -123,22 +123,10 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 			throw new Exception('Could not find authentication source with id ' . $state[self::AUTHID]);
 		}
         
-		try {
-			/* Attempt to log in. */
-            $self->language = $language;
-            $self->message = $message;
-			$attributes = $source->login($msisdn);
-		} catch (SimpleSAML_Error_Error $e) {
-			/* An error occurred during login. Check if it is because of the wrong
-			 * Mobile ID - if it is, we pass that error up to the login form,
-			 * if not, we let the generic error handler deal with it.
-			 */
-			if ($e->getErrorCode() === 'MOBILEIDERROR')
-				return 'MOBILEIDERROR';
-
-			/* Some other error occurred. Rethrow exception and let the generic error handler deal with it */
-			throw $e;
-		}
+		/* Attempt to log in. */
+        $self->language = $language;
+        $self->message = $message;
+        $attributes = $source->login($msisdn);
 
         /* Set the Attributes */
 		$state['Attributes'] = $attributes;
@@ -221,7 +209,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         $mobileIdRequest->sendRequest($this->msisdn, $this->language, $this->message);
         if ($mobileIdRequest->response_error) {
             SimpleSAML_Logger::warning('MobileID: error in service call ' . var_export($mobileIdRequest->response_status_message, TRUE));
-            throw new SimpleSAML_Error_Error('MOBILEIDERROR');
+            throw new SimpleSAML_Error_Error('MOBILEIDERROR_' . $mobileIdRequest->response_status_message);
         }
         
 		/* Create the attribute array of the user. */
