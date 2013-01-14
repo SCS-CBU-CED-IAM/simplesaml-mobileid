@@ -26,6 +26,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
     private $mid_ocsp;
     private $mid_timeout_ws;
     private $mid_timeout_mid;
+    private $mid_error;
 
 	/**
 	 * Constructor for this authentication source.
@@ -124,10 +125,21 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 		}
         
 		/* Attempt to log in. */
-        $self->language = $language;
-        $self->message = $message;
-        $attributes = $source->login($msisdn);
-
+        try {
+            /* Attempt to log in. */
+            $self->language = $language;
+            $self->message = $message;
+            $attributes = $source->login($msisdn);
+        } catch (SimpleSAML_Error_Error $e) {
+            /* An error occurred during login. Check if it is because of MobileID
+             * if it is, we pass the specific error up to the login form,
+             * if not, we let the generic handler deal with it.
+             */
+            if ($e->getErrorCode() === 'WRONGUSERPASS')
+                return $this->mid_error;
+            throw $e;
+        }
+        
         /* Set the Attributes */
 		$state['Attributes'] = $attributes;
         
@@ -222,7 +234,8 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
                     $erroris = "";
                     break;
             }
-            throw new SimpleSAML_Error_Error('MOBILEIDERROR_' . $erroris);
+            $this->mid_error = 'MOBILEIDERROR_' . $erroris
+            throw new SimpleSAML_Error_Error(WRONGUSERPASS));
         }
         
 		/* Create the attribute array of the user. */
