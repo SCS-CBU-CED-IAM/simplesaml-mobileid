@@ -44,8 +44,8 @@ $t = new SimpleSAML_XHTML_Template($globalConfig, 'mobileid:mobileidtemplate.php
 $t->data['stateparams'] = array('AuthState' => $authStateId);
 $t->data['errorcode'] = $errorCode;
 //$language = $t::getLanguageCookie();
-$language = $this->data['midlang'];
-$message  = $this->data['middtbs'];
+$language = $this->t('{mobileid:Auth:language}');
+$message  = $this->t('{mobileid:Auth:message}');
 $t->show();
 exit();
     
