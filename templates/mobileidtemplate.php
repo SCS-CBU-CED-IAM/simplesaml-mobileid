@@ -2,6 +2,8 @@
 $this->data['header'] = $this->t('{mobileid:Auth:header}');
 $this->data['autofocus'] = 'msisdn';
 $this->includeAtTemplateBase('includes/header.php');
+$language = $this->t('{mobileid:Auth:language}');
+$message  = $this->t('{mobileid:Auth:message}');    
 
 ?>
 	<img height="100" style="float: right" src="<?php echo(SimpleSAML_Module::getModuleURL('mobileid/resources/logo.gif')); ?>" />
@@ -24,8 +26,8 @@ foreach ($this->data['stateparams'] as $name => $value) {
 <img src="/<?php echo $this->data['baseurlpath']; ?>resources/icons/experience/gtk-dialog-error.48x48.png" class="float-l" style="margin: 15px " />
 <h2><?php echo $this->t('{mobileid:errors:error_header}'); ?></h2>
 <p><?php echo $this->t('{mobileid:errors:descr_' . $this->data['errorcode'] . '}'); ?></p>
-<p><?php echo $this->data['midlang']; ?></p>
-<p><?php echo $this->data['middtbs']; ?></p>
+<p><?php echo $language; ?></p>
+<p><?php echo $message; ?></p>
 </div>
 
 <?php
