@@ -136,7 +136,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
              * if not, we let the generic handler deal with it.
              */
             if ($e->getErrorCode() === 'WRONGUSERPASS')
-                return $this->mid_error;
+                return $self->mid_error;
             throw $e;
         }
         
@@ -234,7 +234,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
                     $erroris = "";
                     break;
             }
-            $this->mid_error = 'MOBILEIDERROR_' . $erroris;     // Set the module error
+            $self->mid_error = 'MOBILEIDERROR_' . $erroris;     // Set the module error
             throw new SimpleSAML_Error_Error('WRONGUSERPASS');  // Throw standard error exception
         }
         
