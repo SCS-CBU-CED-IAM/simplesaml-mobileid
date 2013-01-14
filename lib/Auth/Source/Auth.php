@@ -234,8 +234,8 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
                     $erroris = "";
                     break;
             }
-            $this->mid_error = 'MOBILEIDERROR_' . $erroris
-            throw new SimpleSAML_Error_Error(WRONGUSERPASS));
+            $this->mid_error = 'MOBILEIDERROR_' . $erroris;     // Set the module error
+            throw new SimpleSAML_Error_Error('WRONGUSERPASS');  // Throw standard error exception
         }
         
 		/* Create the attribute array of the user. */
