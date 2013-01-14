@@ -20,7 +20,7 @@ foreach ($this->data['stateparams'] as $name => $value) {
     if ($this->data['errorcode'] !== NULL) {
 ?>
 
-<img height="48" src="<?php echo(SimpleSAML_Module::getModuleURL('mobileid/resources/warning.png')); ?>" class="float-l" style="margin: 15px " />
+<img height="64" src="<?php echo(SimpleSAML_Module::getModuleURL('mobileid/resources/warning.png')); ?>" class="float-l" style="margin: 5px " />
 <p><b><?php echo $this->t('{mobileid:errors:error_header}'); ?></b></p>
 <p><?php echo $this->t('{mobileid:errors:descr_' . $this->data['errorcode'] . '}'); ?></p>
 
