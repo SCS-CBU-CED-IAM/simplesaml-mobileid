@@ -26,7 +26,6 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
     private $mid_ocsp;
     private $mid_timeout_ws;
     private $mid_timeout_mid;
-    private $mid_error;
 
 	/**
 	 * Constructor for this authentication source.
@@ -124,23 +123,21 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 			throw new Exception('Could not find authentication source with id ' . $state[self::AUTHID]);
 		}
         
-		/* Attempt to log in. */
-        try {
-            /* Attempt to log in. */
-            $self->language = $language;
-            $self->message = $message;
-            $attributes = $source->login($msisdn);
-        } catch (SimpleSAML_Error_Error $e) {
-            /* An error occurred during login. Check if it is because of MobileID
-             * if it is, we pass the specific error up to the login form,
-             * if not, we let the generic handler deal with it.
-             */
-            if ($e->getErrorCode() === 'WRONGUSERPASS')
-                return $self->mid_error;
-            throw $e;
-        }
+        /* Prepare the callout */
+        $self->language = $language;
+        $self->message = $message;
+        /* Call the mobile id */
+        $error = $source->login($msisdn);
+        if (strlen($error))                             // An error occured
+            throw new SimpleSAML_Error_Error($error);
         
         /* Set the Attributes */
+        $attributes = array(
+            'uid' => array($this->uid),
+            'mobile' => array($this->getMSISDNfrom($this->msisdn, '00')),
+            'preferredLanguage' => array($this->language),
+            'noredupersonnin' => array($this->getSuisseIDfrom($this->msisdn)),
+        );
 		$state['Attributes'] = $attributes;
         
         /* Set the AuthnContext */
@@ -230,24 +227,16 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
                 // Rest here if concept is working
                 case 'INTERNAL_ERROR';
                     break;
+                // All other errors are mapped to INTERNAL_ERROR
                 default:
-                    $erroris = "";
+                    $erroris = 'INTERNAL_ERROR';
                     break;
             }
-            $self->mid_error = 'MOBILEIDERROR_' . $erroris;     // Set the module error
-            throw new SimpleSAML_Error_Error('WRONGUSERPASS');  // Throw standard error exception
+            $erroris = 'MOBILEIDERROR_' . $erroris;
+            return $erroris;
         }
         
-		/* Create the attribute array of the user. */
-		$attributes = array(
-            'uid' => array($this->uid),
-            'mobile' => array($this->getMSISDNfrom($this->msisdn, '00')),
-            'preferredLanguage' => array($this->language),
-            'noredupersonnin' => array($this->getSuisseIDfrom($this->msisdn)),
-        );
-        
-		/* Return the attributes. */
-		return $attributes;
+        return;
 	}    
 }
 
