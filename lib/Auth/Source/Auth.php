@@ -250,7 +250,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
                     break;
             }
             /* Special handling for timeout */
-            if ($this->response_soap_fault_subcode === '208')
+            if ($mobileIdRequest->response_soap_fault_subcode === '208')
                 $erroris = 'EXPIRED_TRANSACTION';
             
             throw new SimpleSAML_Error_Error($erroris);
