@@ -123,25 +123,27 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 			throw new Exception('Could not find authentication source with id ' . $state[self::AUTHID]);
 		}
         
-        /* Prepare the callout */
-        $self->language = $language;
-        $self->message = $message;
-        /* Call the mobile id */
-        $error = $source->login($msisdn);
-        if (strlen($error)) return $error;              // An error occured, return it
+		/* $source now contains the authentication source on which authenticate() was called
+		 * We should call login() on the same authentication source.
+		 */
+		try {
+			/* Attempt to log in. */
+            $self->language = $language;
+            $self->message = $message;
+			$attributes = $source->login($msisdn);
+		} catch (SimpleSAML_Error_Error $e) {
+            /* Login failed. Return the error code to the login form */
+			return $e->getErrorCode();
+		}
         
-        /* Set the Attributes */
-        $attributes = array(
-            'uid' => array($self->uid),
-            'mobile' => array($self->getMSISDNfrom($self->msisdn, '00')),
-            'preferredLanguage' => array($self->language),
-            'noredupersonnin' => array($self->getSuisseIDfrom($self->msisdn)),
-        );
+		/* Save the attributes we received from the login-function in the $state-array. */
+		assert('is_array($attributes)');
 		$state['Attributes'] = $attributes;
         
         /* Set the AuthnContext */
         $state['saml:AuthnContextClassRef'] = 'urn:oasis:names:tc:SAML:2.0:ac:classes:MobileTwoFactorContract';
         
+        /* Return control to simpleSAMLphp after successful authentication. */
 		SimpleSAML_Auth_Source::completeAuth($state);
 	}
     
@@ -190,7 +192,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
     /* The login function.
      *
 	 * @param string $msisdn  The Mobile ID entered.
-	 * @return string  Error code in the case of an error.
+	 * @return string  Attributes.
      */
 	protected function login($username) {
 		assert('is_string($username)');
@@ -247,11 +249,19 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
                     $erroris = 'INTERNAL_ERROR';
                     break;
             }
-            $erroris = 'MOBILEIDERROR_' . $erroris;
-            return $erroris;
+            throw new SimpleSAML_Error_Error($erroris);
         }
+
+        /* Create the attribute array of the user. */
+        $attributes = array(
+            'uid' => array($this->uid),
+            'mobile' => array($this->getMSISDNfrom($this->msisdn, '00')),
+            'preferredLanguage' => array($this->language),
+            'noredupersonnin' => array($this->getSuisseIDfrom($this->msisdn)),
+        );
         
-        return;
+        /* Return the attributes. */
+        return $attributes;
 	}    
 }
 
