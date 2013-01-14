@@ -19,13 +19,13 @@ if (array_key_exists('msisdn', $_REQUEST))
     $msisdn = $_REQUEST['msisdn'];
 
 /* Language and message */
-if (array_key_exists('language', $this->data))
-    $language = $this->data['language'];
+if (array_key_exists('language', $_REQUEST))
+    $language = $_REQUEST['language'];
 else
     $language = 'en';
 
-if (array_key_exists('message', $this->data))
-    $message = $this->data['message'];
+if (array_key_exists('message', $_REQUEST))
+    $message = $_REQUEST['message'];
 else
     $message = 'Grrrrr';
     
