@@ -15,6 +15,9 @@ if (!array_key_exists('AuthState', $_REQUEST))
 $authStateId = $_REQUEST['AuthState'];
 
 /* Language and message */
+$language = '{mobileid:Auth:language}';
+$message  = '{mobileid:Auth:message}';
+
 /*if (array_key_exists('midlang', $_REQUEST)) {
     $language = $_REQUEST['midlang'];
     }
@@ -44,8 +47,6 @@ $t = new SimpleSAML_XHTML_Template($globalConfig, 'mobileid:mobileidtemplate.php
 $t->data['stateparams'] = array('AuthState' => $authStateId);
 $t->data['errorcode'] = $errorCode;
 //$language = $t::getLanguageCookie();
-$language = '{mobileid:Auth:language}';
-$message  = '{mobileid:Auth:message}';
 $t->show();
 exit();
     
