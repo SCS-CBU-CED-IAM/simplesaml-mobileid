@@ -16,11 +16,11 @@ $authStateId = $_REQUEST['AuthState'];
 
 /* Language and message */
 $language = '';
-if (array_key_exists('midlang', $_REQUEST))
-    $language = $_REQUEST['midlang'];
+/*if (array_key_exists('midlang', $_REQUEST))
+    $language = $_REQUEST['midlang'];*/
 $message = '';
-if (array_key_exists('middtbs', $_REQUEST))
-    $message = $_REQUEST['middtbs'];
+/*if (array_key_exists('middtbs', $_REQUEST))
+    $message = $_REQUEST['middtbs'];*/
 
 /* MSISDN default value */
 if (array_key_exists('msisdn', $_REQUEST))
@@ -37,13 +37,6 @@ $globalConfig = SimpleSAML_Configuration::getInstance();
 $t = new SimpleSAML_XHTML_Template($globalConfig, 'mobileid:mobileidtemplate.php');
 $t->data['stateparams'] = array('AuthState' => $authStateId);
 $t->data['errorcode'] = $errorCode;
-    
-var_dump($t->data);
-    var_dump($_REQUEST);
-    var_dump($_POST);
-    var_dump($_GET);
-    
-    
 $t->show();
 exit();
     
