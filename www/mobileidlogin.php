@@ -18,9 +18,20 @@ $authStateId = $_REQUEST['AuthState'];
 if (array_key_exists('msisdn', $_REQUEST))
     $msisdn = $_REQUEST['msisdn'];
 
+/* Language and message */
+if (array_key_exists('language', $this->data))
+    $language = $this->data['language'];
+else
+    $language = 'en';
+
+if (array_key_exists('message', $this->data))
+    $message = $this->data['message'];
+else
+    $message = 'Grrrrr';
+    
 /* Try to login */
 if (!empty($msisdn))
-	$errorCode = sspmod_mobileid_Auth_Source_Auth::handleLogin($authStateId, $msisdn, '{mobileid:Auth:language}', '{mobileid:Auth:message}');
+	$errorCode = sspmod_mobileid_Auth_Source_Auth::handleLogin($authStateId, $msisdn, $language, $message);
 else
 	$errorCode = NULL;
 
