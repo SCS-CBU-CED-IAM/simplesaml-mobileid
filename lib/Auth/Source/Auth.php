@@ -133,9 +133,9 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         /* Set the Attributes */
         $attributes = array(
             'uid' => array($self->uid),
-            'mobile' => array($this->getMSISDNfrom($self->msisdn, '00')),
+            'mobile' => array($self->getMSISDNfrom($self->msisdn, '00')),
             'preferredLanguage' => array($self->language),
-            'noredupersonnin' => array($this->getSuisseIDfrom($self->msisdn)),
+            'noredupersonnin' => array($self->getSuisseIDfrom($self->msisdn)),
         );
 		$state['Attributes'] = $attributes;
         
