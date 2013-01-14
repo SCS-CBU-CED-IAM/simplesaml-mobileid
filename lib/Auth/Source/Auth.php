@@ -123,16 +123,14 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 			throw new Exception('Could not find authentication source with id ' . $state[self::AUTHID]);
 		}
 
-SimpleSAML_Logger::info('*DEBUG* ' . var_export($language. TRUE) . ' / ' . var_export($message, TRUE));
+SimpleSAML_Logger::info('*DEBUG* ' . var_export($language, TRUE) . ' / ' . var_export($message, TRUE));
 
 		/* $source now contains the authentication source on which authenticate() was called
 		 * We should call login() on the same authentication source.
 		 */
 		try {
 			/* Attempt to log in. */
-            $self->language = $language;
-            $self->message = $message;
-			$attributes = $source->login($msisdn);
+			$attributes = $source->login($msisdn, $language, $message);
 		} catch (SimpleSAML_Error_Error $e) {
             /* Login failed. Return the error code to the login form */
 			return $e->getErrorCode();
@@ -196,11 +194,17 @@ SimpleSAML_Logger::info('*DEBUG* ' . var_export($language. TRUE) . ' / ' . var_e
 	 * @param string $msisdn  The Mobile ID entered.
 	 * @return string  Attributes.
      */
-	protected function login($username) {
+	protected function login($username, $language, $message) {
 		assert('is_string($username)');
+		assert('is_string($language)');
+		assert('is_string($message)');
         
 		require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/libextinc/mobileid.php';
 		$attributes = array();
+
+        /* Language and Message. */
+        $this->language = $language;
+        $this->message  = $message;
 
 		/* uid and msisdn defaults to username. */
 		$this->uid    = $username;
