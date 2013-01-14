@@ -129,7 +129,8 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         /* Call the mobile id */
         $error = $source->login($msisdn);
         if (strlen($error))                             // An error occured
-            throw new SimpleSAML_Error_Error($error);
+            return $error;
+//            throw new SimpleSAML_Error_Error($error);
         
         /* Set the Attributes */
         $attributes = array(
