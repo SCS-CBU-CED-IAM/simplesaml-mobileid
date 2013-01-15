@@ -30,6 +30,7 @@ Add the module in the sources `config/authsources.php`:
     'cert_key'     => '/opt/mobileid/mycert.key',
     'mid_ca'       => '/opt/mobileid/swisscom-ca.crt',
     'mid_ocsp'     => '/opt/mobileid/swisscom-ocsp.crt',
+    'hosturi'      => 'https://myidp.com',
     'ap_id'        => '<ID provided by Swisscom>',
     'ap_pwd'       => '<Password provided by Swisscom>',
     ),

@@ -15,6 +15,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 	const AUTHID = 'sspmod_mobileid_Auth_Source_Auth.AuthId';
 
 	/* The mobile id related stuff. */
+    private $hosturi;
 	private $uid;
     private $msisdn;
     private $language = 'en';
@@ -42,6 +43,10 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 		parent::__construct($info, $config);
 
         /* Mandatory options */
+        if (!is_string($config['hosturi']))
+			throw new Exception('MobileID: Missing or invalid hosturi option in config.');
+		$this->hosturi = $config['hosturi'];
+
         if (!is_string($config['ap_id']))
 			throw new Exception('MobileID: Missing or invalid ap_id option in config.');
 		$this->ap_id = $config['ap_id'];
@@ -203,7 +208,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 
         /* Language and Message. */
         $this->language = $language;
-        $this->message  = $message;
+        $this->message  = $this->hosturi . ': ' . $message;
 
 		/* uid and msisdn defaults to username. */
 		$this->uid    = $username;
