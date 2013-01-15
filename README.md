@@ -13,7 +13,7 @@ mobileid:auth is a module for login with Mobile ID.
 
 
 ## Install
-Checkout directly from git under the simplesamlphp modules folder with git clone <git> mobileid
+Checkout the project directly from git under the `simplesamlphp/modules` folder
 
 Enable the cas module:
   `touch modules/mobileid/default-enabled`
@@ -23,7 +23,24 @@ Enable the cas module:
 
 Add the module in the sources `config/authsources.php`:
 
-    'MobileID' => array(
-        'mobileid:Auth',
-        ...
+```
+'MobileID' => array(
+    'mobileid:Auth',
+    'cert_file'    => '/opt/mobileid/mycert.crt',
+    'cert_key'     => '/opt/mobileid/mycert.key',
+    'mid_ca'       => '/opt/mobileid/swisscom-ca.crt',
+    'mid_ocsp'     => '/opt/mobileid/swisscom-ocsp.crt',
+    'ap_id'        => '<ID provided by Swisscom>',
+    'ap_pwd'       => '<Password provided by Swisscom>',
     ),
+```
+
+Optional configuration elements
+```
+    'timeout_ws'   => 90,
+    'timeout_mid'  => 80
+```
+
+## Template support
+
+<TBD>

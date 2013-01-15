@@ -1,12 +1,13 @@
 <?php
-
 /**
  * This page shows a Mobile ID login form, and passes information from it
  * to the sspmod_mobileid_Auth_Source_Auth class
  *
- * @author Swisscom
- * @package midsimplesamlphp
- * @version $Id$
+ * @version     1.0.0
+ * @package     simpleSAMLphp-mobileid
+ * @copyright   Copyright (C) 2012. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.md
+ * @author      Swisscom (Schweiz AG)
  */
 
 /* Get AuthState and AuthStateID */

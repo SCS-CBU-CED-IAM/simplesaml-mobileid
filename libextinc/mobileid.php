@@ -1,11 +1,12 @@
 <?php
 /**
- * Mobile ID authentication class
- *
- * @package simpleSAMLphp
- * @version $Id$
+ * @version     1.0.0
+ * @package     simpleSAMLphp-mobileid
+ * @copyright   Copyright (C) 2012. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.md
+ * @author      Swisscom (Schweiz AG)
  * Requirements PHP 5.3.x, php_libcurl, php_libxml, OpenSSL
- **/
+ */
 
 class mobileid {
     private $ap_id;                         // AP UserID provided by Swisscom
