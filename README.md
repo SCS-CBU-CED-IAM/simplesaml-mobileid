@@ -48,11 +48,12 @@ Optional configuration elements
 
 * Attributes
 
-`uid`: the userid attribute defined at the login window
-`mobile`: the Mobile ID validated mobile number in international format with 00 as prefix
-`preferredLanguage`: the language used during the validation process
-`noredupersonnin`: the `mobile` attribute in the Swisscom SuisseID format 1100-9<mobile:3>-<mobile:4>-<mobile:4>
++ `uid`: the userid attribute defined at the login window
++ `mobile`: the Mobile ID validated mobile number in international format with 00 as prefix
++ `preferredLanguage`: the language used during the validation process
++ `noredupersonnin`: the `mobile` attribute in the Swisscom SuisseID format 1100-9<mobile> e.g 1100-9004-1792-080350
 
 * AuthnContext
+
 Returned value is `urn:oasis:names:tc:SAML:2.0:ac:classes:MobileTwoFactorContract`
 
