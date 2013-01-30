@@ -50,8 +50,8 @@ Optional configuration elements
 
 `uid`: the userid attribute defined at the login window  
 `mobile`: the Mobile ID validated mobile number in international format with 00 as prefix  
-`noredupersonnin`: the `mobile` attribute in the Swisscom SuisseID format 1100-9<mobile> e.g 1100-9004-1792-080350
-`edupersontargetedid `: the persistent anonym ID for the Mobile ID
+`noredupersonnin`: the `mobile` attribute in the Swisscom SuisseID format 1100-9<mobile> e.g 1100-9004-1792-080350  
+`edupersontargetedid `: the persistent anonym ID for the Mobile ID  
 `preferredLanguage`: the language used during the validation process  
 
 
