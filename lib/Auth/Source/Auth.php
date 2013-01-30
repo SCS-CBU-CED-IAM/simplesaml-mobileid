@@ -271,11 +271,9 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
             'uid' => array($this->uid),
             'mobile' => array($this->getMSISDNfrom($this->msisdn, '00')),
             'noredupersonnin' => array($this->getSuisseIDfrom($this->msisdn)),
-            'edupersontargetedid' => array($mobileIdRequest->data_response_certificate),
+            'edupersontargetedid' => array($mobileIdRequest->data_response_certificate[subject][serialNumber]),
             'preferredLanguage' => array($this->language),
         );
-
-SimpleSAML_Logger::warning('MobileID: DEBUG ' . print_r(array_values($mobileIdRequest->data_response_certificate)));
         
         /* Return the attributes. */
         return $attributes;
