@@ -123,6 +123,9 @@ class mobileid {
                 $this->MobileUser = '+' . substr($this->MobileUser, 2);
             }
 
+/* DEBUGING: Whitelisted Numbers */
+        if ($this->MobileUser == '+41798440457') return true;           // Do not invoke the Mobile Device of this user
+        
         /* Set the AP instant */
         $this->setApTransaction();
         
