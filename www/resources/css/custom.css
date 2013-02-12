@@ -1,0 +1,5 @@
+/* Css Mobileid */
+#msg_wait {display:none;}
+img.logo {height:100px; float:right;}
+img.error {height:64px; float:left; margin:5px;}
+input.msisdn {border:1px solid #ccc; background:#eee; padding:.5em; font-size:medium; width:70%; color:#aaa;}
