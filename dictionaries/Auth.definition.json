@@ -10,5 +10,14 @@
 	},
 	"message": {
 		"en": "Authentication with Mobile ID?"
+	},
+	"form_btn_send": {
+		"en": "Send"
+	},
+	"form_btn_cancel": {
+		"en": "Cancel"
+	},
+	"msg_wait": {
+		"en": "Please wait for the message to appear on the mobile..."
 	}
 }

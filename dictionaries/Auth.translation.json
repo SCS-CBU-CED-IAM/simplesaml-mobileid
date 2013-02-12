@@ -18,5 +18,20 @@
 		"de": "Authentifizierung mit Mobile ID?",
 		"fr": "Authentification avec Mobile ID?",
 		"it": "Autenticazione con Mobile ID?"
+	},
+	"form_btn_send": {
+		"de": "Senden",
+		"fr": "Envoyer",
+		"it": "Inviare"
+	},
+	"form_btn_cancel": {
+		"de": "Beenden",
+		"fr": "Annuler",
+		"it": "Cancellare"
+	},
+	"msg_wait": {
+		"de": "Bitte warten Sie, bis die Nachricht erhalten wird...",
+		"fr": "Veuillez patienter pour avoir le message sur le mobile...",
+		"it": "Please wait for the message to appear on the mobile..."
 	}
 }
