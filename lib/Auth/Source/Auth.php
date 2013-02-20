@@ -183,9 +183,9 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         
         /* Set prefix for non american / american numbers */
         if (substr($suisseid, 0, 2) == '00')            // Non american number
-            $suisseid = '1100-9' . substr($suisseid, 2);
+            $suisseid = '1100-7' . substr($suisseid, 2);
         else                                            // -> american number needs one 0 more
-            $suisseid = '1100-90' . substr($suisseid, 1);
+            $suisseid = '1100-70' . substr($suisseid, 1);
         
         /* Add - */
         $suisseid = substr($suisseid, 0, 9) . '-' . substr($suisseid, 9, 4) . '-' . substr($suisseid, 13, 4);
