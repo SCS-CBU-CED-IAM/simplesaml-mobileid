@@ -16,7 +16,7 @@ mobileid:auth is a module for login with Mobile ID.
 Checkout the project directly from git under the `simplesamlphp/modules` folder
 
 Enable the cas module:
-  `touch modules/mobileid/default-enabled`
+  `touch modules/mobileid/enable`
 
 
 ## Configuration
