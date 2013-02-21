@@ -9,6 +9,15 @@
  * @author      Swisscom (Schweiz AG)
  */
 
+$config = SimpleSAML_Configuration::getConfig('authsources.php');
+$config_array = $config->getArray('mobileid');
+
+if (isset($config_array["remember_msisdn"]) && isset($_REQUEST['msisdn'])) {
+	if ($config_array["remember_msisdn"] && strlen($_REQUEST['msisdn'])) {
+		$_SESSION['msisdn'] = $_REQUEST['msisdn'];
+	}
+}
+
 $this->data['head']  = '<script type="text/javascript" src="' . SimpleSAML_Module::getModuleUrl('mobileid/resources/js/jquery/jquery-1.8.3.min.js') . '"></script>';
 $this->data['head'] .= '<script type="text/javascript" src="' . SimpleSAML_Module::getModuleUrl('mobileid/resources/js/mobileid.js') . '"></script>';
 $this->data['header'] = $this->t('{mobileid:Auth:header}');
@@ -27,7 +36,7 @@ $this->includeAtTemplateBase('includes/header.php');
 			<tr width="100%">
 				<td rowspan="2"><img style="height:50px; padding:2px;" src="<?php echo(SimpleSAML_Module::getModuleURL('mobileid/resources/logo.gif')); ?>" /></td>
 				<td style="padding: .3em;"><?php echo $this->t('{mobileid:Auth:intro}'); ?></td>
-				<td><input id="msisdn" name="msisdn" tabindex="1" class="msisdn" type="tel" /></td>
+				<td><input id="msisdn" name="msisdn" tabindex="1" class="msisdn" type="tel" value="<?php echo $_SESSION['msisdn']; ?>" /></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>

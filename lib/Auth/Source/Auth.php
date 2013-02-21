@@ -28,6 +28,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
     private $mid_ocsp;
     private $mid_timeout_ws;
     private $mid_timeout_mid;
+    private $remember_msisdn;
 
 	/**
 	 * Constructor for this authentication source.
@@ -80,6 +81,9 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         
         if (is_int($config['timeout_mid']))
             $this->mid_timeout_mid = $config['timeout_mid'];
+
+        if (is_int($config['remember_msisdn']))
+            $this->remember_msisdn = $config['remember_msisdn'];
 	}
 
 	/**
