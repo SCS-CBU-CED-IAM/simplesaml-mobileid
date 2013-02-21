@@ -36,7 +36,7 @@ $this->includeAtTemplateBase('includes/header.php');
 			<tr width="100%">
 				<td rowspan="2"><img style="height:50px; padding:2px;" src="<?php echo(SimpleSAML_Module::getModuleURL('mobileid/resources/logo.gif')); ?>" /></td>
 				<td style="padding: .3em;"><?php echo $this->t('{mobileid:Auth:intro}'); ?></td>
-				<td><input id="msisdn" name="msisdn" tabindex="1" class="msisdn" type="tel" value="<?php echo $_SESSION['msisdn']; ?>" /></td>
+				<td><input id="msisdn" name="msisdn" tabindex="1" class="msisdn" type="tel" value="<?php if (isset($_SESSION['msisdn'])) echo $_SESSION['msisdn']; ?>" /></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
