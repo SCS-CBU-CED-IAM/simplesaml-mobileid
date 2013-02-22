@@ -234,11 +234,6 @@ class mobileid {
 				<mss:AdditionalServices>
 				  <mss:Service>
 					<mss:Description>
-					  <mss:mssURI>http://uri.etsi.org/TS102204/v1.1.2#validate</mss:mssURI>
-					</mss:Description>
-				  </mss:Service>
-				  <mss:Service>
-					<mss:Description>
 					  <mss:mssURI>http://mss.ficom.fi/TS102204/v1.0.0#userLang</mss:mssURI>
 					</mss:Description>
 					<fi:UserLang>'.$this->UserLang.'</fi:UserLang>
