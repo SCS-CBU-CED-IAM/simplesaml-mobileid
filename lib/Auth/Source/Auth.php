@@ -44,46 +44,46 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 		parent::__construct($info, $config);
 
         /* Mandatory options */
-        if (!is_string($config['hosturi']))
+        if (!isset($config['hosturi']))
 			throw new Exception('MobileID: Missing or invalid hosturi option in config.');
-		$this->hosturi = $config['hosturi'];
+		$this->hosturi = $config->getString('hosturi', NULL);
 
-        if (!is_string($config['ap_id']))
+        if (!isset($config['ap_id']))
 			throw new Exception('MobileID: Missing or invalid ap_id option in config.');
-		$this->ap_id = $config['ap_id'];
+		$this->ap_id = $config->getString('ap_id', NULL);
         
-        if (!is_string($config['ap_pwd']))
+        if (!isset($config['ap_pwd']))
 			throw new Exception('MobileID: Missing or invalid ap_pwd option in config.');
-		$this->ap_pwd = $config['ap_pwd'];
+		$this->ap_pwd = $config->getString('ap_pwd', NULL);
         
-        if (!is_string($config['cert_file']))
+        if (!isset($config['cert_file']))
 			throw new Exception('MobileID: Missing or invalid cert_file option in config.');
-		$this->cert_file = $config['cert_file'];
+		$this->cert_file = $config->getString('cert_file', NULL);
         
-        if (!is_string($config['cert_key']))
+        if (!isset($config['cert_key']))
 			throw new Exception('MobileID: Missing or invalid cert_key option in config.');
-		$this->cert_key = $config['cert_key'];
+		$this->cert_key = $config->getString('cert_key', NULL);
         
-        if (!is_string($config['mid_ca']))
+        if (!isset($config['mid_ca']))
 			throw new Exception('MobileID: Missing or invalid mid_ca option in config.');
-		$this->mid_ca = $config['mid_ca'];
+		$this->mid_ca = $config->getString('mid_ca', NULL);
         
-        if (!is_string($config['mid_ocsp']))
+        if (!isset($config['mid_ocsp']))
 			throw new Exception('MobileID: Missing or invalid mid_ocsp option in config.');
-		$this->mid_ocsp = $config['mid_ocsp'];
+		$this->mid_ocsp = $config->getString('mid_ocsp', NULL);
                 
         /* Optional options */
         if (isset($config['default_lang']))
-            $this->language = $config['default_lang'];
+            $this->language = $config->getString('default_lang', 'en');
         
         if (isset($config['timeout_ws']))
-            $this->mid_timeout_ws = $config['timeout_ws'];
+            $this->mid_timeout_ws = $config->getInteger('timeout_ws', 90);
         
         if (isset($config['timeout_mid']))
-            $this->mid_timeout_mid = $config['timeout_mid'];
+            $this->mid_timeout_mid = $config->getInteger('timeout_mid', 80);
 
-        if (isset($config['remember_msisdn']))
-            $this->remember_msisdn = $config['remember_msisdn'];
+//        if (isset($config['remember_msisdn']))
+            $this->remember_msisdn = $config->getBoolean('remember_msisdn', FALSE);
 	}
 
 	/**
