@@ -73,16 +73,16 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 		$this->mid_ocsp = $config['mid_ocsp'];
                 
         /* Optional options */
-        if (is_string($config['default_lang']))
+        if (isset($config['default_lang']))
             $this->language = $config['default_lang'];
         
-        if (is_int($config['timeout_ws']))
+        if (isset($config['timeout_ws']))
             $this->mid_timeout_ws = $config['timeout_ws'];
         
-        if (is_int($config['timeout_mid']))
+        if (isset($config['timeout_mid']))
             $this->mid_timeout_mid = $config['timeout_mid'];
 
-        if (is_int($config['remember_msisdn']))
+        if (isset($config['remember_msisdn']))
             $this->remember_msisdn = $config['remember_msisdn'];
 	}
 
