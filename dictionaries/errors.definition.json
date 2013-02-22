@@ -64,5 +64,8 @@
 	},
 	"descr_INTERNAL_ERROR": {
 		"en": "Error during the login with Mobile ID (INTERNAL_ERROR)"
-	}
+	},
+	"descr_": {
+		"en": "Error during the login with Mobile ID (UNKNOWN ERROR)"
+	},
 }
