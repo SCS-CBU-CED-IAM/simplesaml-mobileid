@@ -21,15 +21,17 @@ Enable the cas module:
 
 ## Configuration
 
+Put the certificates and keys into the cert/ directory.
+
 Add the module in the sources `config/authsources.php`:
 
 ```
 'MobileID' => array(
     'mobileid:Auth',
-    'cert_file'    => '/opt/mobileid/mycert.crt',         // File containing the certificate for the Mutual Authentication
-    'cert_key'     => '/opt/mobileid/mycert.key',         // File containing the private key of the related certificate
-    'mid_ca'       => '/opt/mobileid/swisscom-ca.crt',    // CA bag file for the trust anchor validation of the signature response
-    'mid_ocsp'     => '/opt/mobileid/swisscom-ocsp.crt',  // OCSP bag file for the revocation check of the signature response
+    'cert_file'    => 'mycert.crt',                       // File containing the certificate for the Mutual Authentication
+    'cert_key'     => 'mycert.key',                       // File containing the private key of the related certificate
+    'mid_ca'       => 'swisscom-ca.crt',                  // CA bag file for the trust anchor validation of the signature response
+    'mid_ocsp'     => 'swisscom-ocsp.crt',                // OCSP bag file for the revocation check of the signature response
     'hosturi'      => 'https://myidp.com',                // Host prefix for the message to be signed
     'ap_id'        => '<ID provided by Swisscom>',        // ID of the service provider
     'ap_pwd'       => '<Password provided by Swisscom>',  // Password of the service provider
