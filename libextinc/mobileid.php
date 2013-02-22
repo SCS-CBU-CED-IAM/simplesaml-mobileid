@@ -324,10 +324,11 @@ class mobileid {
 	* @return 	boolean	true on success, false on failure
 	*/
 	private function isResponseRequestSuccess() {
-		$fault = (array)$this->soap_response_simple_xml;
-		//$fault = (string)$this->soap_response_simple_xml->soapenvBody->soapenvFault->soapenvCode->soapenvSubcode->soapenvValue;
-        if (isset($fault['soapenvBody']['soapenvFault']['soapenvCode']['soapenvSubcode']['soapenvValue'])) return;
-		
+		if (isset($this->soap_response_simple_xml->soapenvBody->soapenvFault->soapenvCode->soapenvSubcode->soapenvValue)) {
+			$fault = (string)$this->soap_response_simple_xml->soapenvBody->soapenvFault->soapenvCode->soapenvSubcode->soapenvValue;
+			if (strlen($fault)) return;
+		}
+
 		return true;
 	}	
 
