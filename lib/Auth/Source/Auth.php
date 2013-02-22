@@ -28,7 +28,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
     private $mid_ocsp;
     private $mid_timeout_ws;
     private $mid_timeout_mid;
-    private $remember_msisdn;
+    private $remember_msisdn = FALSE;
 
 	/**
 	 * Constructor for this authentication source.
@@ -43,46 +43,69 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 		/* Call the parent constructor first, as required by the interface. */
 		parent::__construct($info, $config);
 
+		$globalConfig = SimpleSAML_Configuration::getInstance();
+		$certdir = $globalConfig->getPathValue('certdir', 'cert/');
+
         /* Mandatory options */
-        if (!is_string($config['hosturi']))
+        if (!isset($config['hosturi']))
 			throw new Exception('MobileID: Missing or invalid hosturi option in config.');
 		$this->hosturi = $config['hosturi'];
 
-        if (!is_string($config['ap_id']))
+        if (!isset($config['ap_id']))
 			throw new Exception('MobileID: Missing or invalid ap_id option in config.');
 		$this->ap_id = $config['ap_id'];
         
-        if (!is_string($config['ap_pwd']))
+        if (!isset($config['ap_pwd']))
 			throw new Exception('MobileID: Missing or invalid ap_pwd option in config.');
 		$this->ap_pwd = $config['ap_pwd'];
-        
-        if (!is_string($config['cert_file']))
+
+        if (!isset($config['cert_file']))
 			throw new Exception('MobileID: Missing or invalid cert_file option in config.');
-		$this->cert_file = $config['cert_file'];
         
-        if (!is_string($config['cert_key']))
+        $this->cert_file = SimpleSAML_Utilities::resolvePath($config['cert_file'], $certdir);
+
+        if(!file_exists($this->cert_file)) {
+                        throw new Exception('MobileID: Missing or invalid cert_file option in config: ' . $this->cert_file);
+	}
+
+        if (!isset($config['cert_key']))
 			throw new Exception('MobileID: Missing or invalid cert_key option in config.');
-		$this->cert_key = $config['cert_key'];
-        
-        if (!is_string($config['mid_ca']))
+ 
+        $this->cert_key = SimpleSAML_Utilities::resolvePath($config['cert_key'], $certdir);
+
+        if(!file_exists($this->cert_key)) {
+                        throw new Exception('MobileID: Missing or invalid cert_key option in config: ' . $this->cert_key);
+	}
+
+        if (!isset($config['mid_ca']))
 			throw new Exception('MobileID: Missing or invalid mid_ca option in config.');
-		$this->mid_ca = $config['mid_ca'];
+
+        $this->mid_ca = SimpleSAML_Utilities::resolvePath($config['mid_ca'], $certdir);
+
+        if(!file_exists($this->mid_ca)) {
+                        throw new Exception('MobileID: Missing or invalid mid_ca option in config: ' . $this->mid_ca);
+	}
         
-        if (!is_string($config['mid_ocsp']))
+        if (!isset($config['mid_ocsp']))
 			throw new Exception('MobileID: Missing or invalid mid_ocsp option in config.');
-		$this->mid_ocsp = $config['mid_ocsp'];
+
+        $this->mid_ocsp = SimpleSAML_Utilities::resolvePath($config['mid_ocsp'], $certdir);
+
+        if(!file_exists($this->mid_ocsp)) {
+                        throw new Exception('MobileID: Missing or invalid mid_ocsp option in config: ' . $this->mid_ocsp);
+	}
                 
         /* Optional options */
-        if (is_string($config['default_lang']))
+        if (isset($config['default_lang']))
             $this->language = $config['default_lang'];
         
-        if (is_int($config['timeout_ws']))
+        if (isset($config['timeout_ws']))
             $this->mid_timeout_ws = $config['timeout_ws'];
         
-        if (is_int($config['timeout_mid']))
+        if (isset($config['timeout_mid']))
             $this->mid_timeout_mid = $config['timeout_mid'];
 
-        if (is_int($config['remember_msisdn']))
+        if (isset($config['remember_msisdn']))
             $this->remember_msisdn = $config['remember_msisdn'];
 	}
 

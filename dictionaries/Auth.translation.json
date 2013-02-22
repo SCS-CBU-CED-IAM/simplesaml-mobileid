@@ -20,9 +20,9 @@
 		"it": "Autenticazione con Mobile ID?"
 	},
 	"form_btn_send": {
-		"de": "Senden",
-		"fr": "Envoyer",
-		"it": "Inviare"
+		"de": "Anmelden",
+		"fr": "S'identifier",
+		"it": "Login"
 	},
 	"form_btn_cancel": {
 		"de": "Beenden",

@@ -21,25 +21,29 @@ Enable the cas module:
 
 ## Configuration
 
+Put the certificates and keys into the cert/ directory.
+
 Add the module in the sources `config/authsources.php`:
 
 ```
 'MobileID' => array(
     'mobileid:Auth',
-    'cert_file'    => '/opt/mobileid/mycert.crt',
-    'cert_key'     => '/opt/mobileid/mycert.key',
-    'mid_ca'       => '/opt/mobileid/swisscom-ca.crt',
-    'mid_ocsp'     => '/opt/mobileid/swisscom-ocsp.crt',
-    'hosturi'      => 'https://myidp.com',
-    'ap_id'        => '<ID provided by Swisscom>',
-    'ap_pwd'       => '<Password provided by Swisscom>',
+    'cert_file'    => 'mycert.crt',                       // File containing the certificate for the Mutual Authentication
+    'cert_key'     => 'mycert.key',                       // File containing the private key of the related certificate
+    'mid_ca'       => 'swisscom-ca.crt',                  // CA bag file for the trust anchor validation of the signature response
+    'mid_ocsp'     => 'swisscom-ocsp.crt',                // OCSP bag file for the revocation check of the signature response
+    'hosturi'      => 'https://myidp.com',                // Host prefix for the message to be signed
+    'ap_id'        => '<ID provided by Swisscom>',        // ID of the service provider
+    'ap_pwd'       => '<Password provided by Swisscom>',  // Password of the service provider
     ),
 ```
 
 Optional configuration elements
 ```
-    'timeout_ws'   => 90,
-    'timeout_mid'  => 80
+    'default_lang'    => 'en|de|..',  // Default language of the signature request
+    'remember_msisdn' => true,        // Remember the defined Mobile ID number in a session cookie
+    'timeout_ws'      => 90,          // Timeout of the connexion to the Mobile ID service
+    'timeout_mid'     => 80,          // Timeout of the Mobile ID request itself
 ```
 
 ## Template/Theming
@@ -48,11 +52,11 @@ Optional configuration elements
 
 * Attributes
 
-`uid`: the userid attribute defined at the login window  
-`mobile`: the Mobile ID validated mobile number in international format with 00 as prefix  
-`noredupersonnin`: the `mobile` attribute in the Swisscom SuisseID format 1100-7<mobile> e.g 1100-7417-9208-0350  
+`uid`:                  the userid attribute defined at the login window  
+`mobile`:               the Mobile ID validated mobile number in international format with 00 as prefix  
+`noredupersonnin`:      the `mobile` attribute in the Swisscom SuisseID format 1100-7<mobile> e.g 1100-7417-9208-0350  
 `edupersontargetedid `: the persistent anonym ID for the Mobile ID  
-`preferredLanguage`: the language used during the validation process  
+`preferredLanguage`:    the language used during the validation process  
 
 
 * AuthnContext

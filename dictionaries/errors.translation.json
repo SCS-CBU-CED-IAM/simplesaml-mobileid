@@ -108,5 +108,10 @@
 		"de": "Error during the login with Mobile ID (INTERNAL_ERROR)",
 		"fr": "Error during the login with Mobile ID (INTERNAL_ERROR)",
 		"it": "Error during the login with Mobile ID (INTERNAL_ERROR)",
+	},
+	"descr_": {
+		"de": "Error during the login with Mobile ID (UNKNOWN ERROR)",
+		"fr": "Error during the login with Mobile ID (UNKNOWN ERROR)",
+		"it": "Error during the login with Mobile ID (UNKNOWN ERROR)",
 	}
 }
