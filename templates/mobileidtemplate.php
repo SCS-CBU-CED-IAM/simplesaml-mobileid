@@ -28,20 +28,20 @@ if (array_key_exists('msisdn', $_REQUEST)) {
 	<h2><?php echo $this->t('{mobileid:errors:error_header}'); ?></h2>
 	<p><?php echo $this->t('{mobileid:errors:descr_' . $this->data['errorcode'] . '}'); ?></p>
 </div>
-<h2 style=""><?php echo $this->t('{mobileid:Auth:header}'); ?></h2>
-<img style="height:50px; padding:2px; float:right;" src="<?php echo(SimpleSAML_Module::getModuleURL('mobileid/resources/logo.gif')); ?>" />
+<h2 style=""><?php echo $this->t('{mobileid:Auth:header}'); ?><img style="height:80px; padding:0px;margin:0 30px 0 0; float:right;" src="<?php echo(SimpleSAML_Module::getModuleURL('mobileid/resources/logo.gif')); ?>" /></h2>
+
 <form action="?" method="post" name="f" id="mobileid_form">
 	<table>
 		<tbody>
 			<tr width="100%">
 				<td style="padding: .3em;"><?php echo $this->t('{mobileid:Auth:intro}'); ?></td>
-				<td><input id="msisdn" size="30" name="msisdn" tabindex="1" class="msisdn" type="tel" value="<?php if (isset($msisdn_cookie)) echo $msisdn_cookie; ?>" /></td>
+				<td><input id="msisdn" size="30" name="msisdn" tabindex="1" class="msisdn mobileid-input" type="tel" value="<?php if (isset($msisdn_cookie)) echo $msisdn_cookie; ?>" /></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
 				<td>
-					<input type="button" value="<?php echo $this->t('{mobileid:Auth:form_btn_cancel}'); ?>" class="float-l" id="submit_btn_cancel" />
-					<input type="button" value="<?php echo $this->t('{mobileid:Auth:form_btn_send}'); ?>" class="float-r" id="submit_btn_send" />
+					<input type="button" value="<?php echo $this->t('{mobileid:Auth:form_btn_cancel}'); ?>" class="float-l mobileid-btn-cancel" id="submit_btn_cancel" />
+					<input type="button" value="<?php echo $this->t('{mobileid:Auth:form_btn_send}'); ?>" class="float-r mobileid-btn-send" id="submit_btn_send" />
 				</td>
 			</tr>
 		</tbody>
@@ -53,7 +53,7 @@ if (array_key_exists('msisdn', $_REQUEST)) {
 	?>
 </form>
 <div id="msg_wait" style="display:none;">
-	<img src="<?php echo(SimpleSAML_Module::getModuleURL('mobileid/resources/ajax-loader.gif')); ?>" alt="<?php echo $this->t('{mobileid:Auth:msg_wait}'); ?>" title="<?php echo $this->t('{mobileid:Auth:msg_wait}'); ?>" />
+	<img class="mobileid-ajax-loader" src="<?php echo(SimpleSAML_Module::getModuleURL('mobileid/resources/ajax-loader.gif')); ?>" alt="<?php echo $this->t('{mobileid:Auth:msg_wait}'); ?>" title="<?php echo $this->t('{mobileid:Auth:msg_wait}'); ?>" />
 	<p><?php echo $this->t('{mobileid:Auth:msg_wait}'); ?></p>
 </div>
 <?php if ($this->data['errorcode'] !== NULL) { ?>
