@@ -15,10 +15,10 @@ $this->data['header'] = $this->t('{mobileid:Auth:header}');
 $this->data['autofocus'] = 'msisdn';
 $this->includeAtTemplateBase('includes/header.php');
 
-if (isset($_COOKIE["msisdn"])) {
-	if (array_key_exists('msisdn', $_REQUEST)) {
-		$msisdn_cookie = $_REQUEST['msisdn'];
-	} else {
+if (array_key_exists('msisdn', $_REQUEST)) {
+	$msisdn_cookie = $_REQUEST['msisdn'];
+} else {
+	if (isset($_COOKIE["msisdn"])) {
 		$msisdn_cookie = $_COOKIE["msisdn"];
 	}
 }
