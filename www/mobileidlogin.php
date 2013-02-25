@@ -30,6 +30,11 @@ if (array_key_exists('msisdn', $_REQUEST)) {
 		$params['expire']  = time();
 		$params['expire'] += 31536000;
 		setcookie('msisdn', $msisdn, $params['expire'], $params['path'], $params['domain'], $params['secure'], $params['httponly']);
+	} else {
+		if (isset($_COOKIE['msisdn'])) {
+			unset($_COOKIE['msisdn']);
+			setcookie('msisdn', '', time()-3600);
+		}
 	}
 }
     
