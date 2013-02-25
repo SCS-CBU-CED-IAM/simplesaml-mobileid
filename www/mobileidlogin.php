@@ -13,11 +13,25 @@
 /* Get AuthState and AuthStateID */
 if (!array_key_exists('AuthState', $_REQUEST))
     throw new SimpleSAML_Error_BadRequest('Missing AuthState parameter.');
+
 $authStateId = $_REQUEST['AuthState'];
 
 /* MSISDN default value */
-if (array_key_exists('msisdn', $_REQUEST))
+if (array_key_exists('msisdn', $_REQUEST)) {
     $msisdn = $_REQUEST['msisdn'];
+
+	/* Retrieve the authentication state. */
+	$state = SimpleSAML_Auth_State::loadState($authStateId, sspmod_mobileid_Auth_Source_Auth::STAGEID);
+
+	/* Remember the mobile number */
+	if ($state['remember_msisdn']) {
+		$sessionHandler = SimpleSAML_SessionHandler::getSessionHandler();
+		$params = $sessionHandler->getCookieParams();
+		$params['expire']  = time();
+		$params['expire'] += 31536000;
+		setcookie('msisdn', $msisdn, $params['expire'], $params['path'], $params['domain'], $params['secure'], $params['httponly']);
+	}
+}
     
 /* Login and results */
 $globalConfig = SimpleSAML_Configuration::getInstance();

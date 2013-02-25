@@ -121,6 +121,12 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 
 		/* We are going to need the authId in order to retrieve this authentication source later. */
 		$state[self::AUTHID] = $this->authId;
+
+		/* Remember mobile number. */
+		if ($this->remember_msisdn) {
+			$state['remember_msisdn'] = $this->remember_msisdn;
+		}
+		
 		$id = SimpleSAML_Auth_State::saveState($state, self::STAGEID);
 
 		$url = SimpleSAML_Module::getModuleURL('mobileid/mobileidlogin.php');

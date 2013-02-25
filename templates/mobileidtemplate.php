@@ -9,20 +9,19 @@
  * @author      Swisscom (Schweiz AG)
  */
 
-$config = SimpleSAML_Configuration::getConfig('authsources.php');
-$config_array = $config->getArray('mobileid');
-
-if (isset($config_array["remember_msisdn"]) && isset($_REQUEST['msisdn'])) {
-	if ($config_array["remember_msisdn"] && strlen($_REQUEST['msisdn'])) {
-		$_SESSION['msisdn'] = $_REQUEST['msisdn'];
-	}
-}
-
 $this->data['head']  = '<script type="text/javascript" src="' . SimpleSAML_Module::getModuleUrl('mobileid/resources/js/jquery/jquery-1.8.3.min.js') . '"></script>';
 $this->data['head'] .= '<script type="text/javascript" src="' . SimpleSAML_Module::getModuleUrl('mobileid/resources/js/mobileid.js') . '"></script>';
 $this->data['header'] = $this->t('{mobileid:Auth:header}');
 $this->data['autofocus'] = 'msisdn';
 $this->includeAtTemplateBase('includes/header.php');
+
+if (array_key_exists('msisdn', $_REQUEST)) {
+    $msisdn_cookie = $_REQUEST['msisdn'];
+} else {
+	if (isset($_COOKIE["msisdn"])) {
+		$msisdn_cookie = $_COOKIE["msisdn"];
+	}
+}
 ?>
 <div style="border-left: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; background: #f5f5f5; display:none;" id="msg_error">
 	<img src="/<?php echo $this->data['baseurlpath']; ?>resources/icons/experience/gtk-dialog-error.48x48.png" class="float-l" style="margin: 15px " />
@@ -30,13 +29,13 @@ $this->includeAtTemplateBase('includes/header.php');
 	<p><?php echo $this->t('{mobileid:errors:descr_' . $this->data['errorcode'] . '}'); ?></p>
 </div>
 <h2 style=""><?php echo $this->t('{mobileid:Auth:header}'); ?></h2>
+<img style="height:50px; padding:2px; float:right;" src="<?php echo(SimpleSAML_Module::getModuleURL('mobileid/resources/logo.gif')); ?>" />
 <form action="?" method="post" name="f" id="mobileid_form">
 	<table>
 		<tbody>
 			<tr width="100%">
-				<td rowspan="2"><img style="height:50px; padding:2px;" src="<?php echo(SimpleSAML_Module::getModuleURL('mobileid/resources/logo.gif')); ?>" /></td>
 				<td style="padding: .3em;"><?php echo $this->t('{mobileid:Auth:intro}'); ?></td>
-				<td><input id="msisdn" name="msisdn" tabindex="1" class="msisdn" type="tel" value="<?php if (isset($_SESSION['msisdn'])) echo $_SESSION['msisdn']; ?>" /></td>
+				<td><input id="msisdn" size="30" name="msisdn" tabindex="1" class="msisdn" type="tel" value="<?php echo $msisdn_cookie; ?>" /></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
