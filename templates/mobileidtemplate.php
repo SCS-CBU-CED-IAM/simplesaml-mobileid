@@ -35,7 +35,7 @@ if (array_key_exists('msisdn', $_REQUEST)) {
 		<tbody>
 			<tr width="100%">
 				<td style="padding: .3em;"><?php echo $this->t('{mobileid:Auth:intro}'); ?></td>
-				<td><input id="msisdn" size="30" name="msisdn" tabindex="1" class="msisdn" type="tel" value="<?php echo $msisdn_cookie; ?>" /></td>
+				<td><input id="msisdn" size="30" name="msisdn" tabindex="1" class="msisdn" type="tel" value="<?php if (isset($msisdn_cookie)) echo $msisdn_cookie; ?>" /></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
