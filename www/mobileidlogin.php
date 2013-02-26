@@ -16,12 +16,12 @@ if (!array_key_exists('AuthState', $_REQUEST))
 
 $authStateId = $_REQUEST['AuthState'];
 
+/* Retrieve the authentication state. */
+$state = SimpleSAML_Auth_State::loadState($authStateId, sspmod_mobileid_Auth_Source_Auth::STAGEID);
+
 /* MSISDN default value */
 if (array_key_exists('msisdn', $_REQUEST)) {
     $msisdn = $_REQUEST['msisdn'];
-
-	/* Retrieve the authentication state. */
-	$state = SimpleSAML_Auth_State::loadState($authStateId, sspmod_mobileid_Auth_Source_Auth::STAGEID);
 
 	/* Remember the mobile number */
 	if ($state['remember_msisdn']) {
@@ -29,12 +29,15 @@ if (array_key_exists('msisdn', $_REQUEST)) {
 		$params = $sessionHandler->getCookieParams();
 		$params['expire']  = time();
 		$params['expire'] += 31536000;
+		$_COOKIE['msisdn'] = $msisdn;
 		setcookie('msisdn', $msisdn, $params['expire'], $params['path'], $params['domain'], $params['secure'], $params['httponly']);
-	} else {
-		if (isset($_COOKIE['msisdn'])) {
-			unset($_COOKIE['msisdn']);
-			setcookie('msisdn', '', time()-3600);
-		}
+	}
+}
+
+if (!$state['remember_msisdn']) {
+	if (isset($_COOKIE['msisdn'])) {
+		unset($_COOKIE['msisdn']);
+		setcookie('msisdn', '', time()-3600);
 	}
 }
     

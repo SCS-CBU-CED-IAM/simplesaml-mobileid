@@ -14,28 +14,21 @@ $this->data['head'] .= '<script type="text/javascript" src="' . SimpleSAML_Modul
 $this->data['header'] = $this->t('{mobileid:Auth:header}');
 $this->data['autofocus'] = 'msisdn';
 $this->includeAtTemplateBase('includes/header.php');
-
-if (array_key_exists('msisdn', $_REQUEST)) {
-	$msisdn_cookie = $_REQUEST['msisdn'];
-} else {
-	if (isset($_COOKIE["msisdn"])) {
-		$msisdn_cookie = $_COOKIE["msisdn"];
-	}
-}
 ?>
 <div style="border-left: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; background: #f5f5f5; display:none;" id="msg_error">
 	<img src="/<?php echo $this->data['baseurlpath']; ?>resources/icons/experience/gtk-dialog-error.48x48.png" class="float-l" style="margin: 15px " />
 	<h2><?php echo $this->t('{mobileid:errors:error_header}'); ?></h2>
 	<p><?php echo $this->t('{mobileid:errors:descr_' . $this->data['errorcode'] . '}'); ?></p>
 </div>
-<h2 style=""><?php echo $this->t('{mobileid:Auth:header}'); ?><img style="height:80px; padding:0px;margin:0 30px 0 0; float:right;" src="<?php echo(SimpleSAML_Module::getModuleURL('mobileid/resources/logo.gif')); ?>" /></h2>
-
+<h2 style=""><?php echo $this->t('{mobileid:Auth:header}'); ?>
+	<img style="height:80px; padding:0px;margin:0 30px 0 0; float:right;" src="<?php echo(SimpleSAML_Module::getModuleURL('mobileid/resources/logo.gif')); ?>" />
+</h2>
 <form action="?" method="post" name="f" id="mobileid_form">
 	<table>
 		<tbody>
 			<tr width="100%">
 				<td style="padding: .3em;"><?php echo $this->t('{mobileid:Auth:intro}'); ?></td>
-				<td><input id="msisdn" size="30" name="msisdn" tabindex="1" class="msisdn mobileid-input" type="tel" value="<?php if (isset($msisdn_cookie)) echo $msisdn_cookie; ?>" /></td>
+				<td><input id="msisdn" size="30" name="msisdn" tabindex="1" class="msisdn mobileid-input" type="tel" value="<?php if (isset($_COOKIE["msisdn"])) echo $_COOKIE["msisdn"]; ?>" /></td>
 			</tr>
 			<tr>
 				<td>&nbsp;</td>
