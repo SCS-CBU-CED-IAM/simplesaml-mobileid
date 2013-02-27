@@ -46,8 +46,6 @@ Optional configuration elements
     'timeout_mid'     => 80,          // Timeout of the Mobile ID request itself
 ```
 
-## Template/Theming
-
 ## Returned elements
 
 * Attributes
@@ -58,8 +56,15 @@ Optional configuration elements
 `edupersontargetedid `: the persistent anonym ID for the Mobile ID  
 `preferredLanguage`:    the language used during the validation process  
 
-
 * AuthnContext
 
 Returned value is `urn:oasis:names:tc:SAML:2.0:ac:classes:MobileTwoFactorContract`
+
+## Advanced configuration
+
+### Error handling
+
+### Message to be signed
+
+### Translations
 
