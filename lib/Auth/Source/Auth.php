@@ -61,39 +61,27 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 
         if (!isset($config['cert_file']))
 			throw new Exception('MobileID: Missing or invalid cert_file option in config.');
-        
         $this->cert_file = SimpleSAML_Utilities::resolvePath($config['cert_file'], $certdir);
-
-        if(!file_exists($this->cert_file)) {
-                        throw new Exception('MobileID: Missing or invalid cert_file option in config: ' . $this->cert_file);
-	}
+        if (!file_exists($this->cert_file))
+            throw new Exception('MobileID: Missing or invalid cert_file option in config: ' . $this->cert_file);
 
         if (!isset($config['cert_key']))
 			throw new Exception('MobileID: Missing or invalid cert_key option in config.');
- 
         $this->cert_key = SimpleSAML_Utilities::resolvePath($config['cert_key'], $certdir);
-
-        if(!file_exists($this->cert_key)) {
-                        throw new Exception('MobileID: Missing or invalid cert_key option in config: ' . $this->cert_key);
-	}
+        if (!file_exists($this->cert_key))
+            throw new Exception('MobileID: Missing or invalid cert_key option in config: ' . $this->cert_key);
 
         if (!isset($config['mid_ca']))
 			throw new Exception('MobileID: Missing or invalid mid_ca option in config.');
-
         $this->mid_ca = SimpleSAML_Utilities::resolvePath($config['mid_ca'], $certdir);
-
-        if(!file_exists($this->mid_ca)) {
-                        throw new Exception('MobileID: Missing or invalid mid_ca option in config: ' . $this->mid_ca);
-	}
+        if( !file_exists($this->mid_ca))
+            throw new Exception('MobileID: Missing or invalid mid_ca option in config: ' . $this->mid_ca);
         
         if (!isset($config['mid_ocsp']))
 			throw new Exception('MobileID: Missing or invalid mid_ocsp option in config.');
-
         $this->mid_ocsp = SimpleSAML_Utilities::resolvePath($config['mid_ocsp'], $certdir);
-
-        if(!file_exists($this->mid_ocsp)) {
-                        throw new Exception('MobileID: Missing or invalid mid_ocsp option in config: ' . $this->mid_ocsp);
-	}
+        if (!file_exists($this->mid_ocsp))
+            throw new Exception('MobileID: Missing or invalid mid_ocsp option in config: ' . $this->mid_ocsp);
                 
         /* Optional options */
         if (isset($config['default_lang']))
