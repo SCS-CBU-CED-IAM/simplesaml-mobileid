@@ -24,7 +24,7 @@ if ($this->data['errorcode'] !== NULL && array_key_exists('msisdn', $_REQUEST)) 
 
 <div class="mobileid-main">
 <h2 style=""><?php echo $this->t('{mobileid:Auth:header}'); ?></h2>
-<div id="msg_error" class="alert alert-block alert-error">
+<div id="msg_error" style="display: none;"class="alert alert-block alert-error">
         <button type="button" class="close" data-dismiss="alert">×</button>
 	<strong><?php echo $this->t('{mobileid:errors:error_header}'); ?></strong>
 	<p><?php echo $this->t('{mobileid:errors:descr_' . $this->data['errorcode'] . '}'); ?></p>
