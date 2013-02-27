@@ -8,9 +8,6 @@
 	"descr_EXPIRED_TRANSACTION": {
 		"en": "Error during the login with Mobile ID (EXPIRED_TRANSACTION)"
 	},
-	"descr_OTA_ERROR": {
-		"en": "Error during the login with Mobile ID (OTA_ERROR)"
-	},
 	"descr_USER_CANCEL": {
 		"en": "Error during the login with Mobile ID (USER_CANCEL)"
 	},
@@ -19,15 +16,6 @@
 	},
 	"descr_CARD_BLOCKED": {
 		"en": "Error during the login with Mobile ID (CARD_BLOCKED)"
-	},
-	"descr_NO_KEY_FOUND": {
-		"en": "Error during the login with Mobile ID (NO_KEY_FOUND)"
-	},
-	"descr_PB_SIGNATURE_PROCESS": {
-		"en": "Error during the login with Mobile ID (PB_SIGNATURE_PROCESS)"
-	},
-	"descr_NO_CERT_FOUND": {
-		"en": "Error during the login with Mobile ID (NO_CERT_FOUND)"
 	},
 	"descr_REVOKED_CERTIFICATE": {
 		"en": "Error during the login with Mobile ID (REVOKED_CERTIFICATE)"

@@ -273,13 +273,9 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
             switch($erroris) {
                 case 'UNKNOWN_CLIENT';
                 case 'EXPIRED_TRANSACTION';
-                case 'OTA_ERROR';
                 case 'USER_CANCEL';
                 case 'PIN_NR_BLOCKED';
                 case 'CARD_BLOCKED';
-                case 'NO_KEY_FOUND';
-                case 'PB_SIGNATURE_PROCESS';
-                case 'NO_CERT_FOUND';
                 case 'REVOKED_CERTIFICATE';
                     break;
                 // All other errors are mapped to INTERNAL_ERROR
