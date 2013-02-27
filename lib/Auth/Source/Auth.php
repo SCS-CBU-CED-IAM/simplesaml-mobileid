@@ -250,17 +250,25 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         $mobileIdRequest->sendRequest($this->msisdn, $this->language, $this->message);
         if ($mobileIdRequest->response_error) {
             SimpleSAML_Logger::warning('MobileID: error in service call ' . var_export($mobileIdRequest->response_status_message, TRUE));
-            /* Define the error and filter the valid ones for dictionnaries */
+            /* Define the error  */
             $erroris = $mobileIdRequest->response_status_message;
-            switch($erroris) {
+            
+            /* Filter the configuration errors */
+            switch ($erroris) {
                 case 'WRONG_PARAM';
                 case 'MISSING_PARAM';
                 case 'WRONG_DATA_LENGTH';
-                case 'UNAUTHORIZED_ACCESS';
-                case 'UNKNOWN_CLIENT';
                 case 'INAPPROPRIATE_DATA';
                 case 'INCOMPATIBLE_INTERFACE';
                 case 'UNSUPPORTED_PROFILE';
+                case 'UNAUTHORIZED_ACCESS';
+                    throw new Exception('MobileID: error in service call ' . var_export($mobileIdRequest->response_status_message, TRUE));
+                    break;
+            }
+            
+            /* Filter the valid ones for dictionnaries translations */
+            switch($erroris) {
+                case 'UNKNOWN_CLIENT';
                 case 'EXPIRED_TRANSACTION';
                 case 'OTA_ERROR';
                 case 'USER_CANCEL';
@@ -269,11 +277,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
                 case 'NO_KEY_FOUND';
                 case 'PB_SIGNATURE_PROCESS';
                 case 'NO_CERT_FOUND';
-                case 'CRL_PB';
-                case 'CRL_EXPIRED';
                 case 'REVOKED_CERTIFICATE';
-                case 'INVALID_SIGNATURE';
-                case 'INTERNAL_ERROR';
                     break;
                 // All other errors are mapped to INTERNAL_ERROR
                 default:

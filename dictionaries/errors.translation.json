@@ -4,45 +4,10 @@
 		"fr": "Erreur Mobile ID",
 		"it": "Errore Mobile ID",
 	},
-	"descr_WRONG_PARAM": {
-		"de": "Error during the login with Mobile ID (WRONG_PARAM)",
-		"fr": "Error during the login with Mobile ID (WRONG_PARAM)",
-		"it": "Error during the login with Mobile ID (WRONG_PARAM)",
-	},
-	"descr_MISSING_PARAM": {
-		"de": "Error during the login with Mobile ID (MISSING_PARAM)",
-		"fr": "Error during the login with Mobile ID (MISSING_PARAM)",
-		"it": "Error during the login with Mobile ID (MISSING_PARAM)",
-	},
-	"descr_WRONG_DATA_LENGTH": {
-		"de": "Error during the login with Mobile ID (WRONG_DATA_LENGTH)",
-		"fr": "Error during the login with Mobile ID (WRONG_DATA_LENGTH)",
-		"it": "Error during the login with Mobile ID (WRONG_DATA_LENGTH)",
-	},
-	"descr_UNAUTHORIZED_ACCESS": {
-		"de": "Error during the login with Mobile ID (UNAUTHORIZED_ACCESS)",
-		"fr": "Error during the login with Mobile ID (UNAUTHORIZED_ACCESS)",
-		"it": "Error during the login with Mobile ID (UNAUTHORIZED_ACCESS)",
-	},
 	"descr_UNKNOWN_CLIENT": {
 		"de": "Error during the login with Mobile ID (UNKNOWN_CLIENT)",
 		"fr": "Error during the login with Mobile ID (UNKNOWN_CLIENT)",
 		"it": "Error during the login with Mobile ID (UNKNOWN_CLIENT)",
-	},
-	"descr_INAPPROPRIATE_DATA": {
-		"de": "Error during the login with Mobile ID (INAPPROPRIATE_DATA)",
-		"fr": "Error during the login with Mobile ID (INAPPROPRIATE_DATA)",
-		"it": "Error during the login with Mobile ID (INAPPROPRIATE_DATA)",
-	},
-	"descr_INCOMPATIBLE_INTERFACE": {
-		"de": "Error during the login with Mobile ID (INCOMPATIBLE_INTERFACE)",
-		"fr": "Error during the login with Mobile ID (INCOMPATIBLE_INTERFACE)",
-		"it": "Error during the login with Mobile ID (INCOMPATIBLE_INTERFACE)",
-	},
-	"descr_UNSUPPORTED_PROFILE": {
-		"de": "Error during the login with Mobile ID (UNSUPPORTED_PROFILE)",
-		"fr": "Error during the login with Mobile ID (UNSUPPORTED_PROFILE)",
-		"it": "Error during the login with Mobile ID (UNSUPPORTED_PROFILE)",
 	},
 	"descr_EXPIRED_TRANSACTION": {
 		"de": "Error during the login with Mobile ID (EXPIRED_TRANSACTION)",
@@ -84,25 +49,10 @@
 		"fr": "Error during the login with Mobile ID (NO_CERT_FOUND)",
 		"it": "Error during the login with Mobile ID (NO_CERT_FOUND)",
 	},
-	"descr_CRL_PB": {
-		"de": "Error during the login with Mobile ID (CRL_PB)",
-		"fr": "Error during the login with Mobile ID (CRL_PB)",
-		"it": "Error during the login with Mobile ID (CRL_PB)",
-	},
-	"descr_CRL_EXPIRED": {
-		"de": "Error during the login with Mobile ID (CRL_EXPIRED)",
-		"fr": "Error during the login with Mobile ID (CRL_EXPIRED)",
-		"it": "Error during the login with Mobile ID (CRL_EXPIRED)",
-	},
 	"descr_REVOKED_CERTIFICATE": {
 		"de": "Error during the login with Mobile ID (REVOKED_CERTIFICATE)",
 		"fr": "Error during the login with Mobile ID (REVOKED_CERTIFICATE)",
 		"it": "Error during the login with Mobile ID (REVOKED_CERTIFICATE)",
-	},
-	"descr_INVALID_SIGNATURE": {
-		"de": "Error during the login with Mobile ID (INVALID_SIGNATURE)",
-		"fr": "Error during the login with Mobile ID (INVALID_SIGNATURE)",
-		"it": "Error during the login with Mobile ID (INVALID_SIGNATURE)",
 	},
 	"descr_INTERNAL_ERROR": {
 		"de": "Error during the login with Mobile ID (INTERNAL_ERROR)",

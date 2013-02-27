@@ -2,29 +2,8 @@
 	"error_header": {
 		"en": "Error during the Mobile ID login"
 	},
-	"descr_WRONG_PARAM": {
-		"en": "Error during the login with Mobile ID (WRONG_PARAM)"
-	},
-	"descr_MISSING_PARAM": {
-		"en": "Error during the login with Mobile ID (MISSING_PARAM)"
-	},
-	"descr_WRONG_DATA_LENGTH": {
-		"en": "Error during the login with Mobile ID (WRONG_DATA_LENGTH)"
-	},
-	"descr_UNAUTHORIZED_ACCESS": {
-		"en": "Error during the login with Mobile ID (UNAUTHORIZED_ACCESS)"
-	},
 	"descr_UNKNOWN_CLIENT": {
 		"en": "Error during the login with Mobile ID (UNKNOWN_CLIENT)"
-	},
-	"descr_INAPPROPRIATE_DATA": {
-		"en": "Error during the login with Mobile ID (INAPPROPRIATE_DATA)"
-	},
-	"descr_INCOMPATIBLE_INTERFACE": {
-		"en": "Error during the login with Mobile ID (INCOMPATIBLE_INTERFACE)"
-	},
-	"descr_UNSUPPORTED_PROFILE": {
-		"en": "Error during the login with Mobile ID (UNSUPPORTED_PROFILE)"
 	},
 	"descr_EXPIRED_TRANSACTION": {
 		"en": "Error during the login with Mobile ID (EXPIRED_TRANSACTION)"
@@ -50,17 +29,8 @@
 	"descr_NO_CERT_FOUND": {
 		"en": "Error during the login with Mobile ID (NO_CERT_FOUND)"
 	},
-	"descr_CRL_PB": {
-		"en": "Error during the login with Mobile ID (CRL_PB)"
-	},
-	"descr_CRL_EXPIRED": {
-		"en": "Error during the login with Mobile ID (CRL_EXPIRED)"
-	},
 	"descr_REVOKED_CERTIFICATE": {
 		"en": "Error during the login with Mobile ID (REVOKED_CERTIFICATE)"
-	},
-	"descr_INVALID_SIGNATURE": {
-		"en": "Error during the login with Mobile ID (INVALID_SIGNATURE)"
 	},
 	"descr_INTERNAL_ERROR": {
 		"en": "Error during the login with Mobile ID (INTERNAL_ERROR)"
