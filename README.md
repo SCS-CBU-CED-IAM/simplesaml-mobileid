@@ -65,31 +65,29 @@ Returned value is `urn:oasis:names:tc:SAML:2.0:ac:classes:MobileTwoFactorContrac
 ### Error handling
 All errors are handled in the 'lib/Auth/Source/Auth.php' file.
 
-Following errors will throw an exception:
- 'WRONG_PARAM'
- 'MISSING_PARAM'
- 'WRONG_DATA_LENGTH'
- 'INAPPROPRIATE_DATA'
- 'INCOMPATIBLE_INTERFACE'
- 'UNSUPPORTED_PROFILE'
- 'UNAUTHORIZED_ACCESS'
+Following errors will throw an exception: 
+ 'WRONG_PARAM' 
+ 'MISSING_PARAM' 
+ 'WRONG_DATA_LENGTH' 
+ 'INAPPROPRIATE_DATA' 
+ 'INCOMPATIBLE_INTERFACE' 
+ 'UNSUPPORTED_PROFILE' 
+ 'UNAUTHORIZED_ACCESS' 
 
-Following errors will explicitly be indicated to the user and can be translated over the `dictionaries/errors.*.json`files:
- 'UNKNOWN_CLIENT'
- 'EXPIRED_TRANSACTION'
- 'USER_CANCEL'
- 'PIN_NR_BLOCKED'
- 'CARD_BLOCKED'
- 'REVOKED_CERTIFICATE'
+Following errors will explicitly be indicated to the user and can be translated over the `dictionaries/errors.*.json`files: 
+ 'UNKNOWN_CLIENT' 
+ 'EXPIRED_TRANSACTION' 
+ 'USER_CANCEL' 
+ 'PIN_NR_BLOCKED' 
+ 'CARD_BLOCKED' 
+ 'REVOKED_CERTIFICATE' 
 
-A timeout in the request is mapped to 'EXPIRED_TRANSACTION'.
-All other errors will be mapped to the 'INTERNAL_ERROR' and logged explicitly.
-
+A timeout in the request is mapped to 'EXPIRED_TRANSACTION'. All other errors will be mapped to the 'INTERNAL_ERROR' and logged explicitly.
 
 Refer to the "Mobile ID - SOAP client reference guide" document from Swisscom for more details about error states.
 
 ### Message to be signed
-Is composed by "'hosturi': {mobileid:Auth:message}"
+Is composed by "'hosturi': {mobileid:Auth:message}". 
 Example: "http://serviceprovider.com: Authentication with Mobile ID?"
 
 ### Translations
