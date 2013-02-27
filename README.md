@@ -66,6 +66,7 @@ Returned value is `urn:oasis:names:tc:SAML:2.0:ac:classes:MobileTwoFactorContrac
 All errors are handled in the 'lib/Auth/Source/Auth.php' file.
 
 Following errors will throw an exception:  
+````
  'WRONG_PARAM'  
  'MISSING_PARAM'  
  'WRONG_DATA_LENGTH'  
@@ -73,14 +74,17 @@ Following errors will throw an exception:
  'INCOMPATIBLE_INTERFACE'  
  'UNSUPPORTED_PROFILE'  
  'UNAUTHORIZED_ACCESS'  
+````
 
 Following errors will explicitly be indicated to the user and can be translated over the `dictionaries/errors.*.json`files:  
+````
  'UNKNOWN_CLIENT'  
  'EXPIRED_TRANSACTION'  
  'USER_CANCEL'  
  'PIN_NR_BLOCKED'  
  'CARD_BLOCKED'  
  'REVOKED_CERTIFICATE'  
+````
 
 A timeout in the request is mapped to 'EXPIRED_TRANSACTION'. All other errors will be mapped to the 'INTERNAL_ERROR' and logged explicitly.
 
