@@ -24,7 +24,7 @@ if ($this->data['errorcode'] !== NULL && array_key_exists('msisdn', $_REQUEST)) 
 
 <div class="mobileid-main">
 <h2 style=""><?php echo $this->t('{mobileid:Auth:header}'); ?></h2>
-<div id="msg_error" class="alert alert-block alert-error">
+<div id="msg_error" class="alert alert-block alert-error" style="display:none">
         <button type="button" class="close" data-dismiss="alert">×</button>
 	<strong><?php echo $this->t('{mobileid:errors:error_header}'); ?></strong>
 	<p><?php echo $this->t('{mobileid:errors:descr_' . $this->data['errorcode'] . '}'); ?></p>
@@ -40,7 +40,7 @@ if ($this->data['errorcode'] !== NULL && array_key_exists('msisdn', $_REQUEST)) 
 				
 				<input id="msisdn" size="30" name="msisdn" tabindex="1" class="msisdn mobileid-input" type="tel" value="<?php if (isset($_COOKIE["msisdn"])) echo $_COOKIE["msisdn"]; ?>" />        
 			</div>
-                        <div class="form-actions">       
+                        <div class="form-actions">
                              <input type="button" value="<?php echo $this->t('{mobileid:Auth:form_btn_send}'); ?>" class="float-r mobileid-btn-send" id="submit_btn_send" />
                              <input type="button" value="<?php echo $this->t('{mobileid:Auth:form_btn_cancel}'); ?>" class="float-l mobileid-btn-cancel" id="submit_btn_cancel" />
 
@@ -56,6 +56,7 @@ if ($this->data['errorcode'] !== NULL && array_key_exists('msisdn', $_REQUEST)) 
 	}
 	?>
 </form>
+<br/>
 <div id="msg_wait" style="display:none;">
 	<img class="mobileid-ajax-loader" src="<?php echo(SimpleSAML_Module::getModuleURL('mobileid/resources/ajax-loader.gif')); ?>" alt="<?php echo $this->t('{mobileid:Auth:msg_wait}'); ?>" title="<?php echo $this->t('{mobileid:Auth:msg_wait}'); ?>" />
 	<p><?php echo $this->t('{mobileid:Auth:msg_wait}'); ?></p>
