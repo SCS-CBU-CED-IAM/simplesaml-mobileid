@@ -1,5 +1,5 @@
-swisscom-mobileid-simplesamlphp
-===============================
+simplesaml-mobileid
+===================
 
 Mobile ID custom auth module for simplesamlphp
 
