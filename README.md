@@ -48,7 +48,7 @@ Optional configuration elements
 
 ## Returned elements
 
-* Attributes
+### Attributes
 
 `uid`:                  the userid attribute defined at the login window  
 `mobile`:               the Mobile ID validated mobile number in international format with 00 as prefix  
@@ -56,7 +56,7 @@ Optional configuration elements
 `edupersontargetedid `: the persistent anonym ID for the Mobile ID  
 `preferredLanguage`:    the language used during the validation process  
 
-* AuthnContext
+### AuthnContext
 
 Returned value is `urn:oasis:names:tc:SAML:2.0:ac:classes:MobileTwoFactorContract`
 
