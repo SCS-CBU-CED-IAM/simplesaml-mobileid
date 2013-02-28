@@ -37,5 +37,8 @@
 	},
 	"descr_DEFAULT": {
 		"en": "Mobile ID can not be used at this time. Please try again. If the error persists, contact Swisscom at <a href=\"http://swisscom.com/mobile-id\" target=\"_blank\">http://swisscom.com/mobile-id</a>"
+	},
+	"descr_": {
+		"en": "Mobile ID can not be used at this time. Please try again. If the error persists, contact Swisscom at <a href=\"http://swisscom.com/mobile-id\" target=\"_blank\">http://swisscom.com/mobile-id</a>"
 	}
 }

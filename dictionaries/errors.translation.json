@@ -63,5 +63,10 @@
 		"de": "Mobile ID kann zurzeit nicht genutzt werden. Bitte versuchen Sie es erneut. Falls der Fehler wiederholt auftritt, wenden Sie sich an Swisscom unter <a href=\"http://swisscom.com/mobile-id\" target=\"_blank\">http://swisscom.com/mobile-id</a>",
 		"fr": "Pour de raisons techniques sur le système la Mobile ID ne peut pas être vérifiée. Veuillez réessayer, si l'erreur persiste contactez Swisscom sur <a href=\"http://swisscom.com/mobile-id\" target=\"_blank\">http://swisscom.com/mobile-id</a>",
 		"it": "Dovuto guasto del sistema l'identificazione del cellulare non può essere verificata. Riprovi di nuovo. Nel caso del ripetersi dell'errore contatti Swisscom <a href=\"http://swisscom.com/mobile-id\" target=\"_blank\">http://swisscom.com/mobile-id</a>",
+	},
+	"descr_": {
+		"de": "Mobile ID kann zurzeit nicht genutzt werden. Bitte versuchen Sie es erneut. Falls der Fehler wiederholt auftritt, wenden Sie sich an Swisscom unter <a href=\"http://swisscom.com/mobile-id\" target=\"_blank\">http://swisscom.com/mobile-id</a>",
+		"fr": "Pour de raisons techniques sur le système la Mobile ID ne peut pas être vérifiée. Veuillez réessayer, si l'erreur persiste contactez Swisscom sur <a href=\"http://swisscom.com/mobile-id\" target=\"_blank\">http://swisscom.com/mobile-id</a>",
+		"it": "Dovuto guasto del sistema l'identificazione del cellulare non può essere verificata. Riprovi di nuovo. Nel caso del ripetersi dell'errore contatti Swisscom <a href=\"http://swisscom.com/mobile-id\" target=\"_blank\">http://swisscom.com/mobile-id</a>",
 	}
 }
