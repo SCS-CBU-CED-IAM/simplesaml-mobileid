@@ -3,39 +3,42 @@
 		"en": "Error during the Mobile ID login"
 	},
 	"descr_105": {
-		"en": "Error during the login with Mobile ID (UNKNOWN_CLIENT)"
+		"en": "Mobile ID has not been activated for this subscriber number."
 	},
 	"descr_208": {
-		"en": "Error during the login with Mobile ID (EXPIRED_TRANSACTION)"
+		"en": "Transaction Expiry date has been reached or Time out has elapsed."
 	},
 	"descr_209": {
-		"en": "Error during the login with Mobile ID (OTA_ERROR)"
+		"en": "The MSSP has not succeeded to contact the enduser's mobile equipment. (Bad connection...)."
 	},
 	"descr_401": {
-		"en": "Error during the login with Mobile ID (USER_CANCEL)"
+		"en": "The request has been canceled by the user."
 	},
 	"descr_402": {
-		"en": "Error during the login with Mobile ID (PIN_NR_BLOCKED)"
+		"en": "The user's Mobile ID PIN is blocked."
 	},
 	"descr_403": {
-		"en": "Error during the login with Mobile ID (CARD_BLOCKED)"
+		"en": "The subscriber number is blocked."
 	},
 	"descr_404": {
-		"en": "Error during the login with Mobile ID (NO_KEY_FOUND)"
+		"en": "The subscriber number is not yet activated for Mobile ID."
 	},
 	"descr_406": {
-		"en": "Error during the login with Mobile ID (PB_SIGNATURE_PROCESS)"
+		"en": "Error on the user device while confirming the request."
 	},
 	"descr_422": {
-		"en": "Error during the login with Mobile ID (NO_CERT_FOUND)"
+		"en": "The subscriber number is not yet activated for Mobile ID."
 	},
 	"descr_501": {
-		"en": "Error during the login with Mobile ID (REVOKED_CERTIFICATE)"
+		"en": "Verification error with the confirmation."
 	},
 	"descr_503": {
-		"en": "Error during the login with Mobile ID (INVALID_SIGNATURE)"
+		"en": "Verification error with the confirmation."
 	},
 	"descr_DEFAULT": {
+		"en": "Mobile ID can not be used at this time. Please try again and if the error persists, contact the Mobile ID support."
+	},
+	"descr_": {
 		"en": "Mobile ID can not be used at this time. Please try again and if the error persists, contact the Mobile ID support."
 	}
 }
