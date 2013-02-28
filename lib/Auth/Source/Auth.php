@@ -277,7 +277,6 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
             SimpleSAML_Logger::warning('MobileID: error in service call ' . var_export($errortxt, TRUE));
 
             /* Set the error */
-    SimpleSAML_Logger::warning('MobileID: error in service call DEBUG ' . var_export($erroris, TRUE));
             throw new SimpleSAML_Error_Error($erroris);
         }
 
