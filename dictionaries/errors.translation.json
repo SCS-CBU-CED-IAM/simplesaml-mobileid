@@ -4,44 +4,64 @@
 		"fr": "Erreur Mobile ID",
 		"it": "Errore Mobile ID",
 	},
-	"descr_UNKNOWN_CLIENT": {
-		"de": "Error during the login with Mobile ID (UNKNOWN_CLIENT)",
-		"fr": "Error during the login with Mobile ID (UNKNOWN_CLIENT)",
-		"it": "Error during the login with Mobile ID (UNKNOWN_CLIENT)",
+	"descr_105": {
+		"de": "Die Rufnummer ist nicht für Mobile ID aktiviert. Um Mobile ID nutzen zu können, muss die Option auf einem Swisscom Mobilvertrag bestellt und aktiviert werden. Bitte besuchen Sie das Swisscom Portal unter <a href=\"http://swisscom.com/mobileid\" target=\"_blank\">http://swisscom.com/mobileid</a>",
+		"fr": "",
+		"it": "",
 	},
-	"descr_EXPIRED_TRANSACTION": {
-		"de": "Error during the login with Mobile ID (EXPIRED_TRANSACTION)",
-		"fr": "Error during the login with Mobile ID (EXPIRED_TRANSACTION)",
-		"it": "Error during the login with Mobile ID (EXPIRED_TRANSACTION)",
+	"descr_208": {
+		"de": "Gültigkeitsdatum der Transaktion ist abgelaufen oder das Timeout wurde erreicht. Bitte versuchen Sie es erneut. Falls der Fehler wiederholt auftritt, wenden Sie sich an Swisscom unter <a href=\"http://swisscom.com/mobileid\" target=\"_blank\">http://swisscom.com/mobileid</a>",
+		"fr": "",
+		"it": "",
 	},
-	"descr_USER_CANCEL": {
-		"de": "Error during the login with Mobile ID (USER_CANCEL)",
-		"fr": "Error during the login with Mobile ID (USER_CANCEL)",
-		"it": "Error during the login with Mobile ID (USER_CANCEL)",
+	"descr_209": {
+		"de": "Der MSSP konnte das mobile Endgerät nicht kontaktieren. (Schlechte Verbindung…). Bitte versuchen Sie es erneut. Falls der Fehler wiederholt auftritt, wenden Sie sich an Swisscom unter <a href=\"http://swisscom.com/mobileid\" target=\"_blank\">http://swisscom.com/mobileid</a>",
+		"fr": "",
+		"it": "",
 	},
-	"descr_PIN_NR_BLOCKED": {
-		"de": "Error during the login with Mobile ID (PIN_NR_BLOCKED)",
-		"fr": "Error during the login with Mobile ID (PIN_NR_BLOCKED)",
-		"it": "Error during the login with Mobile ID (PIN_NR_BLOCKED)",
+	"descr_401": {
+		"de": "Der Vorgang wurde vom Nutzer abgebrochen. Damit der Vorgang abgeschlossen werden kann, muss der Benutzer die Anfrage akzeptieren und seinen Mobile ID PIN eingeben. Weitere Hinweise finden Sie auf <a href=\"http://swisscom.com/mobileid\" target=\"_blank\">http://swisscom.com/mobileid</a>",
+		"fr": "",
+		"it": "",
 	},
-	"descr_CARD_BLOCKED": {
-		"de": "Error during the login with Mobile ID (CARD_BLOCKED)",
-		"fr": "Error during the login with Mobile ID (CARD_BLOCKED)",
-		"it": "Error during the login with Mobile ID (CARD_BLOCKED)",
+	"descr_402": {
+		"de": "Die Mobile ID PIN des Nutzers ist gesperrt. Um Mobile ID erneut nutzen zu können, muss der Benutzer mit Hilfe von Swisscom seine Mobile ID PIN neu setzen. Weitere Hinweise finden Sie auf <a href=\"http://swisscom.com/mobileid\" target=\"_blank\">http://swisscom.com/mobileid</a>",
+		"fr": "",
+		"it": "",
 	},
-	"descr_REVOKED_CERTIFICATE": {
-		"de": "Error during the login with Mobile ID (REVOKED_CERTIFICATE)",
-		"fr": "Error during the login with Mobile ID (REVOKED_CERTIFICATE)",
-		"it": "Error during the login with Mobile ID (REVOKED_CERTIFICATE)",
+	"descr_403": {
+		"de": "Die Rufnummer des Nutzers ist gesperrt. Um Mobile ID erneut nutzen zu können muss der Benutzer zuerst seine Mobilnummer entsperren lassen. Weitere Hinweise finden Sie auf <a href=\"http://swisscom.com/mobileid\" target=\"_blank\">http://swisscom.com/mobileid</a>",
+		"fr": "",
+		"it": "",
 	},
-	"descr_INTERNAL_ERROR": {
-		"de": "Error during the login with Mobile ID (INTERNAL_ERROR)",
-		"fr": "Error during the login with Mobile ID (INTERNAL_ERROR)",
-		"it": "Error during the login with Mobile ID (INTERNAL_ERROR)",
+	"descr_404": {
+		"de": "Die Rufnummer ist nicht für Mobile ID aktiviert. Um Mobile ID nutzen zu können, muss der Service zuerst aktiviert werden. Bitte besuchen Sie das Swisscom Portal unter <a href=\"http://swisscom.com/mobileid\" target=\"_blank\">http://swisscom.com/mobileid</a>",
+		"fr": "",
+		"it": "",
 	},
-	"descr_": {
-		"de": "Error during the login with Mobile ID (UNKNOWN ERROR)",
-		"fr": "Error during the login with Mobile ID (UNKNOWN ERROR)",
-		"it": "Error during the login with Mobile ID (UNKNOWN ERROR)",
+	"descr_406": {
+		"de": "Fehler auf dem Endgerät beim Erstellen der Bestätigung. Bitte versuchen Sie es erneut. Falls der Fehler wiederholt auftritt, wenden Sie sich an Swisscom unter <a href=\"http://swisscom.com/mobileid\" target=\"_blank\">http://swisscom.com/mobileid</a>",
+		"fr": "",
+		"it": "",
+	},
+	"descr_422": {
+		"de": "Die Rufnummer ist nicht für Mobile ID aktiviert. Um Mobile ID nutzen zu können, muss der Service zuerst aktiviert werden. Bitte besuchen Sie das Swisscom Portal unter <a href=\"http://swisscom.com/mobileid\" target=\"_blank\">http://swisscom.com/mobileid</a>",
+		"fr": "",
+		"it": "",
+	},
+	"descr_501": {
+		"de": "Fehler beim Prüfen der Bestätigung. Um Mobile ID nutzen zu können, muss der Service wieder aktiviert werden. Bitte besuchen Sie dafür das Swisscom Portal unter <a href=\"http://swisscom.com/mobileid\" target=\"_blank\">http://swisscom.com/mobileid</a>",
+		"fr": "",
+		"it": "",
+	},
+	"descr_503": {
+		"de": "Fehler beim Prüfen der Bestätigung. Bitte versuchen Sie es erneut. Falls der Fehler wiederholt auftritt, wenden Sie sich an Swisscom unter <a href=\"http://swisscom.com/mobileid\" target=\"_blank\">http://swisscom.com/mobileid</a>",
+		"fr": "",
+		"it": "",
+	},
+	"descr_DEFAULT": {
+		"de": "Mobile ID can not be used at this time. Please try again and if the error persists, contact the Mobile ID support.",
+		"fr": "",
+		"it": "",
 	}
 }

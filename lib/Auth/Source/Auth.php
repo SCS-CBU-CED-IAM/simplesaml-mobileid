@@ -249,43 +249,32 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         /* Call Mobile ID */
         $mobileIdRequest->sendRequest($this->msisdn, $this->language, $this->message);
         if ($mobileIdRequest->response_error) {
-            /* Define the error  */
-            $erroris = $mobileIdRequest->response_status_message;
-            /* Special handling for timeout */
-            if ($mobileIdRequest->response_soap_fault_subcode === '208')
-                $erroris = 'EXPIRED_TRANSACTION';
-
-            /* Filter the configuration errors */
-            switch ($erroris) {
-                case 'WRONG_PARAM';
-                case 'MISSING_PARAM';
-                case 'WRONG_DATA_LENGTH';
-                case 'INAPPROPRIATE_DATA';
-                case 'INCOMPATIBLE_INTERFACE';
-                case 'UNSUPPORTED_PROFILE';
-                case 'UNAUTHORIZED_ACCESS';
-                    SimpleSAML_Logger::warning('MobileID: error in service call ' . var_export($erroris, TRUE));
-                    throw new Exception('MobileID: error in service call ' . var_export($erroris, TRUE));
-                    break;
-            }
+            $erroris = 'DEFAULT';
+            /* Get error code from status code or fault subcode */
+            if (strlen($mobileIdRequest->response_mss_status_code))
+                $erroris = $mobileIdRequest->response_mss_status_code;
+            if (strlen($mobileIdRequest->response_soap_fault_subcode))
+                $erroris = $mobileIdRequest->response_soap_fault_subcode;
             
-            /* Filter the valid ones for dictionnaries translations */
-            switch($erroris) {
-                case 'UNKNOWN_CLIENT';
-                case 'EXPIRED_TRANSACTION';
-                case 'USER_CANCEL';
-                case 'PIN_NR_BLOCKED';
-                case 'CARD_BLOCKED';
-                case 'REVOKED_CERTIFICATE';
-                    break;
-                // All other errors are mapped to INTERNAL_ERROR
-                default:
-                    $erroris = 'INTERNAL_ERROR';
-                    break;
+            /* Define error text */
+            $errortxt = $erroris . '/' . $mobileIdRequest->response_status_message;
+            
+            /* Filter the configuration errors */
+            $exception_code = array("101", "102", "103", "104", "107", "108", "109");
+            if (in_array($erroris, $exception_code)) {
+                SimpleSAML_Logger::warning('MobileID: error in service call ' . var_export($errortxt, TRUE));
+                throw new Exception('MobileID: error in service call ' . var_export($errortxt, TRUE));
+            }
+ 
+            /* Filter the dictionnaries errors and map the rest to default */
+            $dico_code = array("105", "208", "209", "401", "402", "403", "404", "406", "422", "501", "503");
+            if (!in_array($erroris, $dico_code)) {
+                $erroris = 'DEFAULT';
+                $errortxt = $errortxt . ' mapped to ' . $erroris;
             }
 
             /* Log the details */
-            SimpleSAML_Logger::warning('MobileID: error in service call ' . var_export($mobileIdRequest->response_status_message, TRUE) . ' mapped to ' . var_export($erroris, TRUE));
+            SimpleSAML_Logger::warning('MobileID: error in service call ' . var_export($errortxt, TRUE));
 
             /* Set the error */
             throw new SimpleSAML_Error_Error($erroris);

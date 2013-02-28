@@ -2,28 +2,40 @@
 	"error_header": {
 		"en": "Error during the Mobile ID login"
 	},
-	"descr_UNKNOWN_CLIENT": {
+	"descr_105": {
 		"en": "Error during the login with Mobile ID (UNKNOWN_CLIENT)"
 	},
-	"descr_EXPIRED_TRANSACTION": {
+	"descr_208": {
 		"en": "Error during the login with Mobile ID (EXPIRED_TRANSACTION)"
 	},
-	"descr_USER_CANCEL": {
+	"descr_209": {
+		"en": "Error during the login with Mobile ID (OTA_ERROR)"
+	},
+	"descr_401": {
 		"en": "Error during the login with Mobile ID (USER_CANCEL)"
 	},
-	"descr_PIN_NR_BLOCKED": {
+	"descr_402": {
 		"en": "Error during the login with Mobile ID (PIN_NR_BLOCKED)"
 	},
-	"descr_CARD_BLOCKED": {
+	"descr_403": {
 		"en": "Error during the login with Mobile ID (CARD_BLOCKED)"
 	},
-	"descr_REVOKED_CERTIFICATE": {
+	"descr_404": {
+		"en": "Error during the login with Mobile ID (NO_KEY_FOUND)"
+	},
+	"descr_406": {
+		"en": "Error during the login with Mobile ID (PB_SIGNATURE_PROCESS)"
+	},
+	"descr_422": {
+		"en": "Error during the login with Mobile ID (NO_CERT_FOUND)"
+	},
+	"descr_501": {
 		"en": "Error during the login with Mobile ID (REVOKED_CERTIFICATE)"
 	},
-	"descr_INTERNAL_ERROR": {
-		"en": "Error during the login with Mobile ID (INTERNAL_ERROR)"
+	"descr_503": {
+		"en": "Error during the login with Mobile ID (INVALID_SIGNATURE)"
 	},
-	"descr_": {
-		"en": "Error during the login with Mobile ID (UNKNOWN ERROR)"
+	"descr_DEFAULT": {
+		"en": "Mobile ID can not be used at this time. Please try again and if the error persists, contact the Mobile ID support."
 	}
 }
