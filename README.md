@@ -67,26 +67,23 @@ All errors are handled in the 'lib/Auth/Source/Auth.php' file.
 
 Following errors will throw an exception:  
 ````
- 'WRONG_PARAM'  
- 'MISSING_PARAM'  
- 'WRONG_DATA_LENGTH'  
- 'INAPPROPRIATE_DATA'  
- 'INCOMPATIBLE_INTERFACE'  
- 'UNSUPPORTED_PROFILE'  
- 'UNAUTHORIZED_ACCESS'  
+/* Filter the configuration errors */
+$exception_code = array("101", "102", "103", "104", "107", "108", "109");
+if (in_array($erroris, $exception_code)) {
+  SimpleSAML_Logger::warning('MobileID: error in service call ' . var_export($errortxt, TRUE));
+  throw new Exception('MobileID: error in service call ' . var_export($errortxt, TRUE));
+}
 ````
 
-Following errors will explicitly be indicated to the user and can be translated over the `dictionaries/errors.*.json`files:  
+By default all other errors will display the `dictionaries/errors.definition.json:"descr_DEFAULT":` message and can be translated. If for a specific error a custom text should be displayed, it can be added to the dictionaries as `descr_<errorcode>` and must be defined in the `$dico_code`:  
 ````
- 'UNKNOWN_CLIENT'  
- 'EXPIRED_TRANSACTION'  
- 'USER_CANCEL'  
- 'PIN_NR_BLOCKED'  
- 'CARD_BLOCKED'  
- 'REVOKED_CERTIFICATE'  
+/* Filter the dictionaries errors and map the rest to default */
+$dico_code = array("105", "208", "209", "401", "402", "403", "404", "406", "422", "501", "503");
+if (!in_array($erroris, $dico_code)) {
+	$erroris = 'DEFAULT';
+	$errortxt = $errortxt . ' mapped to ' . $erroris;
+}
 ````
-
-A timeout in the request is mapped to 'EXPIRED_TRANSACTION'. All other errors will be mapped to the 'INTERNAL_ERROR' and logged explicitly.
 
 Refer to the "Mobile ID - SOAP client reference guide" document from Swisscom for more details about error states.
 
