@@ -78,7 +78,7 @@ if (in_array($erroris, $exception_code)) {
 By default all other errors will display the `dictionaries/errors.definition.json:"descr_DEFAULT":` message and can be translated. If for a specific error a custom text should be displayed, it can be added to the dictionaries as `descr_<errorcode>` and must be defined in the `$dico_code`:  
 ````
 /* Filter the dictionaries errors and map the rest to default */
-$dico_code = array("105", "208", "209", "401", "402", "403", "404", "406", "422", "501", "503");
+$dico_code = array("101", "105", "208", "209", "401", "402", "403", "404", "406", "422", "501", "503");
 if (!in_array($erroris, $dico_code)) {
 	$erroris = 'DEFAULT';
 	$errortxt = $errortxt . ' mapped to ' . $erroris;

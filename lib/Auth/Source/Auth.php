@@ -267,7 +267,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
             }
  
             /* Filter the dictionnaries errors and map the rest to default */
-            $dico_code = array("105", "208", "209", "401", "402", "403", "404", "406", "422", "501", "503");
+            $dico_code = array("101", "105", "208", "209", "401", "402", "403", "404", "406", "422", "501", "503");
             if (!in_array($erroris, $dico_code)) {
                 $erroris = 'DEFAULT';
                 $errortxt = $errortxt . ' mapped to ' . $erroris;

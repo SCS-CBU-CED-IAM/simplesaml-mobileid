@@ -2,6 +2,9 @@
 	"error_header": {
 		"en": "Error during the Mobile ID login"
 	},
+	"descr_101": {
+		"en": "This Mobile ID number seems not to be a valid one"
+	},
 	"descr_105": {
 		"en": "Mobile ID has not been activated for this subscriber number. To be able to use Mobile ID, it has to be ordered and activated first. Please visit the Swisscom Site at <a href='http://swisscom.com/mobile-id' target='_blank'>http://swisscom.com/mobile-id</a>"
 	},

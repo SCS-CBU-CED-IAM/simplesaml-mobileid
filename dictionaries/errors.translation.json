@@ -4,6 +4,11 @@
 		"fr": "Erreur Mobile ID",
 		"it": "Errore Mobile ID"
 	},
+	"descr_101": {
+		"de": "Diese Nummer scheint nicht gültig zu sein",
+		"fr": "Ce numéro semble ne pas être valide",
+		"it": "Questo numero sembra non essere valido"
+	},
 	"descr_105": {
 		"de": "Die Rufnummer ist nicht für Mobile ID aktiviert. Um Mobile ID nutzen zu können, muss die Option auf einem Swisscom Mobilvertrag bestellt und aktiviert werden. Bitte besuchen Sie das Swisscom Portal unter <a href='http://swisscom.com/mobile-id' target='_blank'>http://swisscom.com/mobile-id</a>",
 		"fr": "Pour ce numéro d'appel la Mobile ID n'a pas été activée. Pour pouvoir utiliser la Mobile ID, cette option doit être commandée et activée sur le contrat mobile Swisscom en question. Veuillez visiter le portail de Swisscom <a href='http://swisscom.com/mobile-id' target='_blank'>http://swisscom.com/mobile-id</a>",
