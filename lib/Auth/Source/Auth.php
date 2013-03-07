@@ -260,7 +260,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
             $errortxt = $erroris . ' -> ' . $mobileIdRequest->response_status_message;
             
             /* Filter the configuration errors */
-            $exception_code = array("101", "102", "103", "104", "107", "108", "109");
+            $exception_code = array("102", "103", "104", "107", "108", "109");
             if (in_array($erroris, $exception_code)) {
                 SimpleSAML_Logger::warning('MobileID: error in service call ' . var_export($errortxt, TRUE));
                 throw new Exception('MobileID: error in service call ' . var_export($errortxt, TRUE));
