@@ -60,6 +60,15 @@ Optional configuration elements
 
 Returned value is `urn:oasis:names:tc:SAML:2.0:ac:classes:MobileTwoFactorContract`
 
+### Cancel
+
+Will return a Status with following status Codes:
+````
+<samlp:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:Responder">
+<samlp:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:AuthnFailed">
+````
+
+
 ## Advanced configuration
 
 ### Error handling
