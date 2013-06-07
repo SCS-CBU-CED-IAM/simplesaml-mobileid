@@ -25,7 +25,7 @@ if ($this->data['errorcode'] !== NULL && array_key_exists('msisdn', $_REQUEST)) 
 	<p><?php echo $this->t('{mobileid:errors:descr_' . $this->data['errorcode'] . '}'); ?></p>
 </div>
 <h2 style=""><?php echo $this->t('{mobileid:Auth:header}'); ?>
-	<img style="height:80px; padding:0px;margin:0 30px 0 0; float:right;" src="<?php echo(SimpleSAML_Module::getModuleURL('mobileid/resources/logo.gif')); ?>" />
+	<img style="height:28px; float:right;" src="<?php echo(SimpleSAML_Module::getModuleURL('mobileid/resources/mobileid.png')); ?>" />
 </h2>
 <form action="?" method="post" name="f" id="mobileid_form">
 	<table>
