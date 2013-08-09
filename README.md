@@ -102,3 +102,6 @@ Example: "http://serviceprovider.com: Authentication with Mobile ID?"
 
 ### Translations
 The actual resources are translated in EN, DE, FR, IT. Refer to the files in the `dictionaries/`.
+
+### Theming
+The module follows the 'Theming the user interface in SimpleSAMLphp' rules and it can overridden by copying and adjusting the ```mobileidtemplate.php```` in your own theming module.

@@ -28,6 +28,8 @@ class mobileid {
 	protected $MobileUser;                  // Phone number
 	protected $DataToBeSigned;              // Messsage
 	protected $soap_request;                // Soap request
+	protected $soap_request_retry = 0;	// Soap request retry counter
+
 	
 	/* Response */
 	protected $soap_response_xml;           // XML response buffer
@@ -251,6 +253,26 @@ class mobileid {
 		return true;
 	}
 
+        /**
+         * Mobileid reinitialize the MobileID request (Case sub_code = 20901)
+         *
+         * @return 	boolean	true on success, false on failure
+         */
+        private function reInitRequest() {
+                
+                // Reinitialize the soap request
+                $this->soap_request = '';
+                
+                // Reinitialize the error variables
+                $this->response_error = false;
+                $this->response_error_type = false;
+                $this->response_mss_status_code = '';
+                $this->response_soap_fault_subcode = '';
+                $this->response_status_message = '';
+                
+                return true;		
+        }
+
 	/**
 	* Mobileid check the response request
 	*
@@ -266,9 +288,26 @@ class mobileid {
 		/* Soap request response is an error */
 		if (!$this->isResponseRequestSuccess()) {
 			$this->setResponseError();
-			return;			
+			
+			/* If sub error code value is "20901", then we should do
+                         at least one transparent retry by sending the request again */
+			if ($this->response_soap_fault_subcode != '20901' || $this->soap_request_retry) {
+				return;
+			}
+                        
+			// Increment the number of tentativ
+			$this->soap_request_retry += 1;
+			
+			// Reinitialize the MobileID request
+			$this->reInitRequest();
+                        
+			// Set the AP Transaction
+			$this->setApTransaction();
+                        
+			// Resend the request
+			$this->sendRequest();
 		}
-		
+                
 		/* Set the response Datas */
 		if (!$this->setResponseData()) return;
         
