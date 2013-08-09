@@ -257,8 +257,9 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
                 $erroris = $mobileIdRequest->response_soap_fault_subcode;
 
             /* Check for transparent retry on applet language sync */
-            if ($erroris = '20901') {
-                $mobileIdRequest->sendRequest($this->msisdn, $this->language, $this->message);
+            if ($erroris == '20901') {
+                    SimpleSAML_Logger::warning('MobileID: transparent service recall due to applet language sync');
+                    $mobileIdRequest->sendRequest($this->msisdn, $this->language, $this->message);
             }
         }
                 
