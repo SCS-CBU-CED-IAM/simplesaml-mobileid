@@ -94,6 +94,8 @@ if (!in_array($erroris, $dico_code)) {
 }
 ````
 
+The error code 20901 (Applet Language resync) is handled with an automatic and transparent retry.
+
 Refer to the "Mobile ID - SOAP client reference guide" document from Swisscom for more details about error states.
 
 ### Message to be signed
@@ -104,4 +106,4 @@ Example: "http://serviceprovider.com: Authentication with Mobile ID?"
 The actual resources are translated in EN, DE, FR, IT. Refer to the files in the `dictionaries/`.
 
 ### Theming
-The module follows the 'Theming the user interface in SimpleSAMLphp' rules and it can overridden by copying and adjusting the ```mobileidtemplate.php```` in your own theming module.
+The module follows the 'Theming the user interface in SimpleSAMLphp' rules and it can overridden by copying and adjusting the `mobileidtemplate.php` in your own theming module.
