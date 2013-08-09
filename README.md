@@ -94,8 +94,6 @@ if (!in_array($erroris, $dico_code)) {
 }
 ````
 
-The error code 20901 (Applet Language resync) is handled with an automatic and transparent retry.
-
 Refer to the "Mobile ID - SOAP client reference guide" document from Swisscom for more details about error states.
 
 ### Message to be signed
