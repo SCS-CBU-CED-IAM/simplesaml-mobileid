@@ -191,7 +191,7 @@ class mobileid {
 		
 		/* Set the AP instant */
 		$timestamp = time();
-		$this->ap_instant = date('Y-m-d', $timestamp).'T'.date('H:i:s', $timestamp);
+		$this->ap_instant = date('Y-m-d', $timestamp).'T'.date('H:i:sP', $timestamp);
 	}
     
 	/**
