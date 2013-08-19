@@ -44,6 +44,7 @@ Optional configuration elements
     'remember_msisdn' => true,        // Remember the defined Mobile ID number in a session cookie
     'timeout_ws'      => 90,          // Timeout of the connexion to the Mobile ID service
     'timeout_mid'     => 80,          // Timeout of the Mobile ID request itself
+    'proxy'           => '',          // e.g. "my-proxy.com:8080", leave empty for no proxy
 ```
 
 ## Returned elements

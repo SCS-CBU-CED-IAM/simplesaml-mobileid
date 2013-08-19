@@ -15,9 +15,12 @@ class mobileid {
 	public $cert_key;                       // The related key of the certificate
 	public $cert_file;                      // The certificate that is allowed to access the service
 	public $ocsp_cert;                      // OCSP information of the signers certificate
-    private $ocsp_url;                      // OCSP url from the signers certificate
+        private $ocsp_url;                      // OCSP url from the signers certificate
 	public $TimeOutWSRequest  = 90;         // Timeout WS request
 	public $TimeOutMIDRequest = 80;         // Timeout MobileID request
+
+        /* Proxy configuration */
+        protected $curl_proxy;                  // HTTP (CONNECT) proxy
 
 	/* Soap request */
 	protected $ws_url;                      // WS Url
@@ -134,26 +137,29 @@ class mobileid {
 		$ch = curl_init();
 
 		/* Set all session options */
-		curl_setopt($ch, CURLOPT_URL, $this->ws_url);                   // URI
-		curl_setopt($ch, CURLOPT_FRESH_CONNECT, 1);						// No cache
+		curl_setopt($ch, CURLOPT_URL, $this->ws_url);                                   // URI
+		curl_setopt($ch, CURLOPT_FRESH_CONNECT, 1);                                     // No cache
 
 		/* SSL Certificate and keyfile */
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);					// SSL certificate verification
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);					// SSL certificate host name verification
-		curl_setopt($ch, CURLOPT_SSLVERSION, 3);						// Use version 3 of SSL
+		curl_setopt($ch, CURLOPT_SSLVERSION, 3);                                        // Use version 3 of SSL
 		curl_setopt($ch, CURLOPT_CAINFO, $this->cert_ca);				// Set the issued CA root certificates
-		curl_setopt($ch, CURLOPT_SSLCERT, $this->cert_file);			// Set the client certificate file
+		curl_setopt($ch, CURLOPT_SSLCERT, $this->cert_file);                            // Set the client certificate file
 		curl_setopt($ch, CURLOPT_SSLKEY, $this->cert_key);				// Set the private key file for client authentication
 		//curl_setopt($ch, CURLOPT_SSLKEYPASSWD, '');					// No password yet
 
 		/* HTTP protocol and stream options */
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);					// Allow redirects
-		curl_setopt($ch, CURLOPT_TIMEOUT, $this->TimeOutMIDRequest);	// Times out
-		curl_setopt($ch, CURLOPT_POST, 1); 								// Set POST method
+		curl_setopt($ch, CURLOPT_TIMEOUT, $this->TimeOutMIDRequest);                    // Times out
+		curl_setopt($ch, CURLOPT_POST, 1);                                              // Set POST method
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); 					// Return into a variable. This is IMPORTANT!
 
+                /* HTTP proxy */
+                curl_setopt($ch, CURLOPT_PROXY, $this->curl_proxy);                             // Set proxy
+                
 		/* add POST body */
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $this->soap_request); 		// Add POST fields (Soap envelop)
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $this->soap_request);                      // Add POST fields (Soap envelop)
 
 		/* Set custom headers */
 		$headers = array('Content-Type: text/xml', 'SOAPAction: "'.$this->ws_action.'"', 'Content-Length: '.strlen($this->soap_request) );
