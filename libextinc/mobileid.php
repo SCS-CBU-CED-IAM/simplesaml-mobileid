@@ -228,7 +228,9 @@ class mobileid {
 			  <mss:MSS_SignatureReq MinorVersion="1" MajorVersion="1" xmlns:mss="http://uri.etsi.org/TS102204/v1.1.2#" MessagingMode="synch" xmlns:fi="http://mss.ficom.fi/TS102204/v1.0.0#">
 				<mss:AP_Info AP_PWD="'.$this->ap_pwd.'" AP_TransID="'.$this->ap_trans_id.'" Instant="'.$this->ap_instant.'" AP_ID="'.$this->ap_id.'" />
 				<mss:MSSP_Info>
-				  <mss:MSSP_ID/>
+                                  <mss:MSSP_ID>
+                                    <mss:URI>http://mid.swisscom.ch/</mss:URI>
+                                  </mss:MSSP_ID>
 				</mss:MSSP_Info>
 				<mss:MobileUser>
 				  <mss:MSISDN>'.$this->MobileUser.'</mss:MSISDN>
