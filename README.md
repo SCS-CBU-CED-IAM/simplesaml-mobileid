@@ -13,7 +13,10 @@ mobileid:auth is a module for login with Mobile ID.
 
 
 ## Install
+
 Checkout the project directly from git under the `simplesamlphp/modules` folder
+  `cd <simplesamlphp>/modules`
+  `git clone https://github.com/SCS-CBU-CED-IAM/simplesaml-mobileid.git mobileid`
 
 Enable the cas module:
   `touch modules/mobileid/enable`
@@ -21,7 +24,7 @@ Enable the cas module:
 
 ## Configuration
 
-Put the certificates and keys into the cert/ directory.
+Put the Mobile ID related certificates and keys into the cert/ directory.
 
 Add the module in the sources `config/authsources.php`:
 
@@ -98,11 +101,14 @@ if (!in_array($erroris, $dico_code)) {
 Refer to the "Mobile ID - SOAP client reference guide" document from Swisscom for more details about error states.
 
 ### Message to be signed
-Is composed by "'hosturi': {mobileid:Auth:message}".  
+
+The message is composed by "'hosturi': {mobileid:Auth:message}".  
 Example: "http://serviceprovider.com: Authentication with Mobile ID?"
 
 ### Translations
+
 The actual resources are translated in EN, DE, FR, IT. Refer to the files in the `dictionaries/`.
 
 ### Theming
+
 The module follows the 'Theming the user interface in SimpleSAMLphp' rules and it can overridden by copying and adjusting the `mobileidtemplate.php` in your own theming module.
