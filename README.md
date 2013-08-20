@@ -14,9 +14,11 @@ mobileid:auth is a module for login with Mobile ID.
 
 ## Install
 
-Checkout the project directly from git under the `simplesamlphp/modules` folder
-  `cd <simplesamlphp>/modules`
-  `git clone https://github.com/SCS-CBU-CED-IAM/simplesaml-mobileid.git mobileid`
+Checkout the project directly from git under the `simplesamlphp/modules` folder:
+```
+  cd <simplesamlphp>/modules
+  git clone https://github.com/SCS-CBU-CED-IAM/simplesaml-mobileid.git mobileid
+```
 
 Enable the cas module:
   `touch modules/mobileid/enable`
