@@ -6,7 +6,7 @@
 		"en": "The mobile number is invalid"
 	},
 	"descr_105": {
-		"en": "Mobile ID has not been activated for this subscriber number. To be able to use Mobile ID, it has to be ordered and activated first. Please visit the Swisscom Site at <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>"
+		"en": "Mobile ID has not been ordered or is not activated for this subscriber number. To be able to use Mobile ID, it has to be ordered and activated first. Please visit the Swisscom Site at <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>"
 	},
 	"descr_208": {
 		"en": "Transaction Expiry date has been reached or Time out has elapsed. Please try again. If the error persists, contact Swisscom at <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>"

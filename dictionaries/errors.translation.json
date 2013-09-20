@@ -10,9 +10,9 @@
 		"it": "Il numero mobile è invalido"
 	},
 	"descr_105": {
-		"de": "Die Rufnummer ist nicht für Mobile ID aktiviert. Um Mobile ID nutzen zu können, muss die Option auf einem Swisscom Mobilvertrag bestellt und aktiviert werden. Bitte besuchen Sie das Swisscom Portal unter <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>",
-		"fr": "Pour ce numéro d'appel la Mobile ID n'a pas été activée. Pour pouvoir utiliser la Mobile ID, cette option doit être commandée et activée sur le contrat mobile Swisscom en question. Veuillez visiter le portail de Swisscom <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>",
-		"it": "Mobile ID non é stato attivato per questa utenza. Per poter utilizzare Mobile ID, deve essere comandata come opzione di un contratto Swisscom di telefonia mobile. Per ulteriori informazioni consulti il portale Swisscom <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>"
+		"de": "Mobile ID ist für diese Rufnummer noch nicht bestellt worden oder ist nicht aktiviert. Um Mobile ID nutzen zu können, muss die Option auf einem Swisscom Mobilvertrag bestellt und aktiviert werden. Bitte besuchen Sie das Swisscom Portal unter <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>",
+		"fr": "Mobile ID n'a pas encore été commandée ou n'est pas activée pour ce numéro d'appel. Pour pouvoir utiliser la Mobile ID, cette option doit être commandée et activée sur le contrat mobile Swisscom en question. Veuillez visiter le portail de Swisscom <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>",
+		"it": "Mobile ID non è stato ancora ordinato o non è attivato per questo numero di telefono. Per poter utilizzare Mobile ID, deve essere comandata come opzione di un contratto Swisscom di telefonia mobile. Per ulteriori informazioni consulti il portale Swisscom <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>"
 	},
 	"descr_208": {
 		"de": "Gültigkeitsdatum der Transaktion ist abgelaufen oder das Timeout wurde erreicht. Bitte versuchen Sie es erneut. Falls der Fehler wiederholt auftritt, wenden Sie sich an Swisscom unter <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>",
