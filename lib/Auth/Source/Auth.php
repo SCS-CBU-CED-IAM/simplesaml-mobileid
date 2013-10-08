@@ -217,7 +217,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         if (strlen($suisseid) != 16) return('');
 
         /* Add - */
-        $suisseid = substr($suisseid, 0, 4) . '-' . substr($suisseid, 5, 4) . '-' . substr($suisseid, 9, 4) . '-' . substr($suisseid, 13, 4);
+        $suisseid = substr($suisseid, 0, 4) . '-' . substr($suisseid, 4, 4) . '-' . substr($suisseid, 8, 4) . '-' . substr($suisseid, 12, 4);
         
         return $suisseid;
     }
