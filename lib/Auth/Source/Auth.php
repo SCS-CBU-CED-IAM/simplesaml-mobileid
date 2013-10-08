@@ -196,23 +196,28 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
     /* A helper function for generating a SuisseID number.
      *
      * Based on MSISDN like 0041792080350 we generate a SuisseID conform number
-     * 1100-9xxy-yyyy-yyyy where xx is International Prefix and yyy the number itself
+     * for Switzerland and Lichtenstein only. For the others an empty string will be returned.
      */
     private function getSuisseIDfrom($msisdn) {
         /* Ensure clean format */
-        $suisseid = $this->getMSISDNfrom($msisdn, '00');
+        $msisdn = $this->getMSISDNfrom($msisdn, '00');
         
-        /* Return empty if not valid US / World number */
-        if (strlen($suisseid) != 12 && strlen($suisseid) != 13) return '';
-        
-        /* Set prefix for non american / american numbers */
-        if (substr($suisseid, 0, 2) == '00')            // Non american number
-            $suisseid = '1100-7' . substr($suisseid, 2);
-        else                                            // -> american number needs one 0 more
-            $suisseid = '1100-70' . substr($suisseid, 1);
-        
+        /* Country based whitelisting */
+        if (substr($msisdn, 0, 4) == '0041') {          // Switzerland
+            $msisdn = str_pad(substr($msisdn, 4), 9, "0", STR_PAD_LEFT);
+            $suisseid = '1100741' . $msisdn;
+            }
+        elseif (substr($msisdn, 0, 5) == '00423') {     // Lichtenstein
+            $msisdn = str_pad(substr($msisdn, 5), 8, "0", STR_PAD_LEFT);
+            $suisseid = '11007423' . $msisdn;
+            }
+        else return('');                                // Blacklisted
+
+        /* Check valid number */
+        if (strlen($suisseid) != 16) return('');
+
         /* Add - */
-        $suisseid = substr($suisseid, 0, 9) . '-' . substr($suisseid, 9, 4) . '-' . substr($suisseid, 13, 4);
+        $suisseid = substr($suisseid, 0, 4) . '-' . substr($suisseid, 5, 4) . '-' . substr($suisseid, 9, 4) . '-' . substr($suisseid, 13, 4);
         
         return $suisseid;
     }
