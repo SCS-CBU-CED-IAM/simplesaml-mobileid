@@ -20,7 +20,7 @@ class mobileid {
 	public $TimeOutMIDRequest = 80;         // Timeout MobileID request
 
         /* Proxy configuration */
-        protected $curl_proxy;                  // HTTP (CONNECT) proxy
+        public $curl_proxy;                  // HTTP (CONNECT) proxy
 
 	/* Soap request */
 	protected $ws_url;                      // WS Url
