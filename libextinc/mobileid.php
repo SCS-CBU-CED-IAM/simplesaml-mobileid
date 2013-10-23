@@ -587,7 +587,7 @@ class mobileid {
 	*/
 	private function checkRevocationStatus() {
         $result = file($this->file_sig_cert_check);
-		$status = explode(':', $result[0]);
+		$status = (count($result)>0) ? explode(':', $result[0]) : 'failed';
 		
 		switch(trim($status[1])) {
 		case 'revoked':
