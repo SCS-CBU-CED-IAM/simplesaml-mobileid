@@ -253,7 +253,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         $mobileIdRequest->ocsp_cert = $this->mid_ocsp;
         if ($this->mid_timeout_mid) $mobileIdRequest->TimeOutMIDRequest = (int)$this->mid_timeout_mid;
         if ($this->mid_timeout_ws) $mobileIdRequest->TimeOutWSRequest = (int)$this->mid_timeout_ws;
-        if ($this->curl_proxy) $mobileIDRequest->curl_proxy = $this->curl_proxy;
+        if ($this->curl_proxy) $mobileIdRequest->curl_proxy = $this->curl_proxy;
         
         /* Call Mobile ID */
         $mobileIdRequest->sendRequest($this->msisdn, $this->language, $this->message);
