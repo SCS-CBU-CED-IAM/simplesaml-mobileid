@@ -55,6 +55,7 @@ class mobileid {
 	public $data_response_mobile_user;
 	public $data_response_certificate;
 	public $data_response_certificate_status;
+	public $data_response_certificate_pem;
 
 	/* Response logs */
 	public $response_error = false;		 	// Error
@@ -543,7 +544,8 @@ class mobileid {
 		}
 		
 		$this->data_response_certificate = $certificate_data;
-		
+		$this->data_response_certificate_pem = file_get_contents($this->file_sig_cert);
+
 		return true;
 	}
 

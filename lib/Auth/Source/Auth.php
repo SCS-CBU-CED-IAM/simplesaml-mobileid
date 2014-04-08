@@ -298,6 +298,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
             'pseudonym' => array($this->getSuisseIDfrom($this->msisdn)),
             'serialNumber' => array($mobileIdRequest->data_response_certificate['subject']['serialNumber']),
             'preferredLanguage' => array($this->language),
+            'userCertificate' => array($mobileIdRequest->data_response_certificate_pem),
             /* TODO: Remove backwards compatibility attributes */
             'noredupersonnin' => array($this->getSuisseIDfrom($this->msisdn)),
             'edupersontargetedid' => array($mobileIdRequest->data_response_certificate['subject']['serialNumber']),
