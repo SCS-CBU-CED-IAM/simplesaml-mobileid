@@ -56,11 +56,17 @@ Optional configuration elements
 
 ### Attributes
 
-`uid`:                  the userid attribute defined at the login window  
-`mobile`:               the Mobile ID validated mobile number in international format with 00 as prefix  
-`noredupersonnin`:      the `mobile` attribute in the Swisscom SuisseID format 1100-7<mobile> e.g 1100-7417-9208-0350  
-`edupersontargetedid `: the persistent anonym ID for the Mobile ID  
-`preferredLanguage`:    the language used during the validation process  
+`uid`:                  the userid attribute provided at the login window
+`mobile`:               the Mobile ID number in international format with 00 as prefix
+`preferredLanguage`:    the language used during the validation process
+`userCertificate`:      the Mobile ID user certificate (PEM encoded)
+`serialNumber`:         the SerialNumber of the Distinguished Name (DN) in the related Mobile ID user certificate
+`pseudonym`:            the `mobile` attribute in the Swisscom SuisseID format 1100-7<mobile> e.g 1100-7417-9208-0350
+
+Depreciated attributes that will be removed in upcoming releases:
+`noredupersonnin`:      replaced by `pseudonym`
+`edupersontargetedid `: replaced by `serialNumber`
+
 
 ### AuthnContext
 
