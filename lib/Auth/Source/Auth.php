@@ -22,14 +22,14 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
     private $message = 'Login with Mobile ID?';
     private $ap_id;
     private $ap_pwd = "disabled";
-    private $cert_file;
-    private $cert_key;
-    private $mid_ca;
-    private $mid_ocsp;
-    private $mid_timeout_ws;
-    private $mid_timeout_mid;
+    private $certkey_file;
+    private $ssl_ca_file;
+    private $mid_ca_file;
     private $remember_msisdn = FALSE;
-    private $curl_proxy = '';
+    private $proxy_host = '';
+    private $proxy_port;
+    private $proxy_login;
+    private $proxy_password;
 
 	/**
 	 * Constructor for this authentication source.
@@ -60,44 +60,41 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 			throw new Exception('MobileID: Missing or invalid ap_pwd option in config.');
 		$this->ap_pwd = $config['ap_pwd'];
 
-        if (!isset($config['cert_file']))
-			throw new Exception('MobileID: Missing or invalid cert_file option in config.');
-        $this->cert_file = SimpleSAML_Utilities::resolvePath($config['cert_file'], $certdir);
-        if (!file_exists($this->cert_file))
-            throw new Exception('MobileID: Missing or invalid cert_file option in config: ' . $this->cert_file);
+        if (!isset($config['certkey_file']))
+			throw new Exception('MobileID: Missing or invalid certkey_file option in config.');
+        $this->certkey_file = SimpleSAML_Utilities::resolvePath($config['certkey_file'], $certdir);
+        if (!file_exists($this->certkey_file))
+            throw new Exception('MobileID: Missing or invalid certkey_file option in config: ' . $this->certkey_file);
 
-        if (!isset($config['cert_key']))
-			throw new Exception('MobileID: Missing or invalid cert_key option in config.');
-        $this->cert_key = SimpleSAML_Utilities::resolvePath($config['cert_key'], $certdir);
-        if (!file_exists($this->cert_key))
-            throw new Exception('MobileID: Missing or invalid cert_key option in config: ' . $this->cert_key);
-
-        if (!isset($config['mid_ca']))
-			throw new Exception('MobileID: Missing or invalid mid_ca option in config.');
-        $this->mid_ca = SimpleSAML_Utilities::resolvePath($config['mid_ca'], $certdir);
-        if( !file_exists($this->mid_ca))
-            throw new Exception('MobileID: Missing or invalid mid_ca option in config: ' . $this->mid_ca);
+        if (!isset($config['ssl_ca_file']))
+			throw new Exception('MobileID: Missing or invalid ssl_ca_file option in config.');
+        $this->ssl_ca_file = SimpleSAML_Utilities::resolvePath($config['ssl_ca_file'], $certdir);
+        if( !file_exists($this->ssl_ca_file))
+            throw new Exception('MobileID: Missing or invalid ssl_ca_file option in config: ' . $this->ssl_ca_file);
         
-        if (!isset($config['mid_ocsp']))
-			throw new Exception('MobileID: Missing or invalid mid_ocsp option in config.');
-        $this->mid_ocsp = SimpleSAML_Utilities::resolvePath($config['mid_ocsp'], $certdir);
-        if (!file_exists($this->mid_ocsp))
-            throw new Exception('MobileID: Missing or invalid mid_ocsp option in config: ' . $this->mid_ocsp);
+        if (!isset($config['mid_ca_file']))
+			throw new Exception('MobileID: Missing or invalid mid_ca_file option in config.');
+        $this->mid_ca_file = SimpleSAML_Utilities::resolvePath($config['mid_ca_file'], $certdir);
+        if (!file_exists($this->mid_ca_file))
+            throw new Exception('MobileID: Missing or invalid mid_ca_file option in config: ' . $this->mid_ca_file);
                 
         /* Optional options */
         if (isset($config['default_lang']))
             $this->language = $config['default_lang'];
         
-        if (isset($config['timeout_ws']))
-            $this->mid_timeout_ws = $config['timeout_ws'];
-        
-        if (isset($config['timeout_mid']))
-            $this->mid_timeout_mid = $config['timeout_mid'];
-
         if (isset($config['remember_msisdn']))
             $this->remember_msisdn = $config['remember_msisdn'];
-        if (isset($config['proxy']))
-            $this->curl_proxy = $config['proxy'];
+
+        if (isset($config['proxy_host'])) {
+            $this->proxy_host = $config['proxy_host'];
+            if (isset($config['proxy_port']))
+                $this->proxy_port = $config['proxy_port'];
+            if (isset($config['proxy_login'])) {
+                $this->proxy_login = $config['proxy_login'];
+                if (isset($config['proxy_password']))
+                    $this->proxy_password = $config['proxy_password'];
+            }
+        }
 	}
 
 	/**
@@ -117,7 +114,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 		if ($this->remember_msisdn) {
 			$state['remember_msisdn'] = $this->remember_msisdn;
 		}
-		
+
 		$id = SimpleSAML_Auth_State::saveState($state, self::STAGEID);
 
 		$url = SimpleSAML_Module::getModuleURL('mobileid/mobileidlogin.php');
@@ -244,32 +241,33 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         $this->msisdn = $this->getMSISDNfrom($username, '+');
         SimpleSAML_Logger::info('MobileID: Login of ' . var_export($this->uid, TRUE) . ' as ' . var_export($this->msisdn, TRUE));
         SimpleSAML_Logger::info('MobileID:   Message ' . var_export($this->message, TRUE) . ' in ' . var_export($this->language, TRUE));
-        
+
+        /* Mobile ID class options */
+        $myoptions = array();
+        if (isset($this->proxy_host) && (string)$this->proxy_host != '') {
+            $myoptions['proxy_host'] = $this->proxy_host;
+            if (isset($this->proxy_port))
+                $myoptions['proxy_port'] = $this->proxy_port;
+            if (isset($this->proxy_login)) {
+                $myoptions['proxy_login'] = $this->proxy_login;
+                if (isset($this->proxy_password))
+                    $myoptions['proxy_password'] = $this->proxy_password;
+            }
+        }
         /* New instance of the Mobile ID class */
-        $mobileIdRequest = new mobileid($this->ap_id, $this->ap_pwd);
-        $mobileIdRequest->cert_file = $this->cert_file;
-        $mobileIdRequest->cert_key  = $this->cert_key;
-        $mobileIdRequest->cert_ca   = $this->mid_ca;
-        $mobileIdRequest->ocsp_cert = $this->mid_ocsp;
-        if ($this->mid_timeout_mid) $mobileIdRequest->TimeOutMIDRequest = (int)$this->mid_timeout_mid;
-        if ($this->mid_timeout_ws) $mobileIdRequest->TimeOutWSRequest = (int)$this->mid_timeout_ws;
-        if ($this->curl_proxy) $mobileIdRequest->curl_proxy = $this->curl_proxy;
-        
-        /* Call Mobile ID */
-        $mobileIdRequest->sendRequest($this->msisdn, $this->language, $this->message);
-                
-        /* Error handling */
-        if ($mobileIdRequest->response_error) {
-            $erroris = 'DEFAULT';
-            /* Get error code from status code or fault subcode */
-            if (strlen($mobileIdRequest->response_mss_status_code))
-                $erroris = $mobileIdRequest->response_mss_status_code;
-            if (strlen($mobileIdRequest->response_soap_fault_subcode))
-                $erroris = $mobileIdRequest->response_soap_fault_subcode;
-            
-            /* Define error text */
-            $errortxt = $erroris . ' -> ' . $mobileIdRequest->response_status_message;
-            
+        $mobileID = new mobileid($this->ap_id, $this->ap_pwd, $this->certkey_file, $this->ssl_ca_file, $myoptions);
+
+        /* Call Mobile ID Signature Request */
+        if (! $mobileID->signature($this->msisdn, $this->message, $this->language, $this->mid_ca_file)) {
+            /* Get error code and detail */
+            $erroris = $mobileID->statuscode;
+            $errortxt = $erroris . ' -> ' . $mobileID->statusmessage;
+            if (strlen($mobileID->statusdetail))
+                $errortxt = $errortxt . ' (' . $mobileID->statusdetail . ')';
+
+            /* Remove the mss:_ prefix in the error code if present */
+            $erroris = preg_replace('/^mss:_/', '', $erroris);
+
             /* Filter the configuration errors */
             $exception_code = array("102", "103", "104", "107", "108", "109");
             if (in_array($erroris, $exception_code)) {
@@ -277,7 +275,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
                 throw new Exception('MobileID: error in service call ' . var_export($errortxt, TRUE));
             }
  
-            /* Filter the dictionnaries errors and map the rest to default */
+            /* Filter the dictionaries errors and map the rest to default */
             $dico_code = array("101", "105", "208", "209", "401", "402", "403", "404", "406", "422", "501", "503");
             if (!in_array($erroris, $dico_code)) {
                 $erroris = 'DEFAULT';
@@ -293,15 +291,15 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 
         /* Create the attribute array of the user. */
         $attributes = array(
-            'uid' => array($this->uid),
-            'mobile' => array($this->getMSISDNfrom($this->msisdn, '00')),
-            'pseudonym' => array($this->getSuisseIDfrom($this->msisdn)),
-            'serialNumber' => array($mobileIdRequest->data_response_certificate['subject']['serialNumber']),
+            'uid'               => array($this->uid),
+            'mobile'            => array($this->getMSISDNfrom($this->msisdn, '00')),
+            'pseudonym'         => array($this->getSuisseIDfrom($this->msisdn)),
+            'serialNumber'      => array($mobileID->mid_serialnumber),
             'preferredLanguage' => array($this->language),
-            'userCertificate' => array($mobileIdRequest->data_response_certificate_pem),
+            'userCertificate'   => array($mobileID->mid_certificate),
             /* TODO: Remove backwards compatibility attributes */
-            'noredupersonnin' => array($this->getSuisseIDfrom($this->msisdn)),
-            'edupersontargetedid' => array($mobileIdRequest->data_response_certificate['subject']['serialNumber']),
+            'noredupersonnin'     => array($this->getSuisseIDfrom($this->msisdn)),
+            'edupersontargetedid' => array($mobileID->mid_serialnumber),
             /* TODO: End of attributes to be removed */
         );
         

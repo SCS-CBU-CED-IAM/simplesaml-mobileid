@@ -9,7 +9,7 @@ Refer to project documentation for more details:
 
 ## Overview
 
-mobileid:auth is a module for login with Mobile ID.
+mobileid:auth is a module for login with Mobile ID. 
 
 
 ## Install
@@ -33,10 +33,9 @@ Add the module in the sources `config/authsources.php`:
 ```
 'MobileID' => array(
     'mobileid:Auth',
-    'cert_file'    => 'mycert.crt',                       // File containing the certificate for the Mutual Authentication
-    'cert_key'     => 'mycert.key',                       // File containing the private key of the related certificate
-    'mid_ca'       => 'swisscom-ca.crt',                  // CA bag file for the trust anchor validation of the signature response
-    'mid_ocsp'     => 'swisscom-ocsp.crt',                // OCSP bag file for the revocation check of the signature response
+    'certkey_file' => 'mycertandkey.crt',                 // File containing the certificate and private key for the authentication
+    'ssl_ca_file'  => 'swisscom-ca-ssl.crt',              // CA file for the HTTPS connection
+    'mid_ca_file'  => 'swisscom-ca-signature.crt',        // CA file for the trust anchor validation of the signature response
     'hosturi'      => 'https://myidp.com',                // Host prefix for the message to be signed
     'ap_id'        => '<ID provided by Swisscom>',        // ID of the service provider
     'ap_pwd'       => '<Password provided by Swisscom>',  // Password of the service provider
@@ -45,11 +44,12 @@ Add the module in the sources `config/authsources.php`:
 
 Optional configuration elements
 ```
-    'default_lang'    => 'en|de|..',  // Default language of the signature request
-    'remember_msisdn' => true,        // Remember the defined Mobile ID number in a session cookie
-    'timeout_ws'      => 90,          // Timeout of the connexion to the Mobile ID service
-    'timeout_mid'     => 80,          // Timeout of the Mobile ID request itself
-    'proxy'           => '',          // e.g. 'my-proxy.com:8080', leave empty for no proxy
+    'default_lang'    => 'en|de|..',    // Default language of the signature request; en if option not set
+    'remember_msisdn' => true,          // Remember the Mobile ID number in a session cookie; false if option not set
+    'proxy_host'      => '',            // e.g. 'my-proxy.com'
+    'proxy_port'      => 8080,          // Only relevant if proxy_host is set
+    'proxy_login'     => 'proxyuser',   // Only relevant if proxy_host is set
+    'proxy_password'  => 'pwd',         // Only relevant if proxy_login is set
 ```
 
 ## Returned elements
