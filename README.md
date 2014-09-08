@@ -26,14 +26,22 @@ Enable the cas module:
 
 ## Configuration
 
-Put the Mobile ID related certificates and keys into the cert/ directory.
+Put the Mobile ID related certificates into the cert/ directory in the PEM format. The `certkey_file` file must contain both private key and certificate in PEM format (`cat mycert.crt mycert.key > mycertandkey.crt`). Example of content:
+````
+-----BEGIN PRIVATE KEY-----
+...
+-----END PRIVATE KEY-----
+-----BEGIN CERTIFICATE-----
+...
+-----END CERTIFICATE-----
+````
 
 Add the module in the sources `config/authsources.php`:
 
 ```
 'MobileID' => array(
     'mobileid:Auth',
-    'certkey_file' => 'mycertandkey.crt',                 // File containing the certificate and private key for the authentication
+    'certkey_file' => 'mycertandkey.crt',                 // File with private key and certificate for the authentication
     'ssl_ca_file'  => 'swisscom-ca-ssl.crt',              // CA file for the HTTPS connection
     'mid_ca_file'  => 'swisscom-ca-signature.crt',        // CA file for the trust anchor validation of the signature response
     'hosturi'      => 'https://myidp.com',                // Host prefix for the message to be signed
