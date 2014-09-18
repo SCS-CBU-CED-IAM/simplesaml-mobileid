@@ -88,6 +88,11 @@ Will return a Status with following status Codes:
 <samlp:StatusCode Value="urn:oasis:names:tc:SAML:2.0:status:AuthnFailed">
 ````
 
+Note: if cancel is done directly from the 'Test configured authentication sources' at the IDP it will raise an exception as it doesn't know where to return the status Code:
+```
+Exception during login:
+sspmod_saml_Error: Responder/AuthnFailed
+```
 
 ## Advanced configuration
 

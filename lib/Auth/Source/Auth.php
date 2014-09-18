@@ -19,7 +19,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
     private $uid;
     private $msisdn;
     private $language = 'en';
-    private $message = 'Login with Mobile ID?';
+    private $message = 'Authentication with Mobile ID?';
     private $ap_id;
     private $ap_pwd = "disabled";
     private $certkey_file;
