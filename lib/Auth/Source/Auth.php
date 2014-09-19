@@ -115,7 +115,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 			$state['remember_msisdn'] = $this->remember_msisdn;
 		}
 
-var_export($state, TRUE);
+SimpleSAML_Logger::info('****' . var_export($state, TRUE));
         /* Enable "cancel" for proper SAML request */
         if (isset($state['saml:RequestId'])) {
             $state['enable_cancel'] = TRUE;

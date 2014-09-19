@@ -16,7 +16,7 @@ $this->data['autofocus'] = 'msisdn';
 $this->includeAtTemplateBase('includes/header.php');
 
 $this->data['cancel'] = '';
-if ($this->data['enable_cancel'] !== NULL) {
+if (isset($this->data['enable_cancel']) && $this->data['enable_cancel']) {
     $this->data['cancel'] = '<input type="button" value="' . $this->t('{mobileid:Auth:form_btn_cancel}') . '" class="float-l mobileid-btn-cancel" id="submit_btn_cancel" />';
 }
 
