@@ -15,6 +15,10 @@ $this->data['header'] = $this->t('{mobileid:Auth:header}');
 $this->data['autofocus'] = 'msisdn';
 $this->includeAtTemplateBase('includes/header.php');
 
+$this->data['cancel'] = '<input type="button" value="' . $this->t('{mobileid:Auth:form_btn_send}') . '" class="float-r mobileid-btn-send" id="submit_btn_send" />'
+if (isset($this->data['disable_cancel') && $this->data['disable_cancel'] == TRUE)
+  $this->data['cancel'] = ''
+
 if ($this->data['errorcode'] !== NULL && array_key_exists('msisdn', $_REQUEST)) {
 	$_COOKIE["msisdn"] = $_REQUEST['msisdn'];
 }
@@ -37,7 +41,10 @@ if ($this->data['errorcode'] !== NULL && array_key_exists('msisdn', $_REQUEST)) 
 			<tr>
 				<td>&nbsp;</td>
 				<td>
-					<input type="button" value="<?php echo $this->t('{mobileid:Auth:form_btn_cancel}'); ?>" class="float-l mobileid-btn-cancel" id="submit_btn_cancel" />
+                    <?php
+                    if ($this->data['cancel'] !== '')
+                        echo($this->data['cancel']);
+                    ?>
 					<input type="button" value="<?php echo $this->t('{mobileid:Auth:form_btn_send}'); ?>" class="float-r mobileid-btn-send" id="submit_btn_send" />
 				</td>
 			</tr>

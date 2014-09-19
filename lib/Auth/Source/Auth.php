@@ -110,10 +110,15 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 		/* We are going to need the authId in order to retrieve this authentication source later. */
 		$state[self::AUTHID] = $this->authId;
 
-		/* Remember mobile number. */
+		/* Remember mobile number */
 		if ($this->remember_msisdn) {
 			$state['remember_msisdn'] = $this->remember_msisdn;
 		}
+
+        /* Disable "cancel" in not a proper SAML request */
+        if (isset($state['saml:RequestId'])) {
+            $state['disable_cancel'] = TRUE;
+        }
 
 		$id = SimpleSAML_Auth_State::saveState($state, self::STAGEID);
 
