@@ -23,7 +23,6 @@ if (isset($_SESSION['enable_cancel']) && $_SESSION['enable_cancel']) {
 if ($this->data['errorcode'] !== NULL && array_key_exists('msisdn', $_REQUEST)) {
 	$_COOKIE["msisdn"] = $_REQUEST['msisdn'];
 }
-SimpleSAML_Logger::info('****' . var_export($_SESSION, TRUE));
 ?>
 <div style="border-left: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; background: #f5f5f5; display:none;" id="msg_error">
 	<img src="/<?php echo $this->data['baseurlpath']; ?>resources/icons/experience/gtk-dialog-error.48x48.png" class="float-l" style="margin: 15px " />
