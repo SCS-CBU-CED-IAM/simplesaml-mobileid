@@ -118,6 +118,8 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         /* Enable "cancel" for proper SAML request */
         if (isset($state['saml:RequestId'])) {
             $_SESSION['enable_cancel'] = TRUE;
+        } else {
+            $_SESSION['enable_cancel'] = FALSE;
         }
 
 		$id = SimpleSAML_Auth_State::saveState($state, self::STAGEID);
