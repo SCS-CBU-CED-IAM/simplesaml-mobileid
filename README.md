@@ -71,7 +71,7 @@ Optional configuration elements
 * `serialNumber`:         the SerialNumber of the Distinguished Name (DN) in the related Mobile ID user certificate
 * `pseudonym`:            the `mobile` attribute in the Swisscom SuisseID format 1100-7<mobile> e.g 1100-7417-9208-0350
 
-Depreciated attributes that will be removed in upcoming releases:
+Depreciated attributes that have been removed:
 * `noredupersonnin`:      replaced by `pseudonym`
 * `edupersontargetedid `: replaced by `serialNumber`
 

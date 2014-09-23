@@ -304,10 +304,6 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
             'serialNumber'      => array($mobileID->mid_serialnumber),
             'preferredLanguage' => array($this->language),
             'userCertificate'   => array($mobileID->mid_certificate),
-            /* TODO: Remove backwards compatibility attributes */
-            'noredupersonnin'     => array($this->getSuisseIDfrom($this->msisdn)),
-            'edupersontargetedid' => array($mobileID->mid_serialnumber),
-            /* TODO: End of attributes to be removed */
         );
         
         /* Return the attributes. */
