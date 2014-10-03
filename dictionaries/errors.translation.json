@@ -10,7 +10,7 @@
 		"it": "Il numero mobile è invalido"
 	},
 	"descr_105": {
-		"de": "Mobile ID ist für diese Rufnummer noch nicht bestellt worden oder ist nicht aktiviert. Um Mobile ID nutzen zu können, muss die Option auf einem Swisscom Mobilvertrag bestellt und aktiviert werden. Bitte besuchen Sie das Swisscom Portal unter <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>",
+		"de": "Mobile ID ist für diese Rufnummer noch nicht bestellt worden oder ist nicht aktiviert. Besuchen Sie bitte <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a> um die Mobile ID zu aktivieren.",
 		"fr": "Mobile ID n'a pas encore été commandée ou n'est pas activée pour ce numéro d'appel. Pour pouvoir utiliser la Mobile ID, cette option doit être commandée et activée sur le contrat mobile Swisscom en question. Veuillez visiter le portail de Swisscom <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>",
 		"it": "Mobile ID non è stato ancora ordinato o non è attivato per questo numero di telefono. Per poter utilizzare Mobile ID, deve essere comandata come opzione di un contratto Swisscom di telefonia mobile. Per ulteriori informazioni consulti il portale Swisscom <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>"
 	},
@@ -25,17 +25,17 @@
 		"it": "Il servizio non è riuscito per contattare la strumentazione mobile dell'utilizzatore finale. (Connessione scadente…). Riprovi di nuovo. Nel caso del ripetersi dell'errore contatti Swisscom <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>"
 	},
 	"descr_401": {
-		"de": "Der Vorgang wurde vom Nutzer abgebrochen. Damit der Vorgang abgeschlossen werden kann, muss der Benutzer die Anfrage akzeptieren und seinen Mobile ID PIN eingeben. Weitere Hinweise finden Sie auf <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>",
+		"de": "Der Vorgang wurde vom Nutzer abgebrochen. Damit der Vorgang abgeschlossen werden kann, müssen Sie die Anfrage akzeptieren und die Mobile ID PIN eingeben. Weitere Hinweise finden Sie auf <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>",
 		"fr": "La requête a été annulée par l'utilisateur. Pour terminer la requête elle doit être acceptée et confirmée avec le PIN de la Mobile ID par l'utilisateur en question. Plus d'information disponible sur le portail de Swisscom <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>",
 		"it": "La richiesta é stata cancellata dal utilizzatore. Per completare la procedura, l'utilizzatore deve accettare la richiesta e digitare il suo codice PIN Mobile ID. Per ulteriori informazioni consulti il portale Swisscom <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>"
 	},
 	"descr_402": {
-		"de": "Die Mobile ID PIN des Nutzers ist gesperrt. Um Mobile ID erneut nutzen zu können, muss der Benutzer mit Hilfe von Swisscom seine Mobile ID PIN neu setzen. Weitere Hinweise finden Sie auf <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>",
+		"de": "Ihre Mobile ID PIN ist gesperrt. Besuchen Sie bitte <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a> um Ihren PIN zurückzusetzen",
 		"fr": "Le PIN de la Mobile ID de l'utilisateur est bloqué. Pour pouvoir réutiliser la Mobile ID, l'utilisateur doit contacter Swisscom pour définir un nouveau PIN. Veuillez visiter le portail de Swisscom <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>",
 		"it": "Il codice PIN Mobile ID dell'utilizzatore é bloccato. Per poter di nuovo utilizzare Mobilie ID, l'utilizzatore deve definire un nuovo codice PIN Mobilie ID tramite Swisscom. Per ulteriori informazioni consulti il portale Swisscom <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>"
 	},
 	"descr_403": {
-		"de": "Die Rufnummer des Nutzers ist gesperrt. Um Mobile ID erneut nutzen zu können muss der Benutzer zuerst seine Mobilnummer entsperren lassen. Weitere Hinweise finden Sie auf <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>",
+		"de": "Ihre Rufnummer ist gesperrt. Um Mobile ID erneut nutzen zu können müssen Sie zuerst ihre Mobilnummer entsperren lassen.",
 		"fr": "Le numéro d'appel de l'utilisateur est bloqué. Pour pouvoir utiliser la Mobile ID, l'utilisateur doit d'abord faire débloquer son numéro d'appel. Plus d'informations disponible sur le portail de Swisscom <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>",
 		"it": "Il numero di telefonia mobile dell'utenza é bloccato. Per poter di nuovo utilizzare Mobilie ID, l'utilizzatore deve sbloccare il numero mobile tramite Swisscom. Per ulteriori informazioni consulti il portale Swisscom <a href='http://swisscom.com/mobileid' target='_blank'>http://swisscom.com/mobileid</a>"
 	},
