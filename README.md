@@ -26,7 +26,9 @@ Enable the cas module:
 
 ## Configuration
 
-Put the Mobile ID related certificates into the cert/ directory in the PEM format. The `certkey_file` file must contain both private key and certificate in PEM format (`cat mycert.crt mycert.key > mycertandkey.crt`). Example of content:
+Put the Mobile ID related certificates into the cert/ directory in the PEM format. For proper signature validation the `mid_ca_file` must contain all relevant issuing(s) and root CA certificates. Sample CA files can be found here [doc_cafiles/](doc_cafiles).
+
+The `certkey_file` file must contain both private key and certificate in PEM format (`cat mycert.crt mycert.key > mycertandkey.crt`). Example of content:
 ````
 -----BEGIN PRIVATE KEY-----
 ...
