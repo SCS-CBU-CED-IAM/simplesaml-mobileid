@@ -60,6 +60,7 @@ Optional configuration elements
     'proxy_port'      => 8080,          // Only relevant if proxy_host is set
     'proxy_login'     => 'proxyuser',   // Only relevant if proxy_host is set
     'proxy_password'  => 'pwd',         // Only relevant if proxy_login is set
+    'service_url'     => 'https://...', // Mobile ID service URL, e.g. 'https://mobileid.swisscom.com'
 ```
 
 ## Returned elements

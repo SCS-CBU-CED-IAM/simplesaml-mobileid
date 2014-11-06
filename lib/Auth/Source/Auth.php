@@ -30,6 +30,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
     private $proxy_port;
     private $proxy_login;
     private $proxy_password;
+    private $service_url = '';
 
 	/**
 	 * Constructor for this authentication source.
@@ -95,6 +96,9 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
                     $this->proxy_password = $config['proxy_password'];
             }
         }
+
+        if (isset($config['service_url']))
+            $this->service_url = $config['service_url'];
 	}
 
 	/**
@@ -263,6 +267,10 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         }
         /* New instance of the Mobile ID class */
         $mobileID = new mobileid($this->ap_id, $this->ap_pwd, $this->certkey_file, $this->ssl_ca_file, $myoptions);
+        /* Handle special options */
+        if (isset($this->service_url) && (string)$this->service_url != '') {
+            $mobileID->setBaseURL($this->service_url);
+        }
 
         /* Call Mobile ID Signature Request */
         if (! $mobileID->signature($this->msisdn, $this->message, $this->language, $this->mid_ca_file)) {
