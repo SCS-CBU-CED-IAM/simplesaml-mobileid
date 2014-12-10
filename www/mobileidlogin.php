@@ -26,16 +26,16 @@ $state = SimpleSAML_Auth_State::loadState($authStateId, sspmod_mobileid_Auth_Sou
 
 /* Remember the mobile number */
 if (isset($state['remember_msisdn']) && isset($msisdn)) {
-	if ($state['remember_msisdn']) {	// Config is set and true
-		setCookies($msisdn);
-	} else {							// Config is set but false
-		removeCookies();
-	}
+    if ($state['remember_msisdn']) {    // Config is set and true
+        setCookies($msisdn);
+    } else {                            // Config is set but false
+        removeCookies();
+    }
 }
 
 // Config is not set
 if (!isset($state['remember_msisdn'])) {
-	removeCookies();
+    removeCookies();
 }
     
 /* Login and results */
@@ -57,18 +57,18 @@ $t->show();
 exit();
   
 function setCookies($msisdn) {
-	$sessionHandler = SimpleSAML_SessionHandler::getSessionHandler();
-	$params = $sessionHandler->getCookieParams();
-	$params['expire']  = time();
-	$params['expire'] += 31536000;
-	$_COOKIE['msisdn'] = $msisdn;
-	setcookie('msisdn', $msisdn, $params['expire'], $params['path'], $params['domain'], $params['secure'], $params['httponly']);	
+    $sessionHandler = SimpleSAML_SessionHandler::getSessionHandler();
+    $params = $sessionHandler->getCookieParams();
+    $params['expire']  = time();
+    $params['expire'] += 31536000;
+    $_COOKIE['msisdn'] = $msisdn;
+    setcookie('msisdn', $msisdn, $params['expire'], $params['path'], $params['domain'], $params['secure'], $params['httponly']);    
 }
 
 function removeCookies() {
-	if (isset($_COOKIE['msisdn'])) {
-		unset($_COOKIE['msisdn']);
-		setcookie('msisdn', '', time()-3600);
-	}	
+    if (isset($_COOKIE['msisdn'])) {
+        unset($_COOKIE['msisdn']);
+        setcookie('msisdn', '', time()-3600);
+    }   
 }
 ?>

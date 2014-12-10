@@ -10,11 +10,11 @@
 class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 
     /* The string used to identify our states. */
-	const STAGEID = 'sspmod_mobileid_Auth_Source_Auth.state';
+    const STAGEID = 'sspmod_mobileid_Auth_Source_Auth.state';
     /* The key of the AuthId field in the state. */
-	const AUTHID = 'sspmod_mobileid_Auth_Source_Auth.AuthId';
+    const AUTHID = 'sspmod_mobileid_Auth_Source_Auth.AuthId';
 
-	/* The mobile id related stuff. */
+    /* The mobile id related stuff. */
     private $hosturi;
     private $uid;
     private $msisdn;
@@ -32,49 +32,49 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
     private $proxy_password;
     private $service_url = '';
 
-	/**
-	 * Constructor for this authentication source.
-	 *
-	 * @param array $info  Information about this authentication source.
-	 * @param array $config  Configuration.
-	 */
-	public function __construct($info, $config) {
-		assert('is_array($info)');
-		assert('is_array($config)');
+    /**
+     * Constructor for this authentication source.
+     *
+     * @param array $info  Information about this authentication source.
+     * @param array $config  Configuration.
+     */
+    public function __construct($info, $config) {
+        assert('is_array($info)');
+        assert('is_array($config)');
 
-		/* Call the parent constructor first, as required by the interface. */
-		parent::__construct($info, $config);
+        /* Call the parent constructor first, as required by the interface. */
+        parent::__construct($info, $config);
 
-		$globalConfig = SimpleSAML_Configuration::getInstance();
-		$certdir = $globalConfig->getPathValue('certdir', 'cert/');
+        $globalConfig = SimpleSAML_Configuration::getInstance();
+        $certdir = $globalConfig->getPathValue('certdir', 'cert/');
 
         /* Mandatory options */
         if (!isset($config['hosturi']))
-			throw new Exception('MobileID: Missing or invalid hosturi option in config.');
-		$this->hosturi = $config['hosturi'];
+            throw new Exception('MobileID: Missing or invalid hosturi option in config.');
+        $this->hosturi = $config['hosturi'];
 
         if (!isset($config['ap_id']))
-			throw new Exception('MobileID: Missing or invalid ap_id option in config.');
-		$this->ap_id = $config['ap_id'];
+            throw new Exception('MobileID: Missing or invalid ap_id option in config.');
+        $this->ap_id = $config['ap_id'];
         
         if (!isset($config['ap_pwd']))
-			throw new Exception('MobileID: Missing or invalid ap_pwd option in config.');
-		$this->ap_pwd = $config['ap_pwd'];
+            throw new Exception('MobileID: Missing or invalid ap_pwd option in config.');
+        $this->ap_pwd = $config['ap_pwd'];
 
         if (!isset($config['certkey_file']))
-			throw new Exception('MobileID: Missing or invalid certkey_file option in config.');
+            throw new Exception('MobileID: Missing or invalid certkey_file option in config.');
         $this->certkey_file = SimpleSAML_Utilities::resolvePath($config['certkey_file'], $certdir);
         if (!file_exists($this->certkey_file))
             throw new Exception('MobileID: Missing or invalid certkey_file option in config: ' . $this->certkey_file);
 
         if (!isset($config['ssl_ca_file']))
-			throw new Exception('MobileID: Missing or invalid ssl_ca_file option in config.');
+            throw new Exception('MobileID: Missing or invalid ssl_ca_file option in config.');
         $this->ssl_ca_file = SimpleSAML_Utilities::resolvePath($config['ssl_ca_file'], $certdir);
         if( !file_exists($this->ssl_ca_file))
             throw new Exception('MobileID: Missing or invalid ssl_ca_file option in config: ' . $this->ssl_ca_file);
         
         if (!isset($config['mid_ca_file']))
-			throw new Exception('MobileID: Missing or invalid mid_ca_file option in config.');
+            throw new Exception('MobileID: Missing or invalid mid_ca_file option in config.');
         $this->mid_ca_file = SimpleSAML_Utilities::resolvePath($config['mid_ca_file'], $certdir);
         if (!file_exists($this->mid_ca_file))
             throw new Exception('MobileID: Missing or invalid mid_ca_file option in config: ' . $this->mid_ca_file);
@@ -99,25 +99,25 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 
         if (isset($config['service_url']))
             $this->service_url = $config['service_url'];
-	}
+    }
 
-	/**
-	 * Initialize login.
-	 *
-	 * This function saves the information about the login, and redirects to a login page.
-	 *
-	 * @param array &$state  Information about the current authentication.
-	 */
-	public function authenticate(&$state) {
-		assert('is_array($state)');
+    /**
+     * Initialize login.
+     *
+     * This function saves the information about the login, and redirects to a login page.
+     *
+     * @param array &$state  Information about the current authentication.
+     */
+    public function authenticate(&$state) {
+        assert('is_array($state)');
 
-		/* We are going to need the authId in order to retrieve this authentication source later. */
-		$state[self::AUTHID] = $this->authId;
+        /* We are going to need the authId in order to retrieve this authentication source later. */
+        $state[self::AUTHID] = $this->authId;
 
-		/* Remember mobile number */
-		if ($this->remember_msisdn) {
-			$state['remember_msisdn'] = $this->remember_msisdn;
-		}
+        /* Remember mobile number */
+        if ($this->remember_msisdn) {
+            $state['remember_msisdn'] = $this->remember_msisdn;
+        }
 
         /* Enable "cancel" for proper SAML request */
         if (isset($state['saml:RequestId'])) {
@@ -126,62 +126,62 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
             $_SESSION['enable_cancel'] = FALSE;
         }
 
-		$id = SimpleSAML_Auth_State::saveState($state, self::STAGEID);
+        $id = SimpleSAML_Auth_State::saveState($state, self::STAGEID);
 
-		$url = SimpleSAML_Module::getModuleURL('mobileid/mobileidlogin.php');
-		SimpleSAML_Utilities::redirect($url, array('AuthState' => $id));
-	}
-	
-	/**
-	 * Handle login request.
-	 *
-	 * This function is used by the login form when the users a Mobile ID number.
-	 * On success, it will not return. On Mobile ID failure, it will return the error code.
+        $url = SimpleSAML_Module::getModuleURL('mobileid/mobileidlogin.php');
+        SimpleSAML_Utilities::redirect($url, array('AuthState' => $id));
+    }
+    
+    /**
+     * Handle login request.
+     *
+     * This function is used by the login form when the users a Mobile ID number.
+     * On success, it will not return. On Mobile ID failure, it will return the error code.
      * Other failures will throw an exception.
-	 *
-	 * @param string $authStateId  The identifier of the authentication state.
-	 * @param string $msisdn  The Mobile ID entered.
+     *
+     * @param string $authStateId  The identifier of the authentication state.
+     * @param string $msisdn  The Mobile ID entered.
      * @param string $language  The language of the communication.
      * @param string $message  The message to be communicated.
-	 * @return string  Error code in the case of an error.
-	 */
-	public static function handleLogin($authStateId, $msisdn, $language, $message) {
-		assert('is_string($authStateId)');
-		assert('is_string($msisdn)');
+     * @return string  Error code in the case of an error.
+     */
+    public static function handleLogin($authStateId, $msisdn, $language, $message) {
+        assert('is_string($authStateId)');
+        assert('is_string($msisdn)');
         assert('is_string($language)');
         assert('is_string($message)');
 
-		/* Retrieve the authentication state. */
-		$state = SimpleSAML_Auth_State::loadState($authStateId, self::STAGEID);
+        /* Retrieve the authentication state. */
+        $state = SimpleSAML_Auth_State::loadState($authStateId, self::STAGEID);
 
-		/* Find authentication source. */
-		assert('array_key_exists(self::AUTHID, $state)');
-		$source = SimpleSAML_Auth_Source::getById($state[self::AUTHID]);
-		if ($source === NULL) {
-			throw new Exception('Could not find authentication source with id ' . $state[self::AUTHID]);
-		}
+        /* Find authentication source. */
+        assert('array_key_exists(self::AUTHID, $state)');
+        $source = SimpleSAML_Auth_Source::getById($state[self::AUTHID]);
+        if ($source === NULL) {
+            throw new Exception('Could not find authentication source with id ' . $state[self::AUTHID]);
+        }
 
-		/* $source now contains the authentication source on which authenticate() was called
-		 * We should call login() on the same authentication source.
-		 */
-		try {
-			/* Attempt to log in. */
-			$attributes = $source->login($msisdn, $language, $message);
-		} catch (SimpleSAML_Error_Error $e) {
+        /* $source now contains the authentication source on which authenticate() was called
+         * We should call login() on the same authentication source.
+         */
+        try {
+            /* Attempt to log in. */
+            $attributes = $source->login($msisdn, $language, $message);
+        } catch (SimpleSAML_Error_Error $e) {
             /* Login failed. Return the error code to the login form */
-			return $e->getErrorCode();
-		}
+            return $e->getErrorCode();
+        }
         
-		/* Save the attributes we received from the login-function in the $state-array. */
-		assert('is_array($attributes)');
-		$state['Attributes'] = $attributes;
+        /* Save the attributes we received from the login-function in the $state-array. */
+        assert('is_array($attributes)');
+        $state['Attributes'] = $attributes;
         
         /* Set the AuthnContext */
         $state['saml:AuthnContextClassRef'] = 'urn:oasis:names:tc:SAML:2.0:ac:classes:MobileTwoFactorContract';
         
         /* Return control to simpleSAMLphp after successful authentication. */
-		SimpleSAML_Auth_Source::completeAuth($state);
-	}
+        SimpleSAML_Auth_Source::completeAuth($state);
+    }
     
     /* A helper function for setting the right user id.
      *
@@ -232,23 +232,23 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
     
     /* The login function.
      *
-	 * @param string $msisdn  The Mobile ID entered.
-	 * @return string  Attributes.
+     * @param string $msisdn  The Mobile ID entered.
+     * @return string  Attributes.
      */
-	protected function login($username, $language, $message) {
-		assert('is_string($username)');
-		assert('is_string($language)');
-		assert('is_string($message)');
+    protected function login($username, $language, $message) {
+        assert('is_string($username)');
+        assert('is_string($language)');
+        assert('is_string($message)');
         
-		require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/libextinc/mobileid.php';
-		$attributes = array();
+        require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/libextinc/mobileid.php';
+        $attributes = array();
 
         /* Language and Message. */
         $this->language = $language;
         $this->message  = $this->hosturi . ': ' . $message;
 
-		/* uid and msisdn defaults to username. */
-		$this->uid    = $username;
+        /* uid and msisdn defaults to username. */
+        $this->uid    = $username;
         $this->msisdn = $this->getMSISDNfrom($username, '+');
         SimpleSAML_Logger::info('MobileID: Login of ' . var_export($this->uid, TRUE) . ' as ' . var_export($this->msisdn, TRUE));
         SimpleSAML_Logger::info('MobileID:   Message ' . var_export($this->message, TRUE) . ' in ' . var_export($this->language, TRUE));
@@ -316,7 +316,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         
         /* Return the attributes. */
         return $attributes;
-	}    
+    }    
 }
 
 ?>
