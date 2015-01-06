@@ -235,7 +235,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
      * @return string  Transaction ID with a length of 6
      */
     private function generateTransactionID() {
-        $pattern = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+-*&%/=!?';
+        $pattern = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+-*%/=!?';
         $maxlen = strlen($pattern) - 1;
 
         $id = '';
