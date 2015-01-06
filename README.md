@@ -74,10 +74,6 @@ Optional configuration elements
 * `serialNumber`:         the SerialNumber of the Distinguished Name (DN) in the related Mobile ID user certificate
 * `pseudonym`:            the `mobile` attribute in the Swisscom SuisseID format 1100-7<mobile> e.g 1100-7417-9208-0350
 
-Depreciated attributes that have been removed:
-* `noredupersonnin`:      replaced by `pseudonym`
-* `edupersontargetedid `: replaced by `serialNumber`
-
 
 ### AuthnContext
 
@@ -122,8 +118,8 @@ Refer to the "Mobile ID - SOAP client reference guide" document from Swisscom fo
 
 ### Message to be signed
 
-The message is composed by "'hosturi': {mobileid:Auth:message}".  
-Example: "http://serviceprovider.com: Authentication with Mobile ID?"
+The message is composed by "'hosturi': {mobileid:Auth:message} ($TRANS_ID)".  
+Example: "http://serviceprovider.com: Authentication with Mobile ID? (6GwBOP)"
 
 ### Translations
 

@@ -15,9 +15,9 @@
 		"it": "it"
 	},
 	"message": {
-		"de": "Authentifizierung mit Mobile ID?",
-		"fr": "Authentification avec Mobile ID?",
-		"it": "Autenticazione con Mobile ID?"
+		"de": "Authentifizierung mit Mobile ID? ($TRANS_ID)",
+		"fr": "Authentification avec Mobile ID? ($TRANS_ID)",
+		"it": "Autenticazione con Mobile ID? ($TRANS_ID)"
 	},
 	"form_btn_send": {
 		"de": "Anmelden",

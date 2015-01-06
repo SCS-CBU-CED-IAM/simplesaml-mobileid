@@ -19,7 +19,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
     private $uid;
     private $msisdn;
     private $language = 'en';
-    private $message = 'Authentication with Mobile ID?';
+    private $message = 'Authentication with Mobile ID? ($TRANS_ID)';
     private $ap_id;
     private $ap_pwd = "disabled";
     private $certkey_file;
@@ -230,6 +230,21 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         return $suisseid;
     }
     
+    /* A helper function for generating a unique Transaction ID string.
+     *
+     * @return string  Transaction ID with a length of 6
+     */
+    private function generateTransactionID() {
+        $pattern = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+-*&%/=!?';
+        $maxlen = strlen($pattern) - 1;
+
+        $id = '';
+        for ($i = 1; $i <= 6; $i++)
+            $id .= $pattern{mt_rand(0, $maxlen)};
+
+        return $id;
+    }
+
     /* The login function.
      *
      * @param string $msisdn  The Mobile ID entered.
@@ -243,9 +258,11 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         require_once dirname(dirname(dirname(dirname(__FILE__)))) . '/libextinc/mobileid.php';
         $attributes = array();
 
-        /* Language and Message. */
+        /* Language and Message with unique transation ID. */
         $this->language = $language;
         $this->message  = $this->hosturi . ': ' . $message;
+        $transid = $this->generateTransactionID();
+        $this->message = str_replace('$TRANS_ID', $transid, $this->message);
 
         /* uid and msisdn defaults to username. */
         $this->uid    = $username;
