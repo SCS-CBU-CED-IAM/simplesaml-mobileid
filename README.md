@@ -118,7 +118,8 @@ Refer to the "Mobile ID - SOAP client reference guide" document from Swisscom fo
 
 ### Message to be signed
 
-The message is composed by "'hosturi': {mobileid:Auth:message} ($TRANS_ID)".  
+The message is composed by "'hosturi': {mobileid:Auth:message} (#TRANSID#)". #TRANSID# is a placeholder that may be used anywhere in the message to include a unique transaction id.
+
 Example: "http://serviceprovider.com: Authentication with Mobile ID? (6GwBOP)"
 
 ### Translations

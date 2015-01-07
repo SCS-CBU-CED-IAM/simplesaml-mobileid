@@ -19,9 +19,9 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
     private $uid;
     private $msisdn;
     private $language = 'en';
-    private $message = 'Authentication with Mobile ID? ($TRANS_ID)';
+    private $message = 'Authentication with Mobile ID? (#TRANSID#)';
     private $ap_id;
-    private $ap_pwd = "disabled";
+    private $ap_pwd = 'disabled';
     private $certkey_file;
     private $ssl_ca_file;
     private $mid_ca_file;
@@ -235,7 +235,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
      * @return string  Transaction ID with a length of 6
      */
     private function generateTransactionID() {
-        $pattern = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ+-*%/=!?';
+        $pattern = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $maxlen = strlen($pattern) - 1;
 
         $id = '';
@@ -262,7 +262,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         $this->language = $language;
         $this->message  = $this->hosturi . ': ' . $message;
         $transid = $this->generateTransactionID();
-        $this->message = str_replace('$TRANS_ID', $transid, $this->message);
+        $this->message = str_replace('#TRANSID#', $transid, $this->message);
 
         /* uid and msisdn defaults to username. */
         $this->uid    = $username;

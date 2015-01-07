@@ -9,7 +9,7 @@
 		"en": "en"
 	},
 	"message": {
-		"en": "Authentication with Mobile ID? ($TRANS_ID)"
+		"en": "Authentication with Mobile ID? (#TRANSID#)"
 	},
 	"form_btn_send": {
 		"en": "Login"
