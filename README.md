@@ -44,8 +44,8 @@ Add the module in the sources `config/authsources.php`:
 'MobileID' => array(
     'mobileid:Auth',
     'certkey_file' => 'mycertandkey.pem',                 // File with private key and certificate for the authentication
-    'ssl_ca_file'  => 'swisscom-ca-ssl.crt',              // CA file for the HTTPS connection
-    'mid_ca_file'  => 'swisscom-ca-signature.crt',        // CA file for the trust anchor validation of the signature response
+    'ssl_ca_file'  => 'mobileid-ca-ssl.crt',              // CA file for the HTTPS connection
+    'mid_ca_file'  => 'mobileid-ca-signature.crt',        // CA file for the trust anchor validation of the signature response
     'hosturi'      => 'https://myidp.com',                // Host prefix for the message to be signed
     'ap_id'        => '<ID provided by Swisscom>',        // ID of the service provider
     'ap_pwd'       => '<Password provided by Swisscom>',  // Password of the service provider
