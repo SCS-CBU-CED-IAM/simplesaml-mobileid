@@ -30,12 +30,12 @@ Put the Mobile ID related certificates into the cert/ directory in the PEM forma
 
 The `certkey_file` file must contain both private key and certificate in PEM format (`cat mycert.crt mycert.key > mycertandkey.crt`). Example of content:
 ````
------BEGIN PRIVATE KEY-----
-...
------END PRIVATE KEY-----
 -----BEGIN CERTIFICATE-----
 ...
 -----END CERTIFICATE-----
+-----BEGIN PRIVATE KEY-----
+...
+-----END PRIVATE KEY-----
 ````
 
 Add the module in the sources `config/authsources.php`:
