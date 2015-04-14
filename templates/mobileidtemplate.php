@@ -2,11 +2,11 @@
 /**
  * This is the associated template page for the Mobile ID login form
  *
- * @version     1.0.0
+ * @version     1.0.1
  * @package     simpleSAMLphp-mobileid
  * @copyright   Copyright (C) 2012. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.md
- * @author      Swisscom (Schweiz AG)
+ * @license     Licensed under the Apache License, Version 2.0 or later; see LICENSE.md
+ * @author      Swisscom (Schweiz) AG
  */
 
 $this->data['head']  = '<script type="text/javascript" src="' . SimpleSAML_Module::getModuleUrl('mobileid/resources/js/jquery/jquery-1.8.3.min.js') . '"></script>';
@@ -23,11 +23,15 @@ if (isset($_SESSION['enable_cancel']) && $_SESSION['enable_cancel']) {
 if ($this->data['errorcode'] !== NULL && array_key_exists('msisdn', $_REQUEST)) {
     $_COOKIE["msisdn"] = $_REQUEST['msisdn'];
 }
+
+/* Error description */
+$errorDescr = $this->t('{mobileid:errors:descr_' . $this->data['errorcode'] . '}');
+$errorDescr = str_replace('#URL#', $this->data['errorurl'], $errorDescr);
 ?>
 <div style="border-left: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; background: #f5f5f5; display:none;" id="msg_error">
     <img src="/<?php echo $this->data['baseurlpath']; ?>resources/icons/experience/gtk-dialog-error.48x48.png" class="float-l" style="margin: 15px " />
     <h2><?php echo $this->t('{mobileid:errors:error_header}'); ?></h2>
-    <p><?php echo $this->t('{mobileid:errors:descr_' . $this->data['errorcode'] . '}'); ?></p>
+    <p><?php echo $errorDescr; ?></p>
 </div>
 <h2 style=""><?php echo $this->t('{mobileid:Auth:header}'); ?>
     <img style="height:28px; float:right;" src="<?php echo(SimpleSAML_Module::getModuleURL('mobileid/resources/mobileid.png')); ?>" />

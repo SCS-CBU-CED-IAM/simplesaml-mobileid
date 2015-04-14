@@ -1,10 +1,10 @@
 <?php
 /**
- * @version     1.0.0
+ * @version     1.0.1
  * @package     simpleSAMLphp-mobileid
  * @copyright   Copyright (C) 2012. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.md
- * @author      Swisscom (Schweiz AG)
+ * @license     Licensed under the Apache License, Version 2.0 or later; see LICENSE.md
+ * @author      Swisscom (Schweiz) AG
  */
 
 class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
@@ -168,8 +168,14 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
             /* Attempt to log in. */
             $attributes = $source->login($msisdn, $language, $message);
         } catch (SimpleSAML_Error_Error $e) {
-            /* Login failed. Return the error code to the login form */
-            return $e->getErrorCode();
+            /* Get the error and parameters */
+            $error = $e->getErrorCode();
+            $params = $e->getParameters();
+            /* Add the UserAssistanceURL separated by a tag */
+            $error .= '##' . $params['UserAssistanceURL'];
+
+            /* Login failed. Return the error to the login form */
+            return $error;
         }
         
         /* Save the attributes we received from the login-function in the $state-array. */
@@ -317,8 +323,14 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
             /* Log the details */
             SimpleSAML_Logger::warning('MobileID: error in service call ' . var_export($errortxt, TRUE));
 
+            /* Define the error as array to pass specific parameters beside the proper error code */
+            $error = array(
+                $erroris,
+                'UserAssistanceURL' => $mobileID->getUserAssistance(true, false)
+            );
+
             /* Set the error */
-            throw new SimpleSAML_Error_Error($erroris);
+            throw new SimpleSAML_Error_Error($error);
         }
 
         /* Create the attribute array of the user. */

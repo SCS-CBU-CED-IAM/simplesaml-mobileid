@@ -3,11 +3,11 @@
  * This page shows a Mobile ID login form, and passes information from it
  * to the sspmod_mobileid_Auth_Source_Auth class
  *
- * @version     1.0.0
+ * @version     1.0.1
  * @package     simpleSAMLphp-mobileid
  * @copyright   Copyright (C) 2012. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.md
- * @author      Swisscom (Schweiz AG)
+ * @license     Licensed under the Apache License, Version 2.0 or later; see LICENSE.md
+ * @author      Swisscom (Schweiz) AG
  */
 
 /* Get AuthState and AuthStateID */
@@ -45,14 +45,22 @@ $t = new SimpleSAML_XHTML_Template($globalConfig, 'mobileid:mobileidtemplate.php
 /* Try to login */
 $language = $t->t('{mobileid:Auth:language}');
 $message = $t->t('{mobileid:Auth:message}');
-if (!empty($msisdn))
+$errorCode = NULL;
+$errorURL = NULL;
+$errorDescr = NULL;
+if (!empty($msisdn)) {
     $errorCode = sspmod_mobileid_Auth_Source_Auth::handleLogin($authStateId, $msisdn, $language, $message);
-else
-    $errorCode = NULL;
+
+    /* Explode the error into array */
+    $error = explode("##", $errorCode);
+    $errorCode = $error[0];
+    $errorURL = $error[1];
+}
 
 /* Results */
 $t->data['stateparams'] = array('AuthState' => $authStateId);
 $t->data['errorcode'] = $errorCode;
+$t->data['errorurl'] = $errorURL;
 $t->show();
 exit();
   

@@ -2,7 +2,7 @@
 	"header": {
 		"de": "Anmelden mit Mobile ID",
 		"fr": "S'authentifier avec Mobile ID",
-		"it": "Connessione con Mobile ID"
+		"it": "Accesso con Mobile ID"
 	},
 	"intro": {
 		"de": "Bitte geben Sie Ihre Mobilnummer ein",
@@ -32,6 +32,6 @@
 	"msg_wait": {
 		"de": "Bitte warten Sie, bis die Nachricht erhalten wird...",
 		"fr": "Veuillez patienter pour avoir le message sur le mobile...",
-		"it": "Please wait for the message to appear on the mobile..."
+		"it": "Attendere per il messaggio appaia sul cellulare..."
 	}
 }
