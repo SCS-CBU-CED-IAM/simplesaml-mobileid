@@ -30,7 +30,7 @@
 		"en": "Error on the enduser mobile device, probably an other signature request is already in progress. Please try again."
 	},
 	"descr_422": {
-		"en": "Mobile ID has not been activated for this subscriber number. Please visit #URL# to activate your Mobile ID."
+		"en": "The Mobile ID is no more active. Please visit #URL# to reactivate your Mobile ID."
 	},
 	"descr_501": {
 		"en": "Verification error with the confirmation. Please try again and if the error persist contact your Mobile Network Operator."
