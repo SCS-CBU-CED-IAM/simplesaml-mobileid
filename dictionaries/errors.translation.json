@@ -30,14 +30,14 @@
 		"it": "La richiesta é stata cancellata dal utilizzatore."
 	},
 	"descr_402": {
-		"de": "Ihre Mobile ID PIN ist gesperrt. Besuchen Sie #URL# um Ihren PIN zurückzusetzen",
+		"de": "Ihre Mobile ID PIN ist gesperrt. Besuchen Sie #URL# um Ihren PIN zurückzusetzen.",
 		"fr": "Votre PIN Mobile ID est bloqué. Veuillez visiter #URL# pour réinitialiser le code PIN.",
 		"it": "Il vostro PIN Mobile ID é bloccato. Consulti #URL# per ripristinare il PIN."
 	},
 	"descr_403": {
-		"de": "Ihre Rufnummer ist gesperrt. Um Mobile ID erneut nutzen zu können müssen Sie zuerst ihre Mobilnummer entsperren lassen.",
-		"fr": "Votre numéro d'appel de l'utilisateur est bloqué. Pour pouvoir utiliser la Mobile ID, vous devez d'abord faire débloquer votre numéro d'appel.",
-		"it": "Il vostro numero di telefonia mobile é bloccato. Per poter di nuovo utilizzare Mobile ID, dovete sbloccare il numero mobile."
+		"de": "Ihre Mobile ID ist suspendiert. Besuchen Sie #URL# um die Mobile ID zu reaktivieren.",
+		"fr": "Votre Mobile ID est suspendue. Veuillez visiter #URL# pour réactiver Mobile ID.",
+		"it": "Your Mobile ID è sospeso. Consulti #URL# per riattivare Mobile ID."
 	},
 	"descr_404": {
 		"de": "Die Rufnummer ist nicht für Mobile ID aktiviert. Besuchen Sie #URL# um die Mobile ID zu aktivieren.",
