@@ -326,7 +326,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
             /* Define the error as array to pass specific parameters beside the proper error code */
             $error = array(
                 $erroris,
-                'UserAssistanceURL' => $mobileID->getUserAssistance('Mobile ID', false)
+                'UserAssistanceURL' => $mobileID->getUserAssistance('Mobile ID', true)
             );
 
             /* Set the error */
