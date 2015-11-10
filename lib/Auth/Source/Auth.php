@@ -349,13 +349,15 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         /* Allowed MCC in the config ? */
         if (count($this->allowed_mcc) > 0) {
             if (!in_array($this->mcc, $this->allowed_mcc)) {
+                $erroris = 'MCC';
+
                 /* Log the details */
-                SimpleSAML_Logger::warning('MobileID: not in alloed MCC !');
+                SimpleSAML_Logger::warning('MobileID: ' . var_export($this->mcc, TRUE) . ' not in the allowed_mcc list');
 
                 /* Define the error as array to pass specific parameters beside the proper error code */
                 $error = array(
                     $erroris,
-                    'UserAssistanceURL' => "<a href='http://valais.ch' target='_blank'>Wallis</a>",
+                    'UserAssistanceURL' => "<a href='https://en.wikipedia.org/wiki/Mobile_country_code#W' target='_blank'>Wallis</a>",
                     'mcc' => $this->mcc,
                     'mnc' => $this->mnc
                 );
