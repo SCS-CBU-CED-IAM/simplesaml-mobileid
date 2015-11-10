@@ -65,6 +65,8 @@ if (!empty($msisdn)) {
 $t->data['stateparams'] = array('AuthState' => $authStateId);
 $t->data['errorcode'] = $errorCode;
 $t->data['errorurl'] = $errorURL;
+$t->data['mcc'] = $mcc;
+$t->data['mnc'] = $mnc;
 $t->show();
 exit();
   
