@@ -64,6 +64,11 @@
 		"fr": "Erreur lors de la vérification de la requête. Veuillez réessayer et si l'erreur persiste contactez votre opérateur mobile.",
 		"it": "Errore durante la conferma. Riprovi di nuovo e se l'errore persiste rivolgersi all'operatore di rete mobile."
 	},
+	"descr_MCC": {
+		"de": "Physical location error. Switzerland is not the right country for this service, please go to #URL#.",
+		"fr": "Physical location error. Switzerland is not the right country for this service, please go to #URL#.",
+		"it": "Physical location error. Switzerland is not the right country for this service, please go to #URL#."
+	},
 	"descr_DEFAULT": {
 		"de": "Mobile ID kann zurzeit nicht genutzt werden. Bitte versuchen Sie es später erneut.",
 		"fr": "Mobile ID ne peut actuellement pas être utilisée. Veuillez réessayer ultérieurement.",

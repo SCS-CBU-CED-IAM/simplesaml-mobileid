@@ -20,6 +20,8 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
     private $msisdn;
     private $language = 'en';
     private $message = 'Authentication with Mobile ID? (#TRANSID#)';
+    private $mcc = '';				// Mobile Country Code
+    private $mnc = '';				// Mobile Network Code
     private $ap_id;
     private $ap_pwd = 'disabled';
     private $certkey_file;
@@ -31,6 +33,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
     private $proxy_login;
     private $proxy_password;
     private $service_url = '';
+    private $allowed_mcc = array();
 
     /**
      * Constructor for this authentication source.
@@ -99,6 +102,12 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 
         if (isset($config['service_url']))
             $this->service_url = $config['service_url'];
+
+        if (isset($config['allowed_mcc'])) {
+            if (!is_array($config['allowed_mcc']))
+                throw new Exception('MobileID: allowed_mcc is not an array() in config: ' . $this->mid_ca_file);
+            $this->allowed_mcc = $config['allowed_mcc'];
+        }
     }
 
     /**
@@ -333,16 +342,40 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
             throw new SimpleSAML_Error_Error($error);
         }
 
+        /* Get the Subscriber Info 1901 (MCC/MNC) */
+        $this->mcc = substr($mobileID->getSubscriberInfo('1901'), 0, 3);
+        $this->mnc = substr($mobileID->getSubscriberInfo('1901'), 3, 3);
+
+        /* Allowed MCC in the config ? */
+        if (count($this->allowed_mcc) > 0) {
+            if (!in_array($this->mcc, $this->allowed_mcc)) {
+                /* Log the details */
+                SimpleSAML_Logger::warning('MobileID: not in alloed MCC !');
+
+                /* Define the error as array to pass specific parameters beside the proper error code */
+                $error = array(
+                    $erroris,
+                    'UserAssistanceURL' => "<a href='http://valais.ch' target='_blank'>Wallis</a>",
+                    'mcc' => $this->mcc,
+                    'mnc' => $this->mnc
+                );
+
+                /* Set the error */
+                throw new SimpleSAML_Error_Error($error);
+            }
+        }
+
         /* Create the attribute array of the user. */
         $attributes = array(
-            'uid'                  => array($this->uid),
-            'mobile'               => array($this->getMSISDNfrom($this->msisdn, '00')),
-            'pseudonym'            => array($this->getSuisseIDfrom($this->msisdn)),
-            'serialNumber'         => array($mobileID->mid_serialnumber),
-            'preferredLanguage'    => array($this->language),
-            'userCertificate'      => array($mobileID->mid_certificate),
-            'countryName'          => array(substr($mobileID->getSubscriberInfo('1901'), 0, 3)),
-            'destinationIndicator' => array(substr($mobileID->getSubscriberInfo('1901'), 3, 3)),
+            'uid'                => array($this->uid),
+            'mobile'             => array($this->getMSISDNfrom($this->msisdn, '00')),
+            'pseudonym'          => array($this->getSuisseIDfrom($this->msisdn)),
+            'serialNumber'       => array($mobileID->mid_serialnumber),
+            'preferredLanguage'  => array($this->language),
+            'userCertificate'    => array($mobileID->mid_certificate),
+            // TODO: Verify if this is the right way to define a new attribute name
+            'mcc'                => array($this->mcc),
+            'mnc'                => array($this->mnc),
         );
         
         /* Return the attributes. */
