@@ -341,8 +341,8 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
             'serialNumber'         => array($mobileID->mid_serialnumber),
             'preferredLanguage'    => array($this->language),
             'userCertificate'      => array($mobileID->mid_certificate),
-            'countryName'          => array(substr($mobileID->getSubscriberInfo('1901'), 0, 3),
-            'destinationIndicator' => array(substr($mobileID->getSubscriberInfo('1901'), 3, 3)
+            'countryName'          => array(substr($mobileID->getSubscriberInfo('1901'), 0, 3)),
+            'destinationIndicator' => array(substr($mobileID->getSubscriberInfo('1901'), 3, 3)),
         );
         
         /* Return the attributes. */
