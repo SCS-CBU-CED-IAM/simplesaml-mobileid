@@ -65,9 +65,9 @@
 		"it": "Errore durante la conferma. Riprovi di nuovo e se l'errore persiste rivolgersi all'operatore di rete mobile."
 	},
 	"descr_MCC": {
-		"de": "Physical location error. Switzerland is not the right country for this service, please go to #URL#.",
-		"fr": "Physical location error. Switzerland is not the right country for this service, please go to #URL#.",
-		"it": "Physical location error. Switzerland is not the right country for this service, please go to #URL#."
+		"de": "Land #MCC# oder Operator #MNC# nicht autorisiert. Die Schweiz ist für diesen Service nicht freigegeben, bitte gehen Sie nach #URL#.",
+		"fr": "Pays #MCC# ou opérateur #MNC# non autorisée. La Suisse n'est pas libérée pour ce service, veuillez vous rendre en #URL#.",
+		"it": "Paese #MCC# o operatore #MNC# non autorizzata. La Svizzera non è rilasciato per questo servizio, si prega di andare a #URL#."
 	},
 	"descr_DEFAULT": {
 		"de": "Mobile ID kann zurzeit nicht genutzt werden. Bitte versuchen Sie es später erneut.",

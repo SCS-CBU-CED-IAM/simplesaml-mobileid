@@ -182,6 +182,10 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
             $params = $e->getParameters();
             /* Add the UserAssistanceURL separated by a tag */
             $error .= '##' . $params['UserAssistanceURL'];
+            /* Add the mcc separated by a tag */
+            $error .= '##' . $params['mcc'];
+            /* Add the mnc separated by a tag */
+            $error .= '##' . $params['mnc'];
 
             /* Login failed. Return the error to the login form */
             return $error;
@@ -349,14 +353,12 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         /* Allowed MCC in the config ? */
         if (count($this->allowed_mcc) > 0) {
             if (!in_array($this->mcc, $this->allowed_mcc)) {
-                $erroris = 'MCC';
-
                 /* Log the details */
                 SimpleSAML_Logger::warning('MobileID: ' . var_export($this->mcc, TRUE) . ' not in the allowed_mcc list');
 
                 /* Define the error as array to pass specific parameters beside the proper error code */
                 $error = array(
-                    $erroris,
+                    'MCC',
                     'UserAssistanceURL' => "<a href='https://en.wikipedia.org/wiki/Mobile_country_code#W' target='_blank'>Wallis</a>",
                     'mcc' => $this->mcc,
                     'mnc' => $this->mnc
@@ -378,6 +380,9 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
             // TODO: Verify if this is the right way to define a new attribute name
             'mcc'                => array($this->mcc),
             'mnc'                => array($this->mnc),
+            // TODO: https://github.com/musalbas/mcc-mnc-table/blob/master/mcc-mnc-table.csv
+            // TODO: Helper function to convert MCC into country code and name 
+            // TODO: Helper function to convert MNC into mobile operator name
         );
         
         /* Return the attributes. */

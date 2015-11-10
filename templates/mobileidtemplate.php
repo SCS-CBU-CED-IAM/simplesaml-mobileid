@@ -27,6 +27,8 @@ if ($this->data['errorcode'] !== NULL && array_key_exists('msisdn', $_REQUEST)) 
 /* Error description */
 $errorDescr = $this->t('{mobileid:errors:descr_' . $this->data['errorcode'] . '}');
 $errorDescr = str_replace('#URL#', $this->data['errorurl'], $errorDescr);
+$errorDescr = str_replace('#MCC#', $this->data['mcc'], $errorDescr);
+$errorDescr = str_replace('#MNC#', $this->data['mnc'], $errorDescr);
 ?>
 <div style="border-left: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; background: #f5f5f5; display:none;" id="msg_error">
     <img src="/<?php echo $this->data['baseurlpath']; ?>resources/icons/experience/gtk-dialog-error.48x48.png" class="float-l" style="margin: 15px " />

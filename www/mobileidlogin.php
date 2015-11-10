@@ -48,6 +48,8 @@ $message = $t->t('{mobileid:Auth:message}');
 $errorCode = NULL;
 $errorURL = NULL;
 $errorDescr = NULL;
+$mcc = NULL;
+$mnc = NULL;
 if (!empty($msisdn)) {
     $errorCode = sspmod_mobileid_Auth_Source_Auth::handleLogin($authStateId, $msisdn, $language, $message);
 
@@ -55,6 +57,8 @@ if (!empty($msisdn)) {
     $error = explode("##", $errorCode);
     $errorCode = $error[0];
     $errorURL = $error[1];
+    $mcc = $error[2];
+    $mnc = $error[3];
 }
 
 /* Results */

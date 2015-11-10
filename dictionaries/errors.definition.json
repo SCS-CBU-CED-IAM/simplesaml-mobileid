@@ -39,7 +39,7 @@
 		"en": "Verification error with the confirmation. Please try again and if the error persist contact your Mobile Network Operator."
 	},
 	"descr_MCC": {
-		"en": "Physical location error. Switzerland is not the right country for this service, please go to #URL#."
+		"en": "Country #MCC# or operator #MNC# not authorised. Switzerland is not released for this service, please go to #URL#."
 	},
 	"descr_DEFAULT": {
 		"en": "Mobile ID can not be used at this time. Please try it again later."
