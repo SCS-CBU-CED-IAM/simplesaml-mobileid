@@ -54,13 +54,14 @@ Add the module in the sources `config/authsources.php`:
 
 Optional configuration elements
 ```
-    'default_lang'    => 'en|de|..',    // Default language of the signature request; en if option not set
-    'remember_msisdn' => true,          // Remember the Mobile ID number in a session cookie; false if option not set
-    'proxy_host'      => '',            // e.g. 'my-proxy.com'
-    'proxy_port'      => 8080,          // Only relevant if proxy_host is set
-    'proxy_login'     => 'proxyuser',   // Only relevant if proxy_host is set
-    'proxy_password'  => 'pwd',         // Only relevant if proxy_login is set
-    'service_url'     => 'https://...', // Mobile ID service URL, e.g. 'https://mobileid.swisscom.com'
+    'default_lang'    => 'en|de|..',                      // Default language of the signature request; en if option not set
+    'remember_msisdn' => true,                            // Remember the Mobile ID number in a session cookie; false if option not set
+    'proxy_host'      => '',                              // e.g. 'my-proxy.com'
+    'proxy_port'      => 8080,                            // Only relevant if proxy_host is set
+    'proxy_login'     => 'proxyuser',                     // Only relevant if proxy_host is set
+    'proxy_password'  => 'pwd',                           // Only relevant if proxy_login is set
+    'service_url'     => 'https://...',                   // Mobile ID service URL, e.g. 'https://mobileid.swisscom.com'
+    'allowed_mcc'     => array('228', '543'),             // List of allowed Mobile Country Codes, http://www.mcc-mnc.com
 ```
 
 ## Returned elements
@@ -73,6 +74,9 @@ Optional configuration elements
 * `userCertificate`:      the Mobile ID user certificate (PEM encoded)
 * `serialNumber`:         the SerialNumber of the Distinguished Name (DN) in the related Mobile ID user certificate
 * `pseudonym`:            the `mobile` attribute in the Swisscom SuisseID format 1100-7<mobile> e.g 1100-7417-9208-0350
+* `mcc`:                  the Mobile Country Code where the Mobile ID is currently connected to e.g 228 for Switzerland
+* `mnc`:                  the Mobile Network Code where the Mobile ID is currently connected to e.g 01 for Swisscom
+
 
 
 ### AuthnContext

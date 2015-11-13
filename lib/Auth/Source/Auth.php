@@ -286,8 +286,8 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         /* uid and msisdn defaults to username. */
         $this->uid    = $username;
         $this->msisdn = $this->getMSISDNfrom($username, '+');
-        SimpleSAML_Logger::info('MobileID: Login of ' . var_export($this->uid, TRUE) . ' as ' . var_export($this->msisdn, TRUE));
-        SimpleSAML_Logger::info('MobileID:   Message ' . var_export($this->message, TRUE) . ' in ' . var_export($this->language, TRUE));
+        SimpleSAML_Logger::info('MobileID: msisdn=' . var_export($this->msisdn, TRUE) . ' for uid ' . var_export($this->uid, TRUE));
+        SimpleSAML_Logger::info('MobileID: msisdn=' . var_export($this->msisdn, TRUE) . ' msg=' . var_export($this->message, TRUE) . ' lang=' . var_export($this->language, TRUE));
 
         /* Mobile ID class options */
         $myoptions = array();
@@ -322,7 +322,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
             /* Filter the configuration errors */
             $exception_code = array("102", "103", "104", "107", "108", "109");
             if (in_array($erroris, $exception_code)) {
-                SimpleSAML_Logger::warning('MobileID: error in service call ' . var_export($errortxt, TRUE));
+                SimpleSAML_Logger::warning('MobileID: msisdn=' . var_export($this->msisdn, TRUE) . ' error in service call ' . var_export($errortxt, TRUE));
                 throw new Exception('MobileID: error in service call ' . var_export($errortxt, TRUE));
             }
  
@@ -334,7 +334,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
             }
 
             /* Log the details */
-            SimpleSAML_Logger::warning('MobileID: error in service call ' . var_export($errortxt, TRUE));
+            SimpleSAML_Logger::warning('MobileID: msisdn=' . var_export($this->msisdn, TRUE) . ' error in service call ' . var_export($errortxt, TRUE));
 
             /* Define the error as array to pass specific parameters beside the proper error code */
             $error = array(
@@ -346,11 +346,15 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
             throw new SimpleSAML_Error_Error($error);
         }
 
+        /* Log the serialNumber */
+        SimpleSAML_Logger::info('MobileID: msisdn=' . var_export($this->msisdn, TRUE) . ' serialNumber=' . var_export($mobileID->mid_serialnumber, TRUE));
+
         /* Get the Subscriber Info 1901 (MCC/MNC) */
         $this->mcc = substr($mobileID->getSubscriberInfo('1901'), 0, 3);
         $this->mnc = substr($mobileID->getSubscriberInfo('1901'), 3, 3);
 
         /* Allowed MCC in the config ? */
+        SimpleSAML_Logger::info('MobileID: msisdn=' . var_export($this->msisdn, TRUE) . ' mcc=' . var_export($this->mcc, TRUE) . ' mnc=' . var_export($this->mnc, TRUE));
         if (count($this->allowed_mcc) > 0) {
             if (!in_array($this->mcc, $this->allowed_mcc)) {
                 /* Log the details */
@@ -359,7 +363,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
                 /* Define the error as array to pass specific parameters beside the proper error code */
                 $error = array(
                     'MCC',
-                    'UserAssistanceURL' => "<a href='https://en.wikipedia.org/wiki/Mobile_country_code#W' target='_blank'>Wallis</a>",
+                    'UserAssistanceURL' => '',
                     'mcc' => $this->mcc,
                     'mnc' => $this->mnc
                 );
