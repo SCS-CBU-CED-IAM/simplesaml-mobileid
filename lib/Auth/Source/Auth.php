@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     1.0.1
+ * @version     1.0.2
  * @package     simpleSAMLphp-mobileid
  * @copyright   Copyright (C) 2012. All rights reserved.
  * @license     Licensed under the Apache License, Version 2.0 or later; see LICENSE.md
@@ -383,12 +383,8 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
             'serialNumber'       => array($mobileID->mid_serialnumber),
             'preferredLanguage'  => array($this->language),
             'userCertificate'    => array($mobileID->mid_certificate),
-            // TODO: Verify if this is the right way to define a new attribute name
             'mcc'                => array($this->mcc),
             'mnc'                => array($this->mnc),
-            // TODO: https://github.com/musalbas/mcc-mnc-table/blob/master/mcc-mnc-table.csv
-            // TODO: Helper function to convert MCC into country code and name 
-            // TODO: Helper function to convert MNC into mobile operator name
         );
         
         /* Return the attributes. */

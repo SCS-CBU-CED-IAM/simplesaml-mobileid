@@ -2,7 +2,7 @@
 /**
  * This is the associated template page for the Mobile ID login form
  *
- * @version     1.0.1
+ * @version     1.0.2
  * @package     simpleSAMLphp-mobileid
  * @copyright   Copyright (C) 2012. All rights reserved.
  * @license     Licensed under the Apache License, Version 2.0 or later; see LICENSE.md
