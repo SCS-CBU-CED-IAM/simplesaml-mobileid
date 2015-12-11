@@ -12,7 +12,7 @@
 		"en": "The transaction has timed out. Please try again."
 	},
 	"descr_209": {
-		"en": "The service could not contact the enduser mobile device (bad connection...). Please try again."
+		"en": "The service could not contact the enduser mobile device (bad connection, screen locked...). Please try again."
 	},
 	"descr_401": {
 		"en": "The request has been canceled by the user."
