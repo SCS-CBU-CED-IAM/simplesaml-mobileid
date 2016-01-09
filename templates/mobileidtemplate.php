@@ -33,6 +33,9 @@ if (array_key_exists('mcc', $this->data))
 if (array_key_exists('mnc', $this->data))
     $errorDescr = str_replace('#MNC#', $this->data['mnc'], $errorDescr);
 ?>
+<style type="text/css">
+	#msg_wait{display:none;}
+</style>
 <div style="border-left: 1px solid #e8e8e8; border-bottom: 1px solid #e8e8e8; background: #f5f5f5; display:none;" id="msg_error">
     <img src="/<?php echo $this->data['baseurlpath']; ?>resources/icons/experience/gtk-dialog-error.48x48.png" class="float-l" style="margin: 15px " />
     <h2><?php echo $this->t('{mobileid:errors:error_header}'); ?></h2>
@@ -66,7 +69,7 @@ if (array_key_exists('mnc', $this->data))
     }
     ?>
 </form>
-<div id="msg_wait" style="display:none;">
+<div id="msg_wait">
     <img class="mobileid-ajax-loader" src="<?php echo(SimpleSAML_Module::getModuleURL('mobileid/resources/ajax-loader.gif')); ?>" alt="<?php echo $this->t('{mobileid:Auth:msg_wait}'); ?>" title="<?php echo $this->t('{mobileid:Auth:msg_wait}'); ?>" />
     <p><?php echo $this->t('{mobileid:Auth:msg_wait}'); ?></p>
 </div>

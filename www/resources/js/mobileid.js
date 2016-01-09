@@ -6,32 +6,29 @@
  * @author      Swisscom (Schweiz AG)
  */
 
-jQuery(document).ready(function() {
-
-	// Submit the form
-	jQuery('#mobileid_form').submit(function() {
+(function($){
+	$(document).on('submit', '#mobileid_form', function(e) {
+		e.preventDefault()
 		prepareSubmit();
-	});
+	})
 
-	// Click on submit form button
-	jQuery('#submit_btn_send').click(function() {
-		jQuery('#mobileid_form').submit();
-	});
+	$(document).on('click', '#submit_btn_send', function(e) {
+		e.preventDefault()
+		$('#mobileid_form').submit();
+	})
 
-	// Click on submit form button
-	jQuery('#submit_btn_cancel').click(function() {
-		jQuery("#mobileid_form").attr("action", "cancel.php");
-		jQuery('#mobileid_form').submit();
-	});
-});
+	$(document).on('click', '#submit_btn_cancel', function(e) {
+		e.preventDefault()
+		$('#mobileid_form').attr('action', 'cancel.php');
+		$('#mobileid_form').submit();
+	})
 
-function prepareSubmit() {
-
-	// Show waiting message
-	jQuery('#msg_wait').show();
-	jQuery('#msg_error').hide();
-
-	// Disable submit and clear button
-	jQuery('#submit_btn_send').attr("disabled", "true");
-	jQuery('#submit_btn_cancel').attr("disabled", "true");
-}
+	function prepareSubmit() {
+		// Show waiting message
+		$('#msg_wait').show();
+		$('#msg_error').hide();
+		// Disable submit and clear button
+		$('#submit_btn_send').attr('disabled', 'true');
+		$('#submit_btn_cancel').attr('disabled', 'true');
+	}
+}(jQuery))
