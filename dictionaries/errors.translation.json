@@ -20,9 +20,9 @@
 		"it": "L'operazione è scaduta. Riprovi di nuovo."
 	},
 	"descr_209": {
-		"de": "Der Service konnte das mobile Endgerät nicht kontaktieren (schlechte Verbindung...). Bitte versuchen Sie es erneut.",
-		"fr": "Le service n'a pas pu contacter le mobile de l'utilisateur (mauvaise connexion...). Veuillez réessayer.",
-		"it": "Il servizio non ha potuto contattare apparecchiature mobili del utente finale (connessione scadente...). Riprovi di nuovo."
+		"de": "Der Service konnte das mobile Endgerät nicht kontaktieren (schlechte Verbindung, Bildschirmsperre...). Bitte versuchen Sie es erneut.",
+		"fr": "Le service n'a pas pu contacter le mobile de l'utilisateur (mauvaise connexion, écran verrouillé...). Veuillez réessayer.",
+		"it": "Il servizio non ha potuto contattare apparecchiature mobili del utente finale (connessione scadente, schermo bloccato...). Riprovi di nuovo."
 	},
 	"descr_401": {
 		"de": "Der Vorgang wurde vom Nutzer abgebrochen.",
