@@ -354,8 +354,8 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         /* Get the Subscriber Info 1901 (MCC/MNC) */
         $mccmnc = $mobileID->getSubscriberInfo('1901');
         if ($mccmnc != '' && $mccmnc != 'unknown') {
-            $this->mcc = substr($mobileID->getSubscriberInfo('1901'), 0, 3);
-            $this->mnc = substr($mobileID->getSubscriberInfo('1901'), 3, 3);
+            $this->mcc = substr($mccmnc, 0, 3);
+            $this->mnc = substr($mccmnc, 3, 3);
         } else {
             $this->mcc = '000';
             $this->mnc = '00';
