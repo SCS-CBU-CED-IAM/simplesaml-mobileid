@@ -11,6 +11,7 @@
 
 $this->data['head']  = '<script type="text/javascript" src="' . SimpleSAML_Module::getModuleUrl('mobileid/resources/js/jquery/jquery-1.8.3.min.js') . '"></script>';
 $this->data['head'] .= '<script type="text/javascript" src="' . SimpleSAML_Module::getModuleUrl('mobileid/resources/js/mobileid.js') . '"></script>';
+$this->data['head'] .= '<link rel="stylesheet" href="' . SimpleSAML_Module::getModuleUrl('mobileid/resources/css/mobileid.css') . '"/>';
 $this->data['header'] = $this->t('{mobileid:Auth:header}');
 $this->data['autofocus'] = 'msisdn';
 $this->includeAtTemplateBase('includes/header.php');
@@ -70,7 +71,7 @@ if (array_key_exists('mnc', $this->data))
     ?>
 </form>
 <div id="msg_wait">
-    <img class="mobileid-ajax-loader" src="<?php echo(SimpleSAML_Module::getModuleURL('mobileid/resources/ajax-loader.gif')); ?>" alt="<?php echo $this->t('{mobileid:Auth:msg_wait}'); ?>" title="<?php echo $this->t('{mobileid:Auth:msg_wait}'); ?>" />
+<div class='uil-ellipsis-css' style='transform:scale(0.6);'><div class="circle"><div></div></div><div class="circle"><div></div></div><div class="circle"><div></div></div><div class="circle"><div></div></div></div>
     <p><?php echo $this->t('{mobileid:Auth:msg_wait}'); ?></p>
 </div>
 <?php if ($this->data['errorcode'] !== NULL) { ?>
