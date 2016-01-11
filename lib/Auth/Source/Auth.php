@@ -352,8 +352,14 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         SimpleSAML_Logger::info('MobileID: msisdn=' . var_export($this->msisdn, TRUE) . ' serialNumber=' . var_export($mobileID->mid_serialnumber, TRUE));
 
         /* Get the Subscriber Info 1901 (MCC/MNC) */
-        $this->mcc = substr($mobileID->getSubscriberInfo('1901'), 0, 3);
-        $this->mnc = substr($mobileID->getSubscriberInfo('1901'), 3, 3);
+        $mccmnc = $mobileID->getSubscriberInfo('1901');
+        if ($mccmnc != '' && $mccmnc != 'unknown') {
+            $this->mcc = substr($mobileID->getSubscriberInfo('1901'), 0, 3);
+            $this->mnc = substr($mobileID->getSubscriberInfo('1901'), 3, 3);
+        } else {
+            $this->mcc = '000';
+            $this->mnc = '00';
+        }
 
         /* Allowed MCC in the config ? */
         SimpleSAML_Logger::info('MobileID: msisdn=' . var_export($this->msisdn, TRUE) . ' mcc=' . var_export($this->mcc, TRUE) . ' mnc=' . var_export($this->mnc, TRUE));
