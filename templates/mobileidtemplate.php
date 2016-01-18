@@ -71,7 +71,7 @@ if (array_key_exists('mnc', $this->data))
     ?>
 </form>
 <div id="msg_wait">
-<div class='uil-ellipsis-css' style='transform:scale(0.6);'><div class="circle"><div></div></div><div class="circle"><div></div></div><div class="circle"><div></div></div><div class="circle"><div></div></div></div>
+    <div id="spinner"></div>
     <p><?php echo $this->t('{mobileid:Auth:msg_wait}'); ?></p>
 </div>
 <?php if ($this->data['errorcode'] !== NULL) { ?>
