@@ -1,6 +1,6 @@
 <?php
 /**
- * @version        2.0.2
+ * @version        2.0.3
  * @package        mobileid
  * @copyright      Copyright (C) 2014. All rights reserved.
  * @license        Licensed under the Apache License, Version 2.0 or later; see LICENSE.md
@@ -17,7 +17,9 @@ class mobileid {
 
     private $client;                       // SOAP client
     const WSDL = 'mobileid.wsdl';          // Mobile ID WSDL file
-    const TIMEOUT_CON = 90;                // SOAP client connection timeout
+    const TIMEOUT_CON = 90;                // SOAP client connection timeout (default)
+    const TIMEOUT_REQ = 80;                // Mobile ID request timeout (default)
+    private $timeout_req;                  // Mobile ID request timeout
     private $base_url;                     // Base URL of the service
     private $response;                     // SOAP client response
 
@@ -40,9 +42,10 @@ class mobileid {
      * #params     string    Certificate/key that is allowed to access the service
      * #params     string    Location of Certificate Authority file which should be used to authenticate the identity of the remote peer.
      * #params     array     Additional SOAP client options
+     * #params     int.      Optional request timeout
      * @return     null
      */
-    public function __construct($ap_id, $ap_pwd, $ap_cert, $cafile, $myOpts = null) {
+    public function __construct($ap_id, $ap_pwd, $ap_cert, $cafile, $myOpts = null, $requestTimeout = null) {
         /* Set the AP Infos */
         $this->ap_id = $ap_id;
         $this->ap_pwd = $ap_pwd;
@@ -65,6 +68,10 @@ class mobileid {
             'stream_context' => $context
             );
         if (isSet($myOpts)) $options = array_merge($options, (array)$myOpts);
+
+        /* Set Mobile ID request timeout */
+        $this->timeout_req = self::TIMEOUT_REQ;
+        if (isSet($requestTimeout)) $this->timeout_req = $requestTimeout;
 
         /* Check for provided files existence */
         if (!file_exists($ap_cert)) trigger_error('mobileid::construct: file not found ' . $ap_cert, E_USER_WARNING);
@@ -154,7 +161,11 @@ class mobileid {
             ),
             'MobileUser' => array(
                 'MSISDN' => $phoneNumber
-            )
+            ),
+            'GetAutoActivation' => false,
+            'GetServerSideSignature' => false,
+            'GetRecoveryCodeCreated' => false,
+            'GetCertificates' => false            
          );
 
         $this->client->__setLocation($this->base_url . '/soap/services/MSS_ProfilePort');
@@ -181,7 +192,7 @@ class mobileid {
         $params = array(
             'MajorVersion' => 1,
             'MinorVersion' => 1,
-            'TimeOut' => 80,
+            'TimeOut' => $this->timeout_req,
             'MessagingMode' => 'synch',
             'AP_Info' => array(
                 'AP_ID' => $this->ap_id,
