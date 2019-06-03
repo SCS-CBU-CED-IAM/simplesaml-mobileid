@@ -3,7 +3,7 @@
  * This page shows a Mobile ID login form, and passes information from it
  * to the sspmod_mobileid_Auth_Source_Auth class
  *
- * @version     1.0.2
+ * @version     1.0.3
  * @package     simpleSAMLphp-mobileid
  * @copyright   Copyright (C) 2012. All rights reserved.
  * @license     Licensed under the Apache License, Version 2.0 or later; see LICENSE.md
@@ -55,14 +55,14 @@ if (!empty($msisdn)) {
 
     /* Explode the error into array */
     $error = explode("##", $errorCode);
-    if (array_key_exists(0, $error))
-        $errorCode = $error[0];
     if (array_key_exists(1, $error))
-        $errorURL = $error[1];
+        $errorCode = $error[1];
     if (array_key_exists(2, $error))
-        $mcc = $error[2];
+        $errorURL = $error[2];
     if (array_key_exists(3, $error))
-        $mnc = $error[3];
+        $mcc = $error[3];
+    if (array_key_exists(4, $error))
+        $mnc = $error[4];
 }
 
 /* Results */
@@ -75,7 +75,7 @@ $t->show();
 exit();
   
 function setCookies($msisdn) {
-    $sessionHandler = SimpleSAML_SessionHandler::getSessionHandler();
+    $sessionHandler = SimpleSAML\SessionHandler::getSessionHandler();
     $params = $sessionHandler->getCookieParams();
     $params['expire']  = time();
     $params['expire'] += 31536000;

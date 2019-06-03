@@ -9,9 +9,9 @@
  * @author      Swisscom (Schweiz) AG
  */
 
-$this->data['head']  = '<script type="text/javascript" src="' . SimpleSAML_Module::getModuleUrl('mobileid/resources/js/jquery/jquery-1.8.3.min.js') . '"></script>';
-$this->data['head'] .= '<script type="text/javascript" src="' . SimpleSAML_Module::getModuleUrl('mobileid/resources/js/mobileid.js') . '"></script>';
-$this->data['head'] .= '<link rel="stylesheet" href="' . SimpleSAML_Module::getModuleUrl('mobileid/resources/css/mobileid.css') . '"/>';
+$this->data['head']  = '<script type="text/javascript" src="' . SimpleSAML\Module::getModuleUrl('mobileid/resources/js/jquery/jquery-1.8.3.min.js') . '"></script>';
+$this->data['head'] .= '<script type="text/javascript" src="' . SimpleSAML\Module::getModuleUrl('mobileid/resources/js/mobileid.js') . '"></script>';
+$this->data['head'] .= '<link rel="stylesheet" href="' . SimpleSAML\Module::getModuleUrl('mobileid/resources/css/mobileid.css') . '"/>';
 $this->data['header'] = $this->t('{mobileid:Auth:header}');
 $this->data['autofocus'] = 'msisdn';
 $this->includeAtTemplateBase('includes/header.php');
@@ -43,7 +43,7 @@ if (array_key_exists('mnc', $this->data))
     <p><?php echo $errorDescr; ?></p>
 </div>
 <h2 style=""><?php echo $this->t('{mobileid:Auth:header}'); ?>
-    <img style="height:28px; float:right;" src="<?php echo(SimpleSAML_Module::getModuleURL('mobileid/resources/mobileid.png')); ?>" />
+    <img style="height:28px; float:right;" src="<?php echo(SimpleSAML\Module::getModuleURL('mobileid/resources/mobileid.png')); ?>" />
 </h2>
 <form action="?" method="post" name="f" id="mobileid_form">
     <table>

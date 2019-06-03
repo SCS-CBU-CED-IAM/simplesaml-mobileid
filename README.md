@@ -20,6 +20,12 @@ Checkout the project directly from git under the `simplesamlphp/modules` folder:
   git clone https://github.com/SCS-CBU-CED-IAM/simplesaml-mobileid.git mobileid
 ```
 
+Dependencies:
+ * PHP SOAP https://www.php.net/manual/en/soap.setup.php
+ * PHP XML Manipulation https://www.php.net/manual/en/dom.setup.php
+ * PHP cURL https://www.php.net/manual/en/book.curl.php
+
+
 Enable the cas module:
   `touch modules/mobileid/enable`
 
@@ -62,6 +68,8 @@ Optional configuration elements
     'proxy_password'  => 'pwd',                           // Only relevant if proxy_login is set
     'service_url'     => 'https://...',                   // Mobile ID service URL, e.g. 'https://mobileid.swisscom.com'
     'allowed_mcc'     => array('228', '543'),             // List of allowed Mobile Country Codes, http://www.mcc-mnc.com
+    'timeout_conn'    => 45,                              // Connection timeout towards Mobile ID service
+    'timeout_req'     => 35,                              // Request timeout for Mobile ID request
 ```
 
 ## Returned elements
