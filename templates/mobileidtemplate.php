@@ -2,14 +2,14 @@
 /**
  * This is the associated template page for the Mobile ID login form
  *
- * @version     1.0.2
+ * @version     1.0.3
  * @package     simpleSAMLphp-mobileid
  * @copyright   Copyright (C) 2012. All rights reserved.
  * @license     Licensed under the Apache License, Version 2.0 or later; see LICENSE.md
  * @author      Swisscom (Schweiz) AG
  */
 
-$this->data['head']  = '<script type="text/javascript" src="' . SimpleSAML\Module::getModuleUrl('mobileid/resources/js/jquery/jquery-1.8.3.min.js') . '"></script>';
+$this->data['head']  = '<script type="text/javascript" src="' . SimpleSAML\Module::getModuleUrl('mobileid/resources/js/jquery/jquery-3.4.1.min.js') . '"></script>';
 $this->data['head'] .= '<script type="text/javascript" src="' . SimpleSAML\Module::getModuleUrl('mobileid/resources/js/mobileid.js') . '"></script>';
 $this->data['head'] .= '<link rel="stylesheet" href="' . SimpleSAML\Module::getModuleUrl('mobileid/resources/css/mobileid.css') . '"/>';
 $this->data['header'] = $this->t('{mobileid:Auth:header}');
