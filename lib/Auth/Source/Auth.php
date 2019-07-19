@@ -68,19 +68,19 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
 
         if (!isset($config['certkey_file']))
             throw new Exception('MobileID: Missing or invalid certkey_file option in config.');
-        $this->certkey_file = SimpleSAML_Utilities::resolvePath($config['certkey_file'], $certdir);
+        $this->certkey_file = SimpleSAML\\Utilities::resolvePath($config['certkey_file'], $certdir);
         if (!file_exists($this->certkey_file))
             throw new Exception('MobileID: Missing or invalid certkey_file option in config: ' . $this->certkey_file);
 
         if (!isset($config['ssl_ca_file']))
             throw new Exception('MobileID: Missing or invalid ssl_ca_file option in config.');
-        $this->ssl_ca_file = SimpleSAML_Utilities::resolvePath($config['ssl_ca_file'], $certdir);
+        $this->ssl_ca_file = SimpleSAML\\Utilities::resolvePath($config['ssl_ca_file'], $certdir);
         if( !file_exists($this->ssl_ca_file))
             throw new Exception('MobileID: Missing or invalid ssl_ca_file option in config: ' . $this->ssl_ca_file);
         
         if (!isset($config['mid_ca_file']))
             throw new Exception('MobileID: Missing or invalid mid_ca_file option in config.');
-        $this->mid_ca_file = SimpleSAML_Utilities::resolvePath($config['mid_ca_file'], $certdir);
+        $this->mid_ca_file = SimpleSAML\\Utilities::resolvePath($config['mid_ca_file'], $certdir);
         if (!file_exists($this->mid_ca_file))
             throw new Exception('MobileID: Missing or invalid mid_ca_file option in config: ' . $this->mid_ca_file);
                 
@@ -145,7 +145,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         $id = SimpleSAML_Auth_State::saveState($state, self::STAGEID);
 
         $url = SimpleSAML\Module::getModuleURL('mobileid/mobileidlogin.php');
-        SimpleSAML_Utilities::redirect($url, array('AuthState' => $id));
+        SimpleSAML\\Utilities::redirect($url, array('AuthState' => $id));
     }
     
     /**
