@@ -19,7 +19,8 @@ $authStateId = $_REQUEST['AuthState'];
 $state = SimpleSAML\Auth\State::loadState($authStateId, sspmod_mobileid_Auth_Source_Auth::STAGEID);
 
 /* User cancel */
-throw new \SimpleSAML\Error\UserAborted();
+$e = new \SimpleSAML\Error\UserAborted();
+SimpleSAML\Auth\State::throwException($state, $e);
 
 SimpleSAML\Auth\Source::completeAuth($state);
 ?>
