@@ -19,6 +19,6 @@ $authStateId = $_REQUEST['AuthState'];
 $state = SimpleSAML\Auth\State::loadState($authStateId, sspmod_mobileid_Auth_Source_Auth::STAGEID);
 
 /* User cancel */
-$e = new sspmod_saml_Error(SAML2_Const::STATUS_RESPONDER, 'urn:oasis:names:tc:SAML:2.0:status:AuthnFailed');
+$e = new SimpleSAML\Module\saml\Error(SAML2_Const::STATUS_RESPONDER, 'urn:oasis:names:tc:SAML:2.0:status:AuthnFailed');
 SimpleSAML\Auth\State::throwException($state, $e);
 ?>
