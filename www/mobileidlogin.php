@@ -3,7 +3,7 @@
  * This page shows a Mobile ID login form, and passes information from it
  * to the sspmod_mobileid_Auth_Source_Auth class
  *
- * @version     1.0.3
+ * @version     1.0.4
  * @package     simpleSAMLphp-mobileid
  * @copyright   Copyright (C) 2012. All rights reserved.
  * @license     Licensed under the Apache License, Version 2.0 or later; see LICENSE.md
@@ -22,7 +22,7 @@ if (array_key_exists('msisdn', $_REQUEST)) {
 }
 
 /* Retrieve the authentication state. */
-$state = SimpleSAML_Auth_State::loadState($authStateId, sspmod_mobileid_Auth_Source_Auth::STAGEID);
+$state = SimpleSAML\Auth\State::loadState($authStateId, sspmod_mobileid_Auth_Source_Auth::STAGEID);
 
 /* Remember the mobile number */
 if (isset($state['remember_msisdn']) && isset($msisdn)) {
@@ -39,8 +39,8 @@ if (!isset($state['remember_msisdn'])) {
 }
     
 /* Login and results */
-$globalConfig = SimpleSAML_Configuration::getInstance();
-$t = new SimpleSAML_XHTML_Template($globalConfig, 'mobileid:mobileidtemplate.php');
+$globalConfig = SimpleSAML\Configuration::getInstance();
+$t = new SimpleSAML\XHTML\Template($globalConfig, 'mobileid:mobileidtemplate.php');
 
 /* Try to login */
 $language = $t->t('{mobileid:Auth:language}');

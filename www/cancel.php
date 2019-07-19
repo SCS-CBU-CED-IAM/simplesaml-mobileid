@@ -2,7 +2,7 @@
 /**
 * This page handles the user cancel
 *
-* @version     1.0.1
+* @version     1.0.4
 * @package     simpleSAMLphp-mobileid
 * @copyright   Copyright (C) 2012. All rights reserved.
 * @license     Licensed under the Apache License, Version 2.0 or later; see LICENSE.md
@@ -16,9 +16,9 @@ if (!array_key_exists('AuthState', $_REQUEST))
 $authStateId = $_REQUEST['AuthState'];
     
 /* Retrieve the authentication state */
-$state = SimpleSAML_Auth_State::loadState($authStateId, sspmod_mobileid_Auth_Source_Auth::STAGEID);
+$state = SimpleSAML\Auth\State::loadState($authStateId, sspmod_mobileid_Auth_Source_Auth::STAGEID);
 
 /* User cancel */
 $e = new sspmod_saml_Error(SAML2_Const::STATUS_RESPONDER, 'urn:oasis:names:tc:SAML:2.0:status:AuthnFailed');
-SimpleSAML_Auth_State::throwException($state, $e);
+SimpleSAML\Auth\State::throwException($state, $e);
 ?>

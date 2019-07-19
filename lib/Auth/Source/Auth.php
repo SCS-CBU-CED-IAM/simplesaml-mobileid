@@ -1,13 +1,13 @@
 <?php
 /**
- * @version     1.0.3
+ * @version     1.0.4
  * @package     simpleSAMLphp-mobileid
  * @copyright   Copyright (C) 2012. All rights reserved.
  * @license     Licensed under the Apache License, Version 2.0 or later; see LICENSE.md
  * @author      Swisscom (Schweiz) AG
  */
 
-class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
+class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML\Auth\Source {
 
     /* The string used to identify our states. */
     const STAGEID = 'sspmod_mobileid_Auth_Source_Auth.state';
@@ -50,7 +50,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         /* Call the parent constructor first, as required by the interface. */
         parent::__construct($info, $config);
 
-        $globalConfig = SimpleSAML_Configuration::getInstance();
+        $globalConfig = SimpleSAML\Configuration::getInstance();
         $certdir = $globalConfig->getPathValue('certdir', 'cert/');
 
         /* Mandatory options */
@@ -142,7 +142,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
             $_SESSION['enable_cancel'] = FALSE;
         }
 
-        $id = SimpleSAML_Auth_State::saveState($state, self::STAGEID);
+        $id = SimpleSAML\Auth\State::saveState($state, self::STAGEID);
 
         $url = SimpleSAML\Module::getModuleURL('mobileid/mobileidlogin.php');
         SimpleSAML\Utilities::redirect($url, array('AuthState' => $id));
@@ -168,11 +168,11 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         assert('is_string($message)');
 
         /* Retrieve the authentication state. */
-        $state = SimpleSAML_Auth_State::loadState($authStateId, self::STAGEID);
+        $state = SimpleSAML\Auth\State::loadState($authStateId, self::STAGEID);
 
         /* Find authentication source. */
         assert('array_key_exists(self::AUTHID, $state)');
-        $source = SimpleSAML_Auth_Source::getById($state[self::AUTHID]);
+        $source = SimpleSAML\Auth\Source::getById($state[self::AUTHID]);
         if ($source === NULL) {
             throw new Exception('Could not find authentication source with id ' . $state[self::AUTHID]);
         }
@@ -183,7 +183,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         try {
             /* Attempt to log in. */
             $attributes = $source->login($msisdn, $language, $message);
-        } catch (SimpleSAML_Error_Error $e) {
+        } catch (SimpleSAML\Error\Error $e) {
             /* Get the error and parameters */
             $error = $e->getErrorCode();
             $params = $e->getParameters();
@@ -208,7 +208,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
         $state['saml:AuthnContextClassRef'] = 'urn:oasis:names:tc:SAML:2.0:ac:classes:MobileTwoFactorContract';
         
         /* Return control to simpleSAMLphp after successful authentication. */
-        SimpleSAML_Auth_Source::completeAuth($state);
+        SimpleSAML\Auth\Source::completeAuth($state);
     }
     
     /* A helper function for setting the right user id.
@@ -380,7 +380,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
             );
 
             /* Set the error */
-            throw new SimpleSAML_Error_Error($error);
+            throw new SimpleSAML\Error\Error($error);
         }
 
         /* Get the Subscriber Info 1901 (MCC/MNC) */
@@ -412,7 +412,7 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML_Auth_Source {
                 );
 
                 /* Set the error */
-                throw new SimpleSAML_Error_Error($error);
+                throw new SimpleSAML\Error\Error($error);
             }
         }
 
