@@ -20,4 +20,6 @@ $state = SimpleSAML\Auth\State::loadState($authStateId, sspmod_mobileid_Auth_Sou
 
 /* User cancel */
 throw new \SimpleSAML\Error\UserAborted();
+
+SimpleSAML\Auth\Source::completeAuth($state);
 ?>
