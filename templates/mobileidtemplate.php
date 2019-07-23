@@ -2,7 +2,7 @@
 /**
  * This is the associated template page for the Mobile ID login form
  *
- * @version     1.0.3
+ * @version     1.0.5
  * @package     simpleSAMLphp-mobileid
  * @copyright   Copyright (C) 2012. All rights reserved.
  * @license     Licensed under the Apache License, Version 2.0 or later; see LICENSE.md
@@ -19,10 +19,6 @@ $this->includeAtTemplateBase('includes/header.php');
 $this->data['cancel'] = '';
 if (isset($_SESSION['enable_cancel']) && $_SESSION['enable_cancel']) {
     $this->data['cancel'] = '<input type="button" value="' . $this->t('{mobileid:Auth:form_btn_cancel}') . '" class="float-l mobileid-btn-cancel" id="submit_btn_cancel" />';
-}
-
-if ($this->data['errorcode'] !== NULL && array_key_exists('msisdn', $_REQUEST)) {
-    $_COOKIE["msisdn"] = $_REQUEST['msisdn'];
 }
 
 /* Error description */

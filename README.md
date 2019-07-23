@@ -61,7 +61,6 @@ Add the module in the sources `config/authsources.php`:
 Optional configuration elements
 ```
     'default_lang'    => 'en|de|..',                      // Default language of the signature request; en if option not set
-    'remember_msisdn' => true,                            // Remember the Mobile ID number in a session cookie; false if option not set
     'proxy_host'      => '',                              // e.g. 'my-proxy.com'
     'proxy_port'      => 8080,                            // Only relevant if proxy_host is set
     'proxy_login'     => 'proxyuser',                     // Only relevant if proxy_host is set

@@ -1,6 +1,6 @@
 <?php
 /**
- * @version     1.0.4
+ * @version     1.0.5
  * @package     simpleSAMLphp-mobileid
  * @copyright   Copyright (C) 2012. All rights reserved.
  * @license     Licensed under the Apache License, Version 2.0 or later; see LICENSE.md
@@ -27,7 +27,6 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML\Auth\Source {
     private $certkey_file;
     private $ssl_ca_file;
     private $mid_ca_file;
-    private $remember_msisdn = FALSE;
     private $proxy_host = '';
     private $proxy_port;
     private $proxy_login;
@@ -88,9 +87,6 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML\Auth\Source {
         if (isset($config['default_lang']))
             $this->language = $config['default_lang'];
         
-        if (isset($config['remember_msisdn']))
-            $this->remember_msisdn = $config['remember_msisdn'];
-
         if (isset($config['proxy_host'])) {
             $this->proxy_host = $config['proxy_host'];
             if (isset($config['proxy_port']))
@@ -129,11 +125,6 @@ class sspmod_mobileid_Auth_Source_Auth extends SimpleSAML\Auth\Source {
 
         /* We are going to need the authId in order to retrieve this authentication source later. */
         $state[self::AUTHID] = $this->authId;
-
-        /* Remember mobile number */
-        if ($this->remember_msisdn) {
-            $state['remember_msisdn'] = $this->remember_msisdn;
-        }
 
         /* Enable "cancel" for proper SAML request */
         if (isset($state['saml:RequestId'])) {

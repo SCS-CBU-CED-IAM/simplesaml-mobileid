@@ -3,7 +3,7 @@
  * This page shows a Mobile ID login form, and passes information from it
  * to the sspmod_mobileid_Auth_Source_Auth class
  *
- * @version     1.0.4
+ * @version     1.0.5
  * @package     simpleSAMLphp-mobileid
  * @copyright   Copyright (C) 2012. All rights reserved.
  * @license     Licensed under the Apache License, Version 2.0 or later; see LICENSE.md
@@ -16,27 +16,13 @@ if (!array_key_exists('AuthState', $_REQUEST))
 
 $authStateId = $_REQUEST['AuthState'];
 
-/* MSISDN default value */
+/* Get the mobile number from Request */
 if (array_key_exists('msisdn', $_REQUEST)) {
     $msisdn = $_REQUEST['msisdn'];
+    setCookies($msisdn);
 }
-
 /* Retrieve the authentication state. */
 $state = SimpleSAML\Auth\State::loadState($authStateId, sspmod_mobileid_Auth_Source_Auth::STAGEID);
-
-/* Remember the mobile number */
-if (isset($state['remember_msisdn']) && isset($msisdn)) {
-    if ($state['remember_msisdn']) {    // Config is set and true
-        setCookies($msisdn);
-    } else {                            // Config is set but false
-        removeCookies();
-    }
-}
-
-// Config is not set
-if (!isset($state['remember_msisdn'])) {
-    removeCookies();
-}
     
 /* Login and results */
 $globalConfig = SimpleSAML\Configuration::getInstance();
@@ -77,16 +63,8 @@ exit();
 function setCookies($msisdn) {
     $sessionHandler = SimpleSAML\SessionHandler::getSessionHandler();
     $params = $sessionHandler->getCookieParams();
-    $params['expire']  = time();
-    $params['expire'] += 31536000;
-    $_COOKIE['msisdn'] = $msisdn;
+    $params['expire']  = 0;
     setcookie('msisdn', $msisdn, $params['expire'], $params['path'], $params['domain'], $params['secure'], $params['httponly']);    
-}
-
-function removeCookies() {
-    if (isset($_COOKIE['msisdn'])) {
-        unset($_COOKIE['msisdn']);
-        setcookie('msisdn', '', time()-3600);
-    }   
+    $_COOKIE['msisdn'] = $msisdn;
 }
 ?>
