@@ -14,13 +14,13 @@
 if (!array_key_exists('AuthState', $_REQUEST))
     throw new SimpleSAML_Error_BadRequest('Missing AuthState parameter.');
 
-SimpleSAML\Logger::debug('MobileID: Login Form - request =' . var_export($_REQUEST, TRUE)); 
        
 $authStateId = $_REQUEST['AuthState'];
 
 /* Get the mobile number from Request */
-if (array_key_exists('msisdn', $_REQUEST)) {
-    $msisdn = $_REQUEST['msisdn'];
+if (array_key_exists('msisdn', $_POST)) {
+    $msisdn = $_POST['msisdn'];
+    SimpleSAML\Logger::debug('MobileID: Login Form - post =' . var_export($_POST, TRUE)); 
 }
 /* Retrieve the authentication state. */
 $state = SimpleSAML\Auth\State::loadState($authStateId, sspmod_mobileid_Auth_Source_Auth::STAGEID);
