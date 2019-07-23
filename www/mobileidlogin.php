@@ -14,6 +14,8 @@
 if (!array_key_exists('AuthState', $_REQUEST))
     throw new SimpleSAML_Error_BadRequest('Missing AuthState parameter.');
 
+SimpleSAML\Logger::debug('MobileID: Login Form - request =' . var_export($_REQUEST, TRUE)); 
+       
 $authStateId = $_REQUEST['AuthState'];
 
 /* Get the mobile number from Request */
