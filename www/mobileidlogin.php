@@ -20,11 +20,9 @@ $authStateId = $_REQUEST['AuthState'];
 /* Get the mobile number from Request */
 if (array_key_exists('msisdn', $_POST)) {
     $msisdn = $_POST['msisdn'];
-    SimpleSAML\Logger::debug('MobileID: Login Form - post =' . var_export($_POST, TRUE)); 
 }
 /* Retrieve the authentication state. */
 $state = SimpleSAML\Auth\State::loadState($authStateId, sspmod_mobileid_Auth_Source_Auth::STAGEID);
-SimpleSAML\Logger::debug('MobileID: Login Form - state =' . var_export($state, TRUE));        
     
 /* Login and results */
 $globalConfig = SimpleSAML\Configuration::getInstance();
@@ -41,7 +39,6 @@ $mnc = NULL;
 if (!empty($msisdn)) {
     setCookies($msisdn);
     $errorCode = sspmod_mobileid_Auth_Source_Auth::handleLogin($authStateId, $msisdn, $language, $message);
-    SimpleSAML\Logger::debug('MobileID: Login Form - Login Try =' . var_export($errorCode, TRUE));        
 
     /* Explode the error into array */
     $error = explode("##", $errorCode);
@@ -70,6 +67,5 @@ function setCookies($msisdn) {
     $params['expire']  = 0;
     setcookie('msisdn', $msisdn, $params['expire'], $params['path'], $params['domain'], $params['secure'], $params['httponly']);    
     $_COOKIE['msisdn'] = $msisdn;
-    SimpleSAML\Logger::debug('MobileID: Login Form - setCookies =' . var_export($_COOKIE, TRUE));
 }
 ?>

@@ -16,11 +16,6 @@ $this->data['header'] = $this->t('{mobileid:Auth:header}');
 $this->data['autofocus'] = 'msisdn';
 $this->includeAtTemplateBase('includes/header.php');
 
-$this->data['cancel'] = '';
-if (isset($_SESSION['enable_cancel']) && $_SESSION['enable_cancel']) {
-    $this->data['cancel'] = '<input type="button" value="' . $this->t('{mobileid:Auth:form_btn_cancel}') . '" class="float-l mobileid-btn-cancel" id="submit_btn_cancel" />';
-}
-
 /* Error description */
 $errorDescr = $this->t('{mobileid:errors:descr_' . $this->data['errorcode'] . '}');
 if (array_key_exists('errorurl', $this->data))
@@ -51,10 +46,6 @@ if (array_key_exists('mnc', $this->data))
             <tr>
                 <td>&nbsp;</td>
                 <td>
-                    <?php
-                    if ($this->data['cancel'] !== '')
-                        echo($this->data['cancel']);
-                    ?>
                     <input type="button" value="<?php echo $this->t('{mobileid:Auth:form_btn_send}'); ?>" class="float-r mobileid-btn-send" id="submit_btn_send" />
                 </td>
             </tr>

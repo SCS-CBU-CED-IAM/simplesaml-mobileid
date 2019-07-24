@@ -23,11 +23,6 @@
 		}, 400)
 	})
 
-	$(document).on('click', '#submit_btn_cancel', function(e) {
-		e.preventDefault()
-		$('#mobileid_form').attr('action', 'cancel.php');
-		$('#mobileid_form').submit();
-	})
 }(jQuery))
 
 jQuery(document).ready(function($) {
